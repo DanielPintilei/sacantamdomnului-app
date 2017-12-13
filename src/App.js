@@ -40,7 +40,7 @@ class App extends Component {
     this.toggleBodyOverflow(open)
   }
   render () {
-    const songList = () => {
+    const getSongList = () => {
       const { saCantamDomnului, alteCantari, colinde } = songs
       const list = [
         {
@@ -58,6 +58,7 @@ class App extends Component {
       ]
       return list
     }
+    const songList = getSongList()
     const drawerProps = {
       overlayColor: 'rgba(255,255,255,0.6)',
       drawerStyle: {
@@ -84,34 +85,34 @@ class App extends Component {
                 this.setState({ openRight: !openRight, openLeft: false })
               }
             />
-            {!openRight && (
-              <Drawer
-                {...drawerProps}
-                width={300}
-                fadeOut
-                open={openLeft}
-                onChange={this.toggleDrawerLeft}
-              >
-                <DrawerLeft
-                  songList={songList()}
-                  closeDrawer={() => this.setState({ openLeft: false })}
-                />
-              </Drawer>
-            )}
-            {!openLeft && (
-              <Drawer
-                right
-                width={300}
-                {...drawerProps}
-                open={openRight}
-                onChange={this.toggleDrawerRight}
-              >
-                <DrawerRight
-                  closeDrawer={() => this.setState({ openRight: false })}
-                />
-              </Drawer>
-            )}
-            <Main songList={songList()} />
+            <Drawer
+              {...drawerProps}
+              width={300}
+              fadeOut
+              open={openLeft}
+              onChange={this.toggleDrawerLeft}
+            >
+              <DrawerLeft
+                songList={songList}
+                closeDrawer={() => this.setState({ openLeft: false })}
+              />
+            </Drawer>
+            <Drawer
+              right
+              width={300}
+              {...drawerProps}
+              open={openRight}
+              onChange={this.toggleDrawerRight}
+            >
+              <DrawerRight
+                songList={songList
+                  .map(item => item.songs)
+                  .reduce((a, b) => [...a, ...b], [])}
+                closeDrawer={() => this.setState({ openRight: false })}
+                searchFocused={openRight}
+              />
+            </Drawer>
+            <Main songList={songList} />
           </div>
         </ScrollToTop>
       </Router>

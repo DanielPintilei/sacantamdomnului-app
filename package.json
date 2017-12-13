@@ -5,6 +5,7 @@
   "author": "Daniel Pintilei",
   "license": "MIT",
   "dependencies": {
+    "downshift": "^1.22.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-headroom": "^2.2.2",

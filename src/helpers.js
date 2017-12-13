@@ -1,7 +1,7 @@
+export const replaceAccents = str =>
+  str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 export const normalizeTitle = title =>
-  title
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
+  replaceAccents(title)
     .replace(/\s+/g, '-')
     .replace(/[^\w-]+/g, '')
     .replace(/-+/g, '-')
