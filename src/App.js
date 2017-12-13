@@ -92,7 +92,10 @@ class App extends Component {
                 open={openLeft}
                 onChange={this.toggleDrawerLeft}
               >
-                <DrawerLeft songList={songList()} />
+                <DrawerLeft
+                  songList={songList()}
+                  closeDrawer={() => this.setState({ openLeft: false })}
+                />
               </Drawer>
             )}
             {!openLeft && (
@@ -103,7 +106,9 @@ class App extends Component {
                 open={openRight}
                 onChange={this.toggleDrawerRight}
               >
-                <DrawerRight />
+                <DrawerRight
+                  closeDrawer={() => this.setState({ openRight: false })}
+                />
               </Drawer>
             )}
             <Main songList={songList()} />

@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 // import styled from 'styled-components'
 import List from 'react-virtualized/dist/commonjs/List'
+import {
+  CellMeasurer,
+  CellMeasurerCache,
+} from 'react-virtualized/dist/commonjs/CellMeasurer'
 import { Link } from 'react-router-dom'
 import { generateUrl } from './helpers'
 
@@ -9,22 +13,43 @@ class DrawerLeft extends Component {
   state = {
     currentBook: null,
   }
+  cache = new CellMeasurerCache({
+    fixedWidth: true,
+    defaultHeight: 20,
+  })
   static propTypes = {
     songList: PropTypes.array.isRequired,
+    closeDrawer: PropTypes.func.isRequired,
   }
   render () {
+    const { songList, closeDrawer } = this.props
+    const { currentBook } = this.state
     const SongSection = ({ title, songs }) => {
-      const rowRenderer = ({ key, index, isScrolling, isVisible, style }) => {
+      const rowRenderer = ({
+        key,
+        index,
+        parent,
+        isScrolling,
+        isVisible,
+        style,
+      }) => {
         const { number: songNumber, title: songTitle } = songs[index]
         return (
-          <div key={key} style={style}>
-            <Link to={generateUrl(songNumber, songTitle)}>
-              {songNumber}. {songTitle}
-            </Link>
-          </div>
+          <CellMeasurer
+            key={key}
+            cache={this.cache}
+            parent={parent}
+            columnIndex={0}
+            rowIndex={index}
+          >
+            <div style={style} onClick={closeDrawer}>
+              <Link to={generateUrl(songNumber, songTitle)}>
+                {songNumber}. {songTitle}
+              </Link>
+            </div>
+          </CellMeasurer>
         )
       }
-      const { currentBook } = this.state
       return (
         <div>
           <h3
@@ -53,7 +78,8 @@ class DrawerLeft extends Component {
             <List
               height={500}
               rowCount={songs.length}
-              rowHeight={30}
+              rowHeight={this.cache.rowHeight}
+              defferedMeasurementCache={this.cache}
               width={300}
               rowRenderer={rowRenderer}
             />
@@ -61,7 +87,6 @@ class DrawerLeft extends Component {
         </div>
       )
     }
-    const { songList } = this.props
     return (
       <div>
         {songList.map(({ title, songs }) => (
