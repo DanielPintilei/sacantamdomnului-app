@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Headroom from 'react-headroom'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const Nav = styled.div`
   display: flex;
@@ -65,7 +66,9 @@ const Navbar = ({ onClickLeft, onClickRight }) => (
       <button onClick={onClickLeft}>
         <IconLeft />
       </button>
-      <Logo />
+      <Link to='/'>
+        <Logo />
+      </Link>
       <button onClick={onClickRight}>
         <IconRight />
       </button>

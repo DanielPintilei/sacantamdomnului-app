@@ -35,11 +35,8 @@ const Song = ({ match: { params: { number, title } }, songList }) => {
   return (
     <StyledSong>
       <h1>
-        {number} ^^^ {title}
-      </h1>
-      <p>
         {currentSong.number}. {currentSong.title}
-      </p>
+      </h1>
       <pre>{currentSong.content}</pre>
     </StyledSong>
   )
@@ -55,7 +52,7 @@ Song.propTypes = {
 }
 const Main = ({ songList }) => (
   <StyledMain>
-    <BackgroundImage />
+    <Route exact path='/' component={BackgroundImage} />
     <Route
       path='/:number-:title'
       render={props => <Song songList={songList} {...props} />}
