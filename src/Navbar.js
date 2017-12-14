@@ -13,9 +13,8 @@ const Nav = styled.div`
   padding-left: 20px;
   padding-right: 20px;
   background-color: #fff;
-  box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 1px;
+  box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 3px;
 `
-
 const Navbar = ({ onClickLeft, onClickRight }) => (
   <Headroom>
     <Nav>
@@ -31,7 +30,6 @@ const Navbar = ({ onClickLeft, onClickRight }) => (
     </Nav>
   </Headroom>
 )
-
 Navbar.propTypes = {
   onClickLeft: PropTypes.func.isRequired,
   onClickRight: PropTypes.func.isRequired,

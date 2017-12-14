@@ -3,11 +3,10 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Downshift from 'downshift'
 // import styled from 'styled-components'
-import { generateUrl, replaceAccents } from './helpers'
+import { replaceAccents } from './helpers'
 import { IconSearch } from './icons'
 
 class DrawerRight extends Component {
-  state = {}
   static propTypes = {
     songList: PropTypes.array.isRequired,
     closeDrawer: PropTypes.func.isRequired,
@@ -23,17 +22,9 @@ class DrawerRight extends Component {
     return (
       <div>
         <Downshift
-          render={({
-            getInputProps,
-            getItemProps,
-            getLabelProps,
-            isOpen,
-            inputValue,
-            highlightedIndex,
-            selectedItem,
-          }) => (
+          render={({ getInputProps, isOpen, inputValue }) => (
             <div>
-              <label {...getLabelProps()}>
+              <label>
                 <IconSearch />
                 <input
                   {...getInputProps()}
@@ -53,45 +44,24 @@ class DrawerRight extends Component {
                   {songList
                     .filter(({ number, title }) => {
                       const formattedTitle = replaceAccents(title).toLowerCase()
+                      const searchText = new RegExp(`\\b${inputValue}`, 'ig')
                       return (
                         (inputValue &&
                           number.toString().startsWith(inputValue)) ||
                         ((formattedTitle
                           .replace(/[^\w\s]|_/g, '')
                           .replace(/\s+/g, ' ')
-                          .includes(inputValue) ||
-                          formattedTitle.includes(inputValue)) &&
+                          .match(searchText) ||
+                          formattedTitle.match(searchText)) &&
                           inputValue.length > 1)
                       )
                     })
                     .sort((a, b) => a.number - b.number)
-                    .map((item, index) => {
-                      const { number, title } = item
-                      return (
-                        <div
-                          {...getItemProps({
-                            key: number + title,
-                            index,
-                            item: title,
-                            style: {
-                              backgroundColor:
-                                highlightedIndex === index
-                                  ? 'lightgray'
-                                  : 'white',
-                              fontWeight:
-                                selectedItem === item ? 'bold' : 'normal',
-                            },
-                          })}
-                        >
-                          <Link
-                            to={generateUrl(number, title)}
-                            onClick={closeDrawer}
-                          >
-                            {number}. {title}
-                          </Link>
-                        </div>
-                      )
-                    })}
+                    .map(({ number, title, url }) => (
+                      <Link key={url} to={url} onClick={closeDrawer}>
+                        {number}. {title}
+                      </Link>
+                    ))}
                 </div>
               ) : null}
             </div>

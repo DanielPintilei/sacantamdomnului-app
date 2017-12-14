@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-// import styled from 'styled-components'
+import styled from 'styled-components'
 import List from 'react-virtualized/dist/commonjs/List'
 import {
   CellMeasurer,
   CellMeasurerCache,
 } from 'react-virtualized/dist/commonjs/CellMeasurer'
 import { Link } from 'react-router-dom'
-import { generateUrl } from './helpers'
+import { IconBook } from './icons'
 
 class ListWrapper extends Component {
   static propTypes = {
@@ -25,7 +25,7 @@ class ListWrapper extends Component {
 class SongSection extends Component {
   cache = new CellMeasurerCache({
     fixedWidth: true,
-    defaultHeight: 20,
+    defaultHeight: 30,
   })
   static propTypes = {
     title: PropTypes.string.isRequired,
@@ -54,7 +54,7 @@ class SongSection extends Component {
       isVisible,
       style,
     }) => {
-      const { number: songNumber, title: songTitle } = songs[index]
+      const { number: songNumber, title: songTitle, url } = songs[index]
       return (
         <CellMeasurer
           key={key}
@@ -63,22 +63,52 @@ class SongSection extends Component {
           columnIndex={0}
           rowIndex={index}
         >
-          <div
+          <Link
+            to={url}
             style={style}
             onClick={() => {
               closeDrawer()
               setCurrentSong(index + 15)
             }}
           >
-            <Link to={generateUrl(songNumber, songTitle)}>
-              {songNumber}. {songTitle}
-            </Link>
-          </div>
+            <span>{songNumber}.</span>
+            <span> {songTitle}</span>
+          </Link>
         </CellMeasurer>
       )
     }
+    const Div = styled.div`
+      overflow-x: hidden;
+      h3 {
+        display: flex;
+        margin: 0;
+        padding: 15px;
+        font-size: 17px;
+        font-weight: normal;
+        cursor: pointer;
+        box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 3px;
+      }
+      svg {
+        margin-right: 10px;
+      }
+      a {
+        display: flex;
+        padding: 5px 15px;
+        font-size: 15px;
+        line-height: 1.2;
+        color: gray;
+        text-decoration: none;
+        span {
+          &:first-child {
+            display: inline-block;
+            margin-right: 5px;
+            opacity: 0.7;
+          }
+        }
+      }
+    `
     return (
-      <div>
+      <Div>
         <h3
           onClick={() => {
             if (currentBook === title) setCurrentBook(null)
@@ -88,27 +118,14 @@ class SongSection extends Component {
             }
           }}
         >
-          <svg
-            width='24'
-            height='24'
-            viewBox='0 0 24 24'
-            fill='none'
-            stroke='currentColor'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-          >
-            <path d='M4 19.5A2.5 2.5 0 0 1 6.5 17H20' />
-            <path d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z' />
-          </svg>{' '}
-          {title}
+          <IconBook /> {title}
         </h3>
         {currentBook === title && (
           <ListWrapper
             scrollToCurrentSong={() => this.listRef.scrollToRow(currentSong)}
           >
             <List
-              height={window.innerHeight / 2}
+              height={window.innerHeight / 1.5}
               rowCount={songs.length}
               rowHeight={this.cache.rowHeight}
               defferedMeasurementCache={this.cache}
@@ -120,7 +137,7 @@ class SongSection extends Component {
             />
           </ListWrapper>
         )}
-      </div>
+      </Div>
     )
   }
 }

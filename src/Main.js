@@ -5,17 +5,6 @@ import { Route } from 'react-router-dom'
 import BackgroundImage from './BackgroundImage'
 import { normalizeTitle } from './helpers'
 
-const StyledMain = styled.div`
-  width: 100%;
-  height: 100%;
-  .background-image {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
-    color: #fadca8;
-  }
-`
 const StyledSong = styled.article`
   position: relative;
   width: 100%;
@@ -50,6 +39,18 @@ Song.propTypes = {
   }).isRequired,
   songList: PropTypes.array.isRequired,
 }
+
+const StyledMain = styled.div`
+  width: 100%;
+  height: 100%;
+  .background-image {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    color: #fadca8;
+  }
+`
 const Main = ({ songList }) => (
   <StyledMain>
     <Route exact path='/' component={BackgroundImage} />

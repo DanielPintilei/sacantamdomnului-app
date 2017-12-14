@@ -17,6 +17,9 @@ injectGlobal`
     color: #fff;
     background-color: slateblue;
   }
+  a {
+    display: block;
+  }
   button,
   label {
     cursor: pointer;
