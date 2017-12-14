@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import Downshift from 'downshift'
-// import styled from 'styled-components'
+import styled from 'styled-components'
+import ListLink from './ListLink'
 import { replaceAccents } from './helpers'
 import { IconSearch } from './icons'
 
@@ -19,11 +19,51 @@ class DrawerRight extends Component {
   }
   render () {
     const { songList, closeDrawer } = this.props
+    const Div = styled.div`
+      height: 100%;
+      .qwe {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      label {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        padding-left: 15px;
+        padding-right: 15px;
+        box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 3px;
+      }
+      svg {
+        flex-shrink: 0;
+        margin-right: 15px;
+      }
+      input {
+        flex-grow: 1;
+        height: 70px;
+        font-size: 17px;
+        border: none;
+        outline: none;
+        color: ${props => props.theme.textInput};
+        background-color: transparent;
+        -webkit-appearance: textfield;
+        &::-webkit-search-cancel-button,
+        &::-webkit-search-decoration {
+          -webkit-appearance: none;
+        }
+      }
+      .list {
+        flex-grow: 1;
+        padding-top: 10px;
+        padding-bottom: 20px;
+        overflow-y: auto;
+      }
+    `
     return (
-      <div>
+      <Div>
         <Downshift
           render={({ getInputProps, isOpen, inputValue }) => (
-            <div>
+            <div className='qwe'>
               <label>
                 <IconSearch />
                 <input
@@ -36,11 +76,10 @@ class DrawerRight extends Component {
                   autoCorrect='off'
                   autoCapitalize='off'
                   spellCheck='false'
-                  placeholder='Caută'
                 />
               </label>
               {isOpen ? (
-                <div>
+                <div className='list'>
                   {songList
                     .filter(({ number, title }) => {
                       const formattedTitle = replaceAccents(title).toLowerCase()
@@ -58,16 +97,17 @@ class DrawerRight extends Component {
                     })
                     .sort((a, b) => a.number - b.number)
                     .map(({ number, title, url }) => (
-                      <Link key={url} to={url} onClick={closeDrawer}>
-                        {number}. {title}
-                      </Link>
+                      <ListLink key={url} to={url} onClick={closeDrawer}>
+                        <span>{number}.</span>
+                        <span>{title}</span>
+                      </ListLink>
                     ))}
                 </div>
               ) : null}
             </div>
           )}
         />
-      </div>
+      </Div>
     )
   }
 }

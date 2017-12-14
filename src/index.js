@@ -8,7 +8,8 @@ injectGlobal`
   * {
   box-sizing: border-box;
   }
-  body {
+  body,
+  pre {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif;
@@ -21,7 +22,7 @@ injectGlobal`
     display: block;
   }
   button,
-  label {
+  .button {
     cursor: pointer;
     background-color: transparent;
     border: none;

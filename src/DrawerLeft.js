@@ -6,7 +6,7 @@ import {
   CellMeasurer,
   CellMeasurerCache,
 } from 'react-virtualized/dist/commonjs/CellMeasurer'
-import { Link } from 'react-router-dom'
+import ListLink from './ListLink'
 import { IconBook } from './icons'
 
 class ListWrapper extends Component {
@@ -63,7 +63,7 @@ class SongSection extends Component {
           columnIndex={0}
           rowIndex={index}
         >
-          <Link
+          <ListLink
             to={url}
             style={style}
             onClick={() => {
@@ -73,44 +73,14 @@ class SongSection extends Component {
           >
             <span>{songNumber}.</span>
             <span> {songTitle}</span>
-          </Link>
+          </ListLink>
         </CellMeasurer>
       )
     }
-    const Div = styled.div`
-      overflow-x: hidden;
-      h3 {
-        display: flex;
-        margin: 0;
-        padding: 15px;
-        font-size: 17px;
-        font-weight: normal;
-        cursor: pointer;
-        color: ${props => props.theme.textListSection};
-        box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 3px;
-      }
-      svg {
-        margin-right: 10px;
-      }
-      a {
-        display: flex;
-        padding: 5px 15px;
-        font-size: 15px;
-        line-height: 1.2;
-        color: ${props => props.theme.textList};
-        text-decoration: none;
-        span {
-          &:first-child {
-            display: inline-block;
-            margin-right: 5px;
-            opacity: 0.7;
-          }
-        }
-      }
-    `
     return (
-      <Div>
+      <div>
         <h3
+          className='button'
           onClick={() => {
             if (currentBook === title) setCurrentBook(null)
             else {
@@ -138,7 +108,7 @@ class SongSection extends Component {
             />
           </ListWrapper>
         )}
-      </Div>
+      </div>
     )
   }
 }
@@ -155,8 +125,27 @@ class DrawerLeft extends Component {
   render () {
     const { songList, closeDrawer } = this.props
     const { currentBook, currentSong } = this.state
+    const Div = styled.div`
+      overflow-x: hidden;
+      h3 {
+        display: flex;
+        margin: 0;
+        padding: 15px;
+        font-size: 17px;
+        font-weight: normal;
+        cursor: pointer;
+        color: ${props => props.theme.text};
+        & + div {
+          padding-top: 10px;
+          box-shadow: inset rgba(0, 0, 0, 0.15) 1px 1px 3px;
+        }
+      }
+      svg {
+        margin-right: 10px;
+      }
+    `
     return (
-      <div>
+      <Div>
         {songList.map(({ title, songs }) => (
           <SongSection
             title={title}
@@ -177,7 +166,7 @@ class DrawerLeft extends Component {
             key={title}
           />
         ))}
-      </div>
+      </Div>
     )
   }
 }
