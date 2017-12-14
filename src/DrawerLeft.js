@@ -86,6 +86,7 @@ class SongSection extends Component {
         font-size: 17px;
         font-weight: normal;
         cursor: pointer;
+        color: ${props => props.theme.textListSection};
         box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 3px;
       }
       svg {
@@ -96,7 +97,7 @@ class SongSection extends Component {
         padding: 5px 15px;
         font-size: 15px;
         line-height: 1.2;
-        color: gray;
+        color: ${props => props.theme.textList};
         text-decoration: none;
         span {
           &:first-child {

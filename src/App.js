@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { BrowserRouter as Router, withRouter } from 'react-router-dom'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from 'styled-components'
 import Drawer from 'react-motion-drawer'
 import Navbar from './Navbar'
 import DrawerLeft from './DrawerLeft'
 import DrawerRight from './DrawerRight'
 import Main from './Main'
 import { generateUrl } from './helpers'
-import { IconDroplet, IconType } from './icons'
+import { IconDroplet, IconType, IconCheck } from './icons'
+import themes from './themes'
 import songs from './cantari.json'
 
 class ScrollToTopComponent extends Component {
@@ -31,6 +32,7 @@ class App extends Component {
     openRight: false,
     openThemes: false,
     openType: false,
+    currentTheme: themes[0],
   }
   toggleBodyOverflow (bool) {
     document.body.style.overflowY = bool ? 'hidden' : ''
@@ -50,12 +52,12 @@ class App extends Component {
     this.setState({ openType: open })
   }
   render () {
-    const { openLeft, openRight } = this.state
+    const { openLeft, openRight, currentTheme } = this.state
     const drawerProps = {
-      overlayColor: 'rgba(255,255,255,0.6)',
+      overlayColor: `rgba(${currentTheme.backdrop}, 0.6)`,
       drawerStyle: {
         paddingBottom: '100px',
-        background: '#fff',
+        background: currentTheme.background,
         boxShadow:
           'rgba(0, 0, 0, 0.18) 0px 10px 20px, rgba(0, 0, 0, 0.2) 0px 6px 6px',
       },
@@ -94,81 +96,106 @@ class App extends Component {
       right: 0;
       width: 300px;
       padding: 15px;
-      background-color: #fff;
+      background-color: ${props => props.theme.options};
       box-shadow: rgba(0, 0, 0, 0.15) -1px -1px 3px;
+      button {
+        color: ${props => props.theme.accent};
+      }
+    `
+    const ThemePicker = styled.div`
+      position: fixed;
+      bottom: 40px;
+      left: 40px;
+      right: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      padding: 5px;
+      background-color: #fff;
+      box-shadow: 4px 2px 6px 0px hsla(0, 0%, 0%, 0.1);
+      border-radius: 4px;
     `
     return (
       <Router>
         <ScrollToTop>
-          <div
-            style={{
-              width: '100%',
-              height: '100vh',
-            }}
-          >
-            <Navbar
-              onClickLeft={() =>
-                this.setState({ openLeft: !openLeft, openRight: false })
-              }
-              onClickRight={() =>
-                this.setState({ openRight: !openRight, openLeft: false })
-              }
-            />
-            <Drawer
-              {...drawerProps}
-              width={300}
-              fadeOut
-              open={openLeft}
-              onChange={this.toggleDrawerLeft}
+          <ThemeProvider theme={currentTheme}>
+            <div
+              style={{
+                width: '100%',
+                height: '100vh',
+              }}
             >
-              <DrawerLeft
-                songList={songList}
-                closeDrawer={() => this.setState({ openLeft: false })}
-                openThemes={() => {
-                  this.toggleDrawerLeft(false)
-                  this.toggleThemes(true)
-                }}
-                openType={() => {
-                  this.toggleDrawerLeft(false)
-                  this.toggleType(true)
-                }}
+              <Navbar
+                onClickLeft={() =>
+                  this.setState({ openLeft: !openLeft, openRight: false })
+                }
+                onClickRight={() =>
+                  this.setState({ openRight: !openRight, openLeft: false })
+                }
               />
-              <Options>
-                <button
-                  onClick={() => {
+              <Drawer
+                {...drawerProps}
+                width={300}
+                fadeOut
+                open={openLeft}
+                onChange={this.toggleDrawerLeft}
+              >
+                <DrawerLeft
+                  songList={songList}
+                  closeDrawer={() => this.setState({ openLeft: false })}
+                  openThemes={() => {
                     this.toggleDrawerLeft(false)
                     this.toggleThemes(true)
                   }}
-                >
-                  <IconDroplet />
-                </button>
-                <button
-                  onClick={() => {
+                  openType={() => {
                     this.toggleDrawerLeft(false)
                     this.toggleType(true)
                   }}
+                />
+                <Options>
+                  <button
+                    onClick={() => {
+                      this.toggleDrawerLeft(false)
+                      this.toggleThemes(true)
+                    }}
+                  >
+                    <IconDroplet />
+                  </button>
+                  <button
+                    onClick={() => {
+                      this.toggleDrawerLeft(false)
+                      this.toggleType(true)
+                    }}
+                  >
+                    <IconType />
+                  </button>
+                </Options>
+              </Drawer>
+              <Drawer
+                right
+                width={300}
+                {...drawerProps}
+                open={openRight}
+                onChange={this.toggleDrawerRight}
+              >
+                <DrawerRight
+                  songList={songList
+                    .map(item => item.songs)
+                    .reduce((a, b) => [...a, ...b], [])}
+                  closeDrawer={() => this.setState({ openRight: false })}
+                  searchFocused={openRight}
+                />
+              </Drawer>
+              <Main songList={songList} />
+              <ThemePicker>
+                <div
+                  className='swatch'
+                  onClick={() => this.setState({ currentTheme: themes[1] })}
                 >
-                  <IconType />
-                </button>
-              </Options>
-            </Drawer>
-            <Drawer
-              right
-              width={300}
-              {...drawerProps}
-              open={openRight}
-              onChange={this.toggleDrawerRight}
-            >
-              <DrawerRight
-                songList={songList
-                  .map(item => item.songs)
-                  .reduce((a, b) => [...a, ...b], [])}
-                closeDrawer={() => this.setState({ openRight: false })}
-                searchFocused={openRight}
-              />
-            </Drawer>
-            <Main songList={songList} />
-          </div>
+                  <IconCheck />
+                </div>
+              </ThemePicker>
+            </div>
+          </ThemeProvider>
         </ScrollToTop>
       </Router>
     )
