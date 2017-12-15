@@ -44,7 +44,7 @@ class DrawerRight extends Component {
         font-size: 17px;
         border: none;
         outline: none;
-        color: ${props => props.theme.textInput};
+        color: ${({ theme }) => theme.textInput};
         background-color: transparent;
         -webkit-appearance: textfield;
         &::-webkit-search-cancel-button,
@@ -96,8 +96,8 @@ class DrawerRight extends Component {
                       )
                     })
                     .sort((a, b) => a.number - b.number)
-                    .map(({ number, title, url }) => (
-                      <ListLink key={url} to={url} onClick={closeDrawer}>
+                    .map(({ number, title, path }) => (
+                      <ListLink key={path} to={path} onClick={closeDrawer}>
                         <span>{number}.</span>
                         <span>{title}</span>
                       </ListLink>

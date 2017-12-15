@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 export const IconMenu = () => (
   <svg
@@ -123,7 +124,25 @@ export const IconZoomIn = () => (
     <line x1='8' y1='11' x2='14' y2='11' />
   </svg>
 )
-export const IconCheck = () => (
+export const IconCheck = ({ stroke }) => (
+  <svg
+    width='24'
+    height='24'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke={stroke}
+    strokeWidth='2'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+  >
+    <polyline points='9 11 12 14 23 3' />
+    <path d='M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11' />
+  </svg>
+)
+IconCheck.prototypes = {
+  stroke: PropTypes.string.isRequired,
+}
+export const IconInfo = () => (
   <svg
     width='24'
     height='24'
@@ -133,8 +152,10 @@ export const IconCheck = () => (
     strokeWidth='2'
     strokeLinecap='round'
     strokeLinejoin='round'
+    className='feather feather-info'
   >
-    <polyline points='9 11 12 14 23 3' />
-    <path d='M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11' />
+    <circle cx='12' cy='12' r='10' />
+    <line x1='12' y1='16' x2='12' y2='12' />
+    <line x1='12' y1='8' x2='12' y2='8' />
   </svg>
 )

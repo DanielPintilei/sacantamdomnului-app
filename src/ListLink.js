@@ -6,7 +6,7 @@ const ListLink = styled(Link)`
   padding: 5px 10px 5px 15px;
   font-size: 15px;
   line-height: 1.2;
-  color: ${props => props.theme.textList};
+  color: ${({ theme }) => theme.textList};
   text-decoration: none;
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);

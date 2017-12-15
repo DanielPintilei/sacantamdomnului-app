@@ -14,12 +14,12 @@ injectGlobal`
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
       sans-serif;
   }
-  ::selection {
-    color: #fff;
-    background-color: slateblue;
-  }
   a {
     display: block;
+  }
+  button {
+    padding-left: 12px;
+    padding-right: 12px;
   }
   button,
   .button {

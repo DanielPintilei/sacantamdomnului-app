@@ -5,5 +5,5 @@ export const normalizeTitle = title =>
     .replace(/\s+/g, '-')
     .replace(/[^\w-]+/g, '')
     .replace(/-+/g, '-')
-export const generateUrl = (number, title) =>
+export const generatePath = (number, title) =>
   `${number}-${normalizeTitle(title)}`

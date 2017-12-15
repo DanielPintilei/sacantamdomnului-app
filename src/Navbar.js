@@ -12,10 +12,10 @@ const Nav = styled.div`
   height: 70px;
   padding-left: 20px;
   padding-right: 20px;
-  background-color: ${props => props.theme.navbar};
+  background-color: ${({ theme }) => theme.navbar};
   box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 3px;
   button {
-    color: ${props => props.theme.iconsNavbar};
+    color: ${({ theme }) => theme.iconsNavbar};
   }
 `
 const Navbar = ({ onClickLeft, onClickRight }) => (

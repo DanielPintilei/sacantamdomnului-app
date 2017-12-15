@@ -7,16 +7,16 @@ import Navbar from './Navbar'
 import DrawerLeft from './DrawerLeft'
 import DrawerRight from './DrawerRight'
 import Main from './Main'
-import { generateUrl } from './helpers'
 import {
   IconDroplet,
   IconType,
   IconCheck,
   IconZoomOut,
   IconZoomIn,
+  IconInfo,
 } from './icons'
 import themes from './themes'
-import songs from './cantari.json'
+import songs from './songs.json'
 
 class ScrollToTopComponent extends Component {
   static propTypes = {
@@ -34,22 +34,22 @@ const ScrollToTop = withRouter(ScrollToTopComponent)
 
 class App extends Component {
   state = {
-    openLeft: false,
-    openRight: false,
-    openThemes: false,
-    openFont: false,
-    currentTheme: themes[0],
+    leftDrawerOpen: false,
+    rightDrawerOpen: false,
+    themesPanelOpen: false,
+    fontPanelOpen: false,
+    currentTheme: localStorage.getItem('serif') || 0,
     serif: localStorage.getItem('serif'),
   }
   toggleBodyOverflow (bool) {
     document.body.style.overflowY = bool ? 'hidden' : ''
   }
   toggleDrawerLeft = open => {
-    this.setState({ openLeft: open })
+    this.setState({ leftDrawerOpen: open })
     this.toggleBodyOverflow(open)
   }
   toggleDrawerRight = open => {
-    this.setState({ openRight: open })
+    this.setState({ rightDrawerOpen: open })
     this.toggleBodyOverflow(open)
   }
   closeBackdrop = ev => {
@@ -59,49 +59,26 @@ class App extends Component {
     }
   }
   toggleThemesPanel = open => {
-    this.setState({ openThemes: open })
+    this.setState({ themesPanelOpen: open })
   }
   toggleFontPanel = open => {
-    this.setState({ openFont: open })
+    this.setState({ fontPanelOpen: open })
   }
   render () {
     const {
-      openLeft,
-      openRight,
-      openThemes,
-      openFont,
+      leftDrawerOpen,
+      rightDrawerOpen,
+      themesPanelOpen,
+      fontPanelOpen,
       currentTheme,
     } = this.state
-    const overlayColor = `rgba(${currentTheme.backdrop}, 0.6)`
+    const currentThemeObj = themes[currentTheme]
+    const overlayColor = `rgba(${currentThemeObj.backdrop}, 0.6)`
     const drawerStyle = {
-      background: currentTheme.background,
+      background: currentThemeObj.background,
       boxShadow:
         'rgba(0, 0, 0, 0.18) 0px 10px 20px, rgba(0, 0, 0, 0.2) 0px 6px 6px',
     }
-    const getSongList = () => {
-      const { saCantamDomnului, alteCantari, colinde } = songs
-      const formatSection = section =>
-        section.filter(x => x).map(item => ({
-          ...item,
-          url: generateUrl(item.number, item.title),
-        }))
-      const list = [
-        {
-          title: 'Să cântăm Domnului',
-          songs: formatSection(saCantamDomnului),
-        },
-        {
-          title: 'Alte Cântări',
-          songs: formatSection(alteCantari),
-        },
-        {
-          title: 'Colinde',
-          songs: formatSection(colinde),
-        },
-      ]
-      return list
-    }
-    const songList = getSongList()
     const Backdrop = styled.div`
       position: fixed;
       top: 0;
@@ -120,10 +97,10 @@ class App extends Component {
       right: 0;
       width: 300px;
       padding: 15px;
-      background-color: ${props => props.theme.options};
+      background-color: ${({ theme }) => theme.options};
       box-shadow: rgba(0, 0, 0, 0.15) -1px -1px 3px;
       button {
-        color: ${props => props.theme.accent};
+        color: ${({ theme }) => theme.accent};
       }
     `
     const OptionsPanel = styled.div`
@@ -133,29 +110,44 @@ class App extends Component {
       transform: translateX(-50%);
       display: flex;
       flex-wrap: wrap;
+      justify-content: space-between;
       padding: 15px;
       background-color: #fff;
       box-shadow: 4px 2px 6px 0px hsla(0, 0%, 0%, 0.1);
       border-radius: 4px;
     `
     const ThemePicker = OptionsPanel.extend`
-      width: 400px;
+      width: 340px;
+      .swatch {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
     `
     const FontSettings = OptionsPanel.extend`
       width: 300px;
-      justify-content: space-between;
     `
     return (
       <Router>
         <ScrollToTop>
-          <ThemeProvider theme={currentTheme}>
+          <ThemeProvider theme={currentThemeObj}>
             <div>
               <Navbar
                 onClickLeft={() =>
-                  this.setState({ openLeft: !openLeft, openRight: false })
+                  this.setState({
+                    leftDrawerOpen: !leftDrawerOpen,
+                    rightDrawerOpen: false,
+                  })
                 }
                 onClickRight={() =>
-                  this.setState({ openRight: !openRight, openLeft: false })
+                  this.setState({
+                    rightDrawerOpen: !rightDrawerOpen,
+                    leftDrawerOpen: false,
+                  })
                 }
               />
               <Drawer
@@ -163,14 +155,21 @@ class App extends Component {
                 drawerStyle={{ ...drawerStyle, paddingBottom: '100px' }}
                 width={300}
                 fadeOut
-                open={openLeft}
+                open={leftDrawerOpen}
                 onChange={this.toggleDrawerLeft}
               >
                 <DrawerLeft
-                  songList={songList}
-                  closeDrawer={() => this.setState({ openLeft: false })}
+                  songList={songs}
+                  closeDrawer={() => this.setState({ leftDrawerOpen: false })}
                 />
                 <Options>
+                  <button
+                    onClick={() => {
+                      alert('Designed and developed by Daniel Pintilei')
+                    }}
+                  >
+                    <IconInfo />
+                  </button>
                   <button
                     onClick={() => {
                       this.toggleDrawerLeft(false)
@@ -194,31 +193,37 @@ class App extends Component {
                 width={300}
                 overlayColor={overlayColor}
                 drawerStyle={drawerStyle}
-                open={openRight}
+                open={rightDrawerOpen}
                 onChange={this.toggleDrawerRight}
               >
                 <DrawerRight
-                  songList={songList
+                  songList={songs
                     .map(item => item.songs)
                     .reduce((a, b) => [...a, ...b], [])}
-                  closeDrawer={() => this.setState({ openRight: false })}
-                  searchFocused={openRight}
+                  closeDrawer={() => this.setState({ rightDrawerOpen: false })}
+                  searchFocused={rightDrawerOpen}
                 />
               </Drawer>
-              <Main songList={songList} />
-              {openThemes && (
+              <Main songList={songs} />
+              {themesPanelOpen && (
                 <Backdrop data-backdrop onClick={this.closeBackdrop}>
                   <ThemePicker>
-                    <div
-                      className='swatch'
-                      onClick={() => this.setState({ currentTheme: themes[1] })}
-                    >
-                      <IconCheck />
-                    </div>
+                    {themes.map((theme, index) => (
+                      <button
+                        key={index}
+                        className='swatch'
+                        style={{ backgroundColor: theme.background }}
+                        onClick={() => this.setState({ currentTheme: index })}
+                      >
+                        {currentTheme === index && (
+                          <IconCheck stroke={theme.accent} />
+                        )}
+                      </button>
+                    ))}
                   </ThemePicker>
                 </Backdrop>
               )}
-              {openFont && (
+              {fontPanelOpen && (
                 <Backdrop data-backdrop onClick={this.closeBackdrop}>
                   <FontSettings>
                     <button>
@@ -227,13 +232,7 @@ class App extends Component {
                     <button>
                       <IconType />
                     </button>
-                    <button
-                      onClick={ev => {
-                        ev.preventDefault()
-                        ev.stopPropagation()
-                        ev.nativeEvent.stopImmediatePropagation()
-                      }}
-                    >
+                    <button>
                       <IconZoomIn />
                     </button>
                   </FontSettings>

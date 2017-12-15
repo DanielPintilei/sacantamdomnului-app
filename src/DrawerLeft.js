@@ -54,7 +54,7 @@ class SongSection extends Component {
       isVisible,
       style,
     }) => {
-      const { number: songNumber, title: songTitle, url } = songs[index]
+      const { number: songNumber, title: songTitle, path } = songs[index]
       return (
         <CellMeasurer
           key={key}
@@ -64,7 +64,7 @@ class SongSection extends Component {
           rowIndex={index}
         >
           <ListLink
-            to={url}
+            to={path}
             style={style}
             onClick={() => {
               closeDrawer()
@@ -77,9 +77,25 @@ class SongSection extends Component {
         </CellMeasurer>
       )
     }
+    const H3 = styled.div`
+      display: flex;
+      margin: 0;
+      padding: 15px;
+      font-size: 17px;
+      font-weight: normal;
+      cursor: pointer;
+      color: ${({ theme }) => theme.text};
+      & + div {
+        padding-top: 10px;
+        box-shadow: inset rgba(0, 0, 0, 0.15) 1px 1px 3px;
+      }
+      svg {
+        margin-right: 10px;
+      }
+    `
     return (
       <div>
-        <h3
+        <H3
           className='button'
           onClick={() => {
             if (currentBook === title) setCurrentBook(null)
@@ -90,7 +106,7 @@ class SongSection extends Component {
           }}
         >
           <IconBook /> {title}
-        </h3>
+        </H3>
         {currentBook === title && (
           <ListWrapper
             scrollToCurrentSong={() => this.listRef.scrollToRow(currentSong)}
@@ -125,27 +141,8 @@ class DrawerLeft extends Component {
   render () {
     const { songList, closeDrawer } = this.props
     const { currentBook, currentSong } = this.state
-    const Div = styled.div`
-      overflow-x: hidden;
-      h3 {
-        display: flex;
-        margin: 0;
-        padding: 15px;
-        font-size: 17px;
-        font-weight: normal;
-        cursor: pointer;
-        color: ${props => props.theme.text};
-        & + div {
-          padding-top: 10px;
-          box-shadow: inset rgba(0, 0, 0, 0.15) 1px 1px 3px;
-        }
-      }
-      svg {
-        margin-right: 10px;
-      }
-    `
     return (
-      <Div>
+      <div>
         {songList.map(({ title, songs }) => (
           <SongSection
             title={title}
@@ -166,7 +163,7 @@ class DrawerLeft extends Component {
             key={title}
           />
         ))}
-      </Div>
+      </div>
     )
   }
 }
