@@ -75,6 +75,21 @@ export const IconDroplet = () => (
     <path d='M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z' />
   </svg>
 )
+export const IconTypeSans = () => (
+  <svg
+    width='24'
+    height='24'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='2'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+  >
+    <line y2='20' x2='12' y1='4' x1='12' />
+    <line x1='20' y1='4' x2='4' y2='4' />
+  </svg>
+)
 export const IconType = () => (
   <svg
     width='24'

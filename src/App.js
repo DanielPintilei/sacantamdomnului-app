@@ -9,6 +9,7 @@ import DrawerRight from './DrawerRight'
 import Main from './Main'
 import {
   IconDroplet,
+  IconTypeSans,
   IconType,
   IconCheck,
   IconZoomOut,
@@ -38,8 +39,8 @@ class App extends Component {
     rightDrawerOpen: false,
     themesPanelOpen: false,
     fontPanelOpen: false,
-    currentTheme: localStorage.getItem('serif') || 0,
-    serif: localStorage.getItem('serif'),
+    currentTheme: +localStorage.getItem('theme') || 0,
+    sansFont: !!localStorage.getItem('sansFont'),
   }
   toggleBodyOverflow (bool) {
     document.body.style.overflowY = bool ? 'hidden' : ''
@@ -71,6 +72,7 @@ class App extends Component {
       themesPanelOpen,
       fontPanelOpen,
       currentTheme,
+      sansFont,
     } = this.state
     const currentThemeObj = themes[currentTheme]
     const overlayColor = `rgba(${currentThemeObj.backdrop}, 0.6)`
@@ -204,7 +206,7 @@ class App extends Component {
                   searchFocused={rightDrawerOpen}
                 />
               </Drawer>
-              <Main songList={songs} />
+              <Main songList={songs} sansFont={sansFont} />
               {themesPanelOpen && (
                 <Backdrop data-backdrop onClick={this.closeBackdrop}>
                   <ThemePicker>
@@ -229,7 +231,20 @@ class App extends Component {
                     <button>
                       <IconZoomOut />
                     </button>
-                    <button>
+                    <button
+                      onClick={() => {
+                        this.setState({ sansFont: true })
+                        localStorage.setItem('sansFont', true)
+                      }}
+                    >
+                      <IconTypeSans />
+                    </button>
+                    <button
+                      onClick={() => {
+                        this.setState({ sansFont: false })
+                        localStorage.removeItem('sansFont')
+                      }}
+                    >
                       <IconType />
                     </button>
                     <button>

@@ -1,6 +1,5 @@
 export default [
   {
-    // main: '#393a3e',
     accent: '#ff764b',
     background: '#fff4d7',
     navbar: '#393a3e',
@@ -10,13 +9,6 @@ export default [
     textList: '#757575',
     textInput: '#393a3e',
     backdrop: '255, 244, 215',
-    //
-    // text: '#393a3e',
-    logo: '#fff',
-    icon2: '#757575',
-    confirm: '#18FFFF',
-    confirm2: '#757575',
-    highlight: '#ffc8a6',
   },
   {
     main: '#ecce93',

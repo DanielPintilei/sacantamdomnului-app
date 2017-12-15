@@ -77,7 +77,7 @@ class SongSection extends Component {
         </CellMeasurer>
       )
     }
-    const H3 = styled.div`
+    const H3 = styled.h3`
       display: flex;
       margin: 0;
       padding: 15px;

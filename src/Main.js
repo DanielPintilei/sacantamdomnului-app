@@ -14,8 +14,8 @@ const StyledSong = styled.article`
     margin-top: 0;
     margin-bottom: 30px;
     max-width: 400px;
-    font-family: 'Alegreya Sans', sans-serif;
-    font-size: 30px;
+    font-family: 'Lora';
+    font-size: 28px;
     font-weight: normal;
     line-height: 1.2;
     position: relative;
@@ -34,9 +34,10 @@ const StyledSong = styled.article`
   pre {
     margin: 0;
     white-space: pre-wrap;
-    font-family: 'Alegreya Sans', sans-serif;
+    font-family: 'Lora';
     font-size: 18px;
     line-height: 1.4;
+    tab-size: 2;
     em {
       font-style: italic;
     }
@@ -45,7 +46,7 @@ const StyledSong = styled.article`
     }
   }
 `
-const Song = ({ match: { params: { path } }, songList }) => {
+const Song = ({ match: { params: { path } }, songList, sansFont }) => {
   let currentSong
   for (const section of songList) {
     for (const song of section.songs) {
@@ -57,10 +58,13 @@ const Song = ({ match: { params: { path } }, songList }) => {
   }
   return (
     <StyledSong>
-      <h1>
+      <h1 style={{ fontFamily: sansFont ? 'Open Sans' : '' }}>
         {currentSong.number}. {currentSong.title}
       </h1>
-      <pre dangerouslySetInnerHTML={{ __html: currentSong.content }} />
+      <pre
+        style={{ fontFamily: sansFont ? 'Open Sans' : '' }}
+        dangerouslySetInnerHTML={{ __html: currentSong.content }}
+      />
     </StyledSong>
   )
 }
@@ -71,6 +75,7 @@ Song.propTypes = {
     }).isRequired,
   }).isRequired,
   songList: PropTypes.array.isRequired,
+  sansFont: PropTypes.bool,
 }
 
 const StyledMain = styled.div`
@@ -89,17 +94,20 @@ const StyledMain = styled.div`
     color: ${({ theme }) => theme.accent};
   }
 `
-const Main = ({ songList }) => (
+const Main = ({ songList, sansFont }) => (
   <StyledMain>
     <Route exact path='/' component={BackgroundImage} />
     <Route
       path='/:path'
-      render={props => <Song songList={songList} {...props} />}
+      render={props => (
+        <Song songList={songList} sansFont={sansFont} {...props} />
+      )}
     />
   </StyledMain>
 )
 Main.propTypes = {
   songList: PropTypes.array.isRequired,
+  sansFont: PropTypes.bool,
 }
 
 export default Main
