@@ -21,7 +21,7 @@ class DrawerRight extends Component {
     const { songList, closeDrawer } = this.props
     const Div = styled.div`
       height: 100%;
-      .qwe {
+      .wrapper {
         display: flex;
         flex-direction: column;
         height: 100%;
@@ -32,6 +32,7 @@ class DrawerRight extends Component {
         align-items: center;
         padding-left: 15px;
         padding-right: 15px;
+        color: ${({ theme }) => theme.textInput};
         box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 3px;
       }
       svg {
@@ -63,7 +64,7 @@ class DrawerRight extends Component {
       <Div>
         <Downshift
           render={({ getInputProps, isOpen, inputValue }) => (
-            <div className='qwe'>
+            <div className='wrapper'>
               <label>
                 <IconSearch />
                 <input

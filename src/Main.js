@@ -28,7 +28,7 @@ const StyledSong = styled.article`
       left: 5px;
       right: 5px;
       background-color: ${({ theme }) => theme.accent};
-      opacity: 0.1;
+      opacity: 0.15;
     }
   }
   pre {
@@ -137,7 +137,6 @@ const StyledMain = styled.div`
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
-    /* color: #fadca8; */
     color: ${({ theme }) => theme.accent};
   }
 `

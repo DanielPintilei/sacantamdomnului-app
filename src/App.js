@@ -114,26 +114,29 @@ class App extends Component {
       transform: translateX(-50%);
       display: flex;
       flex-wrap: wrap;
-      justify-content: space-between;
-      padding: 15px;
+      max-width: calc(100vw - 30px);
       background-color: #fff;
       box-shadow: 4px 2px 6px 0px hsla(0, 0%, 0%, 0.1);
       border-radius: 4px;
     `
     const ThemePicker = OptionsPanel.extend`
-      width: 340px;
+      width: 310px;
+      padding: 5px;
       .swatch {
         display: flex;
         align-items: center;
         justify-content: center;
         width: 50px;
         height: 50px;
+        margin: 5px;
         border-radius: 50%;
+        border: 1px solid rgba(0, 0, 0, 0.1);
         cursor: pointer;
       }
     `
     const FontSettings = OptionsPanel.extend`
       width: 300px;
+      padding: 15px;
     `
     return (
       <Router>
