@@ -34,6 +34,9 @@ injectGlobal`
       transform: scale(0.9);
     }
   }
+  .headroom {
+    z-index: 5 !important;
+  }
 `
 
 ReactDOM.render(<App />, document.getElementById('root'))

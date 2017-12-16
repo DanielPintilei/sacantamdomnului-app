@@ -12,17 +12,17 @@ const StyledSong = styled.article`
   h1 {
     display: inline-block;
     margin-top: 0;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     max-width: 400px;
     font-family: 'Lora';
-    font-size: 28px;
+    font-size: 22px;
     font-weight: normal;
     line-height: 1.2;
     position: relative;
     &:after {
       content: '';
       display: block;
-      height: 15px;
+      height: 10px;
       position: absolute;
       bottom: 0px;
       left: 5px;
@@ -39,11 +39,43 @@ const StyledSong = styled.article`
     line-height: 1.4;
     tab-size: 2;
     em {
+      display: inline-block;
+      width: 100%;
+      position: sticky;
+      top: 0.5em;
+      z-index: 1;
       font-style: italic;
+      background-color: ${({ theme }) => theme.background};
+      &::before,
+      &::after {
+        display: block;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 0.5em;
+        background-color: ${({ theme }) => theme.background};
+      }
+      &::before {
+        top: -0.5em;
+        border-top: 1px solid ${({ theme }) => theme.border};
+      }
+      &::after {
+        bottom: -0.5em;
+        border-bottom: 1px solid ${({ theme }) => theme.border};
+      }
     }
     small {
       opacity: 0.7;
     }
+  }
+  .end {
+    width: 15px;
+    height: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: ${({ theme }) => theme.accent};
+    transform: rotate(45deg);
+    opacity: 0.2;
   }
 `
 const Song = ({
@@ -66,7 +98,7 @@ const Song = ({
       <h1
         style={{
           fontFamily: sansFont ? 'Open Sans' : '',
-          fontSize: 28 + fontSizeAdd,
+          fontSize: 22 + fontSizeAdd,
         }}
       >
         {currentSong.number}. {currentSong.title}
@@ -78,6 +110,7 @@ const Song = ({
         }}
         dangerouslySetInnerHTML={{ __html: currentSong.content }}
       />
+      <div className='end' />
     </StyledSong>
   )
 }
