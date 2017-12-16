@@ -127,16 +127,13 @@ Song.propTypes = {
 
 const StyledMain = styled.div`
   display: flex;
+  align-items: center;
   justify-content: center;
   min-height: 100vh;
   margin-top: -70px;
   padding-top: 70px;
   background-color: ${({ theme }) => theme.background};
   .background-image {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
     color: ${({ theme }) => theme.accent};
   }
 `
