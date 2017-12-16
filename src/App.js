@@ -66,6 +66,11 @@ class App extends Component {
   toggleFontPanel = open => {
     this.setState({ fontPanelOpen: open })
   }
+  componentDidMount () {
+    document
+      .querySelector('meta[name=theme-color]')
+      .setAttribute('content', themes[this.state.currentTheme].navbar)
+  }
   render () {
     const {
       leftDrawerOpen,
@@ -230,7 +235,13 @@ class App extends Component {
                         key={index}
                         className='swatch'
                         style={{ backgroundColor: theme.background }}
-                        onClick={() => this.setState({ currentTheme: index })}
+                        onClick={() => {
+                          document
+                            .querySelector('meta[name=theme-color]')
+                            .setAttribute('content', theme.navbar)
+                          this.setState({ currentTheme: index })
+                          localStorage.setItem('theme', index)
+                        }}
                       >
                         {currentTheme === index && (
                           <IconCheck stroke={theme.accent} />
