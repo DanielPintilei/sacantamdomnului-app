@@ -135,6 +135,7 @@ class App extends Component {
       }
     `
     const FontSettings = OptionsPanel.extend`
+      justify-content: space-between;
       width: 300px;
       padding: 15px;
     `
@@ -161,6 +162,8 @@ class App extends Component {
                 overlayColor={overlayColor}
                 drawerStyle={{ ...drawerStyle, paddingBottom: '100px' }}
                 width={300}
+                handleWidth={window.innerWidth / 2}
+                zIndex={leftDrawerOpen ? 7 : 0}
                 fadeOut
                 open={leftDrawerOpen}
                 onChange={this.toggleDrawerLeft}
@@ -197,9 +200,12 @@ class App extends Component {
               </Drawer>
               <Drawer
                 right
-                width={300}
                 overlayColor={overlayColor}
                 drawerStyle={drawerStyle}
+                width={300}
+                handleWidth={window.innerWidth / 2}
+                zIndex={rightDrawerOpen ? 7 : 0}
+                fadeOut
                 open={rightDrawerOpen}
                 onChange={this.toggleDrawerRight}
               >

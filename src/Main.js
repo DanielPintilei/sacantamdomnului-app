@@ -32,7 +32,7 @@ const StyledSong = styled.article`
     }
   }
   pre {
-    margin: 0;
+    margin: 0 0 15px;
     white-space: pre-wrap;
     font-family: 'Lora';
     font-size: 18px;
@@ -133,7 +133,7 @@ const StyledMain = styled.div`
   padding-top: 70px;
   background-color: ${({ theme }) => theme.background};
   .background-image {
-    position: fixed;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
