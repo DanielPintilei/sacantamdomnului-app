@@ -8,6 +8,9 @@ injectGlobal`
   * {
   box-sizing: border-box;
   }
+  body {
+    user-select: none;
+  }
   body,
   pre {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

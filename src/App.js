@@ -41,6 +41,7 @@ class App extends Component {
     fontPanelOpen: false,
     currentTheme: +localStorage.getItem('theme') || 0,
     sansFont: !!localStorage.getItem('sansFont'),
+    fontSizeAdd: +localStorage.getItem('fontSizeAdd') || 0,
   }
   toggleBodyOverflow (bool) {
     document.body.style.overflowY = bool ? 'hidden' : ''
@@ -73,6 +74,7 @@ class App extends Component {
       fontPanelOpen,
       currentTheme,
       sansFont,
+      fontSizeAdd,
     } = this.state
     const currentThemeObj = themes[currentTheme]
     const overlayColor = `rgba(${currentThemeObj.backdrop}, 0.6)`
@@ -206,7 +208,11 @@ class App extends Component {
                   searchFocused={rightDrawerOpen}
                 />
               </Drawer>
-              <Main songList={songs} sansFont={sansFont} />
+              <Main
+                songList={songs}
+                sansFont={sansFont}
+                fontSizeAdd={fontSizeAdd}
+              />
               {themesPanelOpen && (
                 <Backdrop data-backdrop onClick={this.closeBackdrop}>
                   <ThemePicker>
@@ -228,7 +234,15 @@ class App extends Component {
               {fontPanelOpen && (
                 <Backdrop data-backdrop onClick={this.closeBackdrop}>
                   <FontSettings>
-                    <button>
+                    <button
+                      onClick={() => {
+                        this.setState(({ fontSizeAdd }) => {
+                          const newSize = fontSizeAdd - 2
+                          localStorage.setItem('fontSizeAdd', newSize)
+                          return { fontSizeAdd: newSize }
+                        })
+                      }}
+                    >
                       <IconZoomOut />
                     </button>
                     <button
@@ -247,7 +261,15 @@ class App extends Component {
                     >
                       <IconType />
                     </button>
-                    <button>
+                    <button
+                      onClick={() => {
+                        this.setState(({ fontSizeAdd }) => {
+                          const newSize = fontSizeAdd + 2
+                          localStorage.setItem('fontSizeAdd', newSize)
+                          return { fontSizeAdd: newSize }
+                        })
+                      }}
+                    >
                       <IconZoomIn />
                     </button>
                   </FontSettings>

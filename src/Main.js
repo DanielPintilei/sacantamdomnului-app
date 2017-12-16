@@ -46,7 +46,12 @@ const StyledSong = styled.article`
     }
   }
 `
-const Song = ({ match: { params: { path } }, songList, sansFont }) => {
+const Song = ({
+  match: { params: { path } },
+  songList,
+  sansFont,
+  fontSizeAdd,
+}) => {
   let currentSong
   for (const section of songList) {
     for (const song of section.songs) {
@@ -58,11 +63,19 @@ const Song = ({ match: { params: { path } }, songList, sansFont }) => {
   }
   return (
     <StyledSong>
-      <h1 style={{ fontFamily: sansFont ? 'Open Sans' : '' }}>
+      <h1
+        style={{
+          fontFamily: sansFont ? 'Open Sans' : '',
+          fontSize: 28 + fontSizeAdd,
+        }}
+      >
         {currentSong.number}. {currentSong.title}
       </h1>
       <pre
-        style={{ fontFamily: sansFont ? 'Open Sans' : '' }}
+        style={{
+          fontFamily: sansFont ? 'Open Sans' : '',
+          fontSize: 18 + fontSizeAdd,
+        }}
         dangerouslySetInnerHTML={{ __html: currentSong.content }}
       />
     </StyledSong>
@@ -76,6 +89,7 @@ Song.propTypes = {
   }).isRequired,
   songList: PropTypes.array.isRequired,
   sansFont: PropTypes.bool,
+  fontSizeAdd: PropTypes.number,
 }
 
 const StyledMain = styled.div`
@@ -94,13 +108,18 @@ const StyledMain = styled.div`
     color: ${({ theme }) => theme.accent};
   }
 `
-const Main = ({ songList, sansFont }) => (
+const Main = ({ songList, sansFont, fontSizeAdd }) => (
   <StyledMain>
     <Route exact path='/' component={BackgroundImage} />
     <Route
       path='/:path'
       render={props => (
-        <Song songList={songList} sansFont={sansFont} {...props} />
+        <Song
+          songList={songList}
+          sansFont={sansFont}
+          fontSizeAdd={fontSizeAdd}
+          {...props}
+        />
       )}
     />
   </StyledMain>
@@ -108,6 +127,7 @@ const Main = ({ songList, sansFont }) => (
 Main.propTypes = {
   songList: PropTypes.array.isRequired,
   sansFont: PropTypes.bool,
+  fontSizeAdd: PropTypes.number,
 }
 
 export default Main
