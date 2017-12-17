@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import Headroom from 'react-headroom'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
-import { IconMenu, Logo, IconSearch } from './icons'
+import Logo from './Logo'
+import { IconMenu, IconSearch } from './icons'
 
 const Nav = styled.div`
   display: flex;
@@ -14,6 +15,7 @@ const Nav = styled.div`
   padding-right: 20px;
   background-color: ${({ theme }) => theme.navbar};
   box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 3px;
+  overflow: hidden;
   button {
     color: ${({ theme }) => theme.iconsNavbar};
   }

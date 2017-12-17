@@ -2,6 +2,7 @@ export default [
   {
     accent: '#ecce93',
     background: '#212121',
+    backgroundTitle: 'rgba(236, 206, 147, 0.05)',
     navbar: '#212121',
     options: '#212121',
     iconsNavbar: '#d7d8d9',
@@ -14,6 +15,7 @@ export default [
   {
     accent: '#ecce93',
     background: '#fff',
+    backgroundTitle: 'rgba(236, 206, 147, 0.2)',
     navbar: '#fff',
     options: '#fff',
     iconsNavbar: '#4c4c4d',
@@ -26,6 +28,7 @@ export default [
   {
     accent: '#ff764b',
     background: '#fff4d7',
+    backgroundTitle: 'rgba(255, 118, 75, 0.2)',
     navbar: '#393a3e',
     options: '#393a3e',
     iconsNavbar: '#d7d8d9',

@@ -22,17 +22,16 @@ const StyledSong = styled.article`
     &:after {
       content: '';
       display: block;
-      height: 10px;
       position: absolute;
-      bottom: 0px;
+      top: 0.5em;
+      bottom: 0;
       left: 5px;
       right: 5px;
-      background-color: ${({ theme }) => theme.accent};
-      opacity: 0.15;
+      background-color: ${({ theme }) => theme.backgroundTitle};
     }
   }
   pre {
-    margin: 0 0 15px;
+    margin: 0 0 40px;
     white-space: pre-wrap;
     font-family: 'Lora';
     font-size: 18px;
@@ -41,6 +40,7 @@ const StyledSong = styled.article`
     em {
       display: inline-block;
       width: 100%;
+      margin-left: -4px;
       position: sticky;
       top: 0.5em;
       z-index: 1;
@@ -133,7 +133,8 @@ const StyledMain = styled.div`
   padding-top: 70px;
   background-color: ${({ theme }) => theme.background};
   .background-image {
-    min-height: calc(100vh - 70px);
+    display: flex;
+    align-items: center;
     color: ${({ theme }) => theme.accent};
   }
 `
