@@ -180,7 +180,9 @@ class App extends Component {
                 <Options>
                   <button
                     onClick={() => {
-                      alert('Designed and developed by Daniel Pintilei')
+                      alert(
+                        'Carte de cântări a Oastei Domnului \n\n Designed and developed by Daniel Pintilei'
+                      )
                     }}
                   >
                     <IconInfo />
