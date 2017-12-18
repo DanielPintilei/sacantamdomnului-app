@@ -135,7 +135,6 @@ const StyledMain = styled.div`
   .background-image {
     display: flex;
     align-items: center;
-    color: ${({ theme }) => theme.accent};
   }
 `
 const Main = ({ songList, sansFont, fontSizeAdd }) => (

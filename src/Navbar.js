@@ -16,6 +16,11 @@ const Nav = styled.div`
   background-color: ${({ theme }) => theme.navbar};
   box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 3px;
   overflow: hidden;
+  .logo {
+    display: block;
+    height: 36px;
+    color: ${({ theme }) => theme.accent};
+  }
   button {
     color: ${({ theme }) => theme.iconsNavbar};
   }
@@ -26,7 +31,7 @@ const Navbar = ({ onClickLeft, onClickRight }) => (
       <button onClick={onClickLeft}>
         <IconMenu />
       </button>
-      <Link to='/'>
+      <Link to='/' className='logo'>
         <Logo />
       </Link>
       <button onClick={onClickRight}>

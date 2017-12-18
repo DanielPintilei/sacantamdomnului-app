@@ -1,6 +1,7 @@
 export default [
   {
     accent: '#ecce93',
+    logo: '#ad8c4a',
     background: '#212121',
     backgroundTitle: 'rgba(236, 206, 147, 0.05)',
     navbar: '#212121',
@@ -14,6 +15,7 @@ export default [
   },
   {
     accent: '#ecce93',
+    logo: '#79653d',
     background: '#fff',
     backgroundTitle: 'rgba(236, 206, 147, 0.2)',
     navbar: '#fff',
@@ -27,6 +29,7 @@ export default [
   },
   {
     accent: '#ff764b',
+    logo: '#ff9f4b',
     background: '#fff4d7',
     backgroundTitle: 'rgba(255, 118, 75, 0.2)',
     navbar: '#393a3e',
