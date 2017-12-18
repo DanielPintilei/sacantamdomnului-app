@@ -1,10 +1,169 @@
 import React from 'react'
+import styled from 'styled-components'
 
-export default () => (
-  <svg viewBox='0 0 25 26.5' height='36' width='35'>
-    <path
-      fill='currentcolor'
-      d='M 8.9,0 C 5.8,0 3.8,0.8 2.6,1.3 1.4,1.8 0.4,2.6 0.2,3 0,3.4 0,3.7 0,4 0.1,4.4 0.2,4.7 0.5,5 0.9,5.4 1.3,5.7 1.6,6.1 2.5,7.4 2.8,8.9 2.8,8.9 l 3.4,15.4 c 0,0 1.5853709,-0.184474 1.8,-0.2 0.1,0 0.1,0.6 0,1.3 -0.1,0.7 -0.2,0.7 -0.2,0.8 0,0.2 0.3,0.2 0.4,0.2 h 7.5 c 0.1,0 0.170679,-0.02587 0.203981,-0.103981 C 15.937284,26.217911 15.956205,26.107963 15.9,26 15.6,25.5 15.6,24.9 15.8,24.3 16,23.7 16.5,23.2 16.8,22.9 17.5,22.2 17,22.7 18.4,21 22.7,15.8 24.2,10 24.6,7.8 25,5.5 24.8603,6.2592597 25,5.3 c 0.1,-0.7 -0.5,-1.1 -0.9,-1 -1,0.3 -1.3,0.9 -2.4,1.1 -1.3,0.2 -2.2,-0.2 -2.2,-0.2 0,0 0.9,0.1 1.7,-0.1 C 22,4.9 22.4,4.6 22.4,4.6 22.4,4.6 21.8,4.7 21,4.3 19.2,3.3 18.6,2.8 15.5,1.4 13.1,0.4 10.8,0 8.9,0 Z M 9,2.9 v 0 L 5.8,7.1 5.5,6.2 C 5.5,6.2 5.3,5.8 5.1,5.3 5,4.9 4.9,4.1 5.7,3.5 6.1,3.1 7.5,2.9 9,2.9 Z m 0.9,0 c 0.6,0 1.1,0.1 1.6,0.2 L 6.6,9.5 6.1,7.9 Z m 2.4,0.4 c 0.5,0.1 0.9,0.3 1.4,0.5 L 7.4,12 6.9,10.4 Z m 2.1,0.8 c 0.5,0.2 0.9,0.4 1.3,0.6 L 8.2,14.4 7.7,12.8 Z m 2,0.9 c 0.4,0.2 0.9,0.4 1.3,0.6 L 9.1,16.8 8.6,15.2 Z M 2.5901743,5.6786959 C 2.5901743,5.6786959 3.1,6.1 3.8,7 4.5,7.9 4.9,8.9 5,9.2 c 0.3,0.7 0.8,2.5 0.8,2.5 l 1.5,4.8 2.2,7 L 7.1,17.1 4.8,10.6 C 4.8,10.6 4.4,9.5 4.2,8.9 4,8.3 3.6,7.5 3.4,7.1 3.2,6.7 2.1,5.3 2.1,5.3 Z M 18.3,6 c 0.5,0.2 0.9,0.5 1.2,0.7 L 9.9,19.2 9.4,17.6 Z m 1.8,1.1 c 0.6,0.3 1,0.6 1.2,0.7 L 10.7,21.6 10.2,20 Z m 1.2,1.8 c -0.2,1.1 -0.7,3 -2,5.4 -1.6,3 -5.1,8.8 -8.2,8.8 l -0.2,-0.7 z'
-    />
-  </svg>
-)
+export default () => {
+  const Div = styled.div`
+    width: 120px;
+    height: 120px;
+    stroke: ${({ theme }) => theme.accent};
+    stroke-width: 0.26px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transform-origin: center;
+    .gr2,
+    .gr3 {
+      transform-origin: center;
+      animation: r 240s infinite linear;
+    }
+    @keyframes r {
+      0% {
+        transform: rotate(0);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    .gr2-1 {
+      stroke-dasharray: 0.5, 0.2, 0.5;
+      animation: gr2 7s infinite linear;
+    }
+    .gr2-2 {
+      stroke-dasharray: 0.2, 0.6, 0.3;
+      animation: gr2 7s infinite linear;
+    }
+    .gr2-3 {
+      stroke-dasharray: 0.1, 0.4, 0.7;
+      animation: gr2 7s infinite linear;
+    }
+    .gr2-4 {
+      stroke-dasharray: 0.4, 0.2, 0.5;
+      animation: gr2 7s infinite linear;
+    }
+    .gr2-5 {
+      stroke-dasharray: 0.2, 0.2, 0.5;
+      animation: gr2-m 7s infinite linear;
+      stroke-dashoffset: 7;
+    }
+    .gr2-6 {
+      stroke-dasharray: 0.4, 0.1, 0.7;
+      animation: gr2-m 7s infinite linear;
+      stroke-dashoffset: 7;
+    }
+    .gr2-7 {
+      stroke-dasharray: 0.8, 0.2, 0.3;
+      animation: gr2-m 7s infinite linear;
+      stroke-dashoffset: 7;
+    }
+    .gr2-8 {
+      stroke-dasharray: 0.2, 0.7, 0.4;
+      animation: gr2-m 7s infinite linear;
+      stroke-dashoffset: 7;
+    }
+    @keyframes gr2 {
+      50% {
+        opacity: 0.4;
+      }
+      100% {
+        stroke-dashoffset: 7;
+      }
+    }
+    @keyframes gr2-m {
+      30% {
+        opacity: 0.7;
+      }
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+    .gr3-1 {
+      opacity: 0.4;
+      stroke-dasharray: 0.5, 0.2, 0.5;
+      animation: gr3 7s infinite linear;
+    }
+    .gr3-2 {
+      opacity: 0.4;
+      stroke-dasharray: 0.7, 0.4, 0.1;
+      animation: gr3 7s infinite linear;
+    }
+    .gr3-3 {
+      opacity: 0.4;
+      stroke-dasharray: 0.6, 0.2, 0.5;
+      animation: gr3 7s infinite linear;
+    }
+    .gr3-4 {
+      opacity: 0.4;
+      stroke-dasharray: 0.1, 0.3, 0.7;
+      animation: gr3 7s infinite linear;
+    }
+    .gr3-5 {
+      opacity: 0.7;
+      stroke-dasharray: 0.2, 0.5, 0.3;
+      stroke-dashoffset: 7;
+      animation: gr3-m 7s infinite linear;
+    }
+    .gr3-6 {
+      opacity: 0.7;
+      stroke-dasharray: 0.8, 0.2, 0.4;
+      stroke-dashoffset: 7;
+      animation: gr3-m 7s infinite linear;
+    }
+    .gr3-7 {
+      opacity: 0.7;
+      stroke-dasharray: 0.1, 0.6, 0.3;
+      stroke-dashoffset: 7;
+      animation: gr3-m 7s infinite linear;
+    }
+    .gr3-8 {
+      opacity: 0.7;
+      stroke-dasharray: 0.3, 0.5, 0.1;
+      stroke-dashoffset: 7;
+      animation: gr3-m 7s infinite linear;
+    }
+    @keyframes gr3 {
+      50% {
+        opacity: 1;
+      }
+      100% {
+        stroke-dashoffset: 7;
+      }
+    }
+    @keyframes gr3-m {
+      50% {
+        opacity: 1;
+      }
+      100% {
+        stroke-dashoffset: 0;
+      }
+    }
+  `
+  return (
+    <Div>
+      <svg width='100%' height='100%' viewBox='0 0 24 24'>
+        <g className='gr1'>
+          <path d='M12,9.798l0,4.437' />
+          <path d='M10.847,10.763l2.306,0' />
+        </g>
+        <g className='gr2'>
+          <path className='gr2-1' d='M12,6.529l0,2.046' />
+          <path className='gr2-2' d='M17.471,12l-2.046,0' />
+          <path className='gr2-3' d='M8.131,8.131l1.447,1.447' />
+          <path className='gr2-4' d='M8.131,15.869l1.447,-1.447' />
+          <path className='gr2-5' d='M12,15.425l0,2.046' />
+          <path className='gr2-6' d='M8.575,12l-2.046,0' />
+          <path className='gr2-7' d='M14.422,14.422l1.447,1.447' />
+          <path className='gr2-8' d='M14.422,9.578l1.447,-1.447' />
+        </g>
+        <g className='gr3'>
+          <path className='gr3-1' d='M9.95,6.927l0.767,1.898' />
+          <path className='gr3-2' d='M17.073,9.95l-1.898,0.767' />
+          <path className='gr3-3' d='M6.963,9.863l1.884,0.799' />
+          <path className='gr3-4' d='M9.863,17.037l0.799,-1.884' />
+          <path className='gr3-5' d='M13.283,15.175l0.767,1.898' />
+          <path className='gr3-6' d='M8.825,13.283l-1.898,0.767' />
+          <path className='gr3-7' d='M15.153,13.338l1.884,0.799' />
+          <path className='gr3-8' d='M13.338,8.847l0.799,-1.884' />
+        </g>
+      </svg>
+    </Div>
+  )
+}
