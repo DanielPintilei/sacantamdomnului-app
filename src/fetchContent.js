@@ -4,19 +4,22 @@ const firebase = require('firebase')
 
 const config = {
   apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
+  // authDomain: process.env.AUTH_DOMAIN,
   databaseURL: process.env.DATABASE_URL,
 }
 firebase.initializeApp(config)
 
 const replaceAccents = str =>
   str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+
 const normalizeTitle = title =>
   replaceAccents(title)
     .replace(/\s+/g, '-')
     .replace(/[^\w-]+/g, '')
     .replace(/-+/g, '-')
+
 const generatePath = (number, title) => `${number}-${normalizeTitle(title)}`
+
 const formatSong = song => {
   const refren = /Refren\n([^]*?)\n\n/
   const autor = /(Versuri:(.*)\n)/
@@ -32,6 +35,7 @@ const formatSong = song => {
     .replace(/(\n)+$/, '')
   return formatted
 }
+
 const formatSection = section =>
   section.filter(x => x).map(({ number, title, content }) => ({
     number,
@@ -39,7 +43,8 @@ const formatSection = section =>
     content: formatSong(content),
     path: generatePath(number, title),
   }))
-const generateContent = ({ saCantamDomnului, alteCantari, colinde }) => [
+
+const formatContent = ({ saCantamDomnului, alteCantari, colinde }) => [
   {
     title: 'Să cântăm Domnului',
     songs: formatSection(saCantamDomnului),
@@ -53,20 +58,22 @@ const generateContent = ({ saCantamDomnului, alteCantari, colinde }) => [
     songs: formatSection(colinde),
   },
 ]
-const createContent = snapshot => {
+
+const writeContent = snapshot => {
   const raw = snapshot.val()
-  const content = JSON.stringify(generateContent(raw))
+  const content = JSON.stringify(formatContent(raw))
   fs.writeFileSync('./src/songs.json', content)
   process.exit()
 }
 
-const getRawContent = () => {
+const getContent = () => {
   firebase
     .database()
     .ref()
+    .child('cantari')
     .once('value')
     .then(snapshot => {
-      createContent(snapshot)
+      writeContent(snapshot)
     })
     .catch(err => {
       console.log(err)
@@ -74,13 +81,15 @@ const getRawContent = () => {
     })
 }
 
-firebase
-  .auth()
-  .signInWithEmailAndPassword(process.env.EMAIL, process.env.PASSWORD)
-  .then(() => {
-    getRawContent()
-  })
-  .catch(({ code, message }) => {
-    console.log(code, message)
-    process.exit(1)
-  })
+// firebase
+//   .auth()
+//   .signInWithEmailAndPassword(process.env.EMAIL, process.env.PASSWORD)
+//   .then(() => {
+//     getContent()
+//   })
+//   .catch(({ code, message }) => {
+//     console.log(code, message)
+//     process.exit(1)
+//   })
+
+getContent()
