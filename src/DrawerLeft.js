@@ -36,6 +36,9 @@ class SongSection extends Component {
     currentSong: PropTypes.number,
     setCurrentSong: PropTypes.func.isRequired,
   }
+  componentWillUpdate () {
+    this.cache.clearAll()
+  }
   render () {
     const {
       title,
@@ -71,8 +74,8 @@ class SongSection extends Component {
               setCurrentSong(index + 15)
             }}
           >
-            <span>{songNumber}.</span>
-            <span> {songTitle}</span>
+            <span>{songNumber}</span>
+            <span>{songTitle}</span>
           </ListLink>
         </CellMeasurer>
       )
@@ -93,21 +96,25 @@ class SongSection extends Component {
         margin-right: 10px;
       }
     `
+    const currentBookIsThis = currentBook === title
     return (
       <div>
         <H3
-          className='button'
           onClick={() => {
-            if (currentBook === title) setCurrentBook(null)
+            if (currentBookIsThis) setCurrentBook(null)
             else {
               setCurrentSong(0)
               setCurrentBook(title)
+              setTimeout(() => {
+                this.cache.clearAll()
+                this.forceUpdate()
+              })
             }
           }}
         >
           <IconBook /> {title}
         </H3>
-        {currentBook === title && (
+        {currentBookIsThis && (
           <ListWrapper
             scrollToCurrentSong={() => this.listRef.scrollToRow(currentSong)}
           >

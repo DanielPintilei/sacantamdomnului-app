@@ -99,7 +99,7 @@ class DrawerRight extends Component {
                     .sort((a, b) => a.number - b.number)
                     .map(({ number, title, path }) => (
                       <ListLink key={path} to={path} onClick={closeDrawer}>
-                        <span>{number}.</span>
+                        <span>{number}</span>
                         <span>{title}</span>
                       </ListLink>
                     ))}

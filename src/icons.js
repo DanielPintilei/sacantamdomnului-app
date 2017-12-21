@@ -47,6 +47,41 @@ export const IconBook = () => (
     <path d='M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z' />
   </svg>
 )
+export const IconInfo = () => (
+  <svg
+    width='24'
+    height='24'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='2'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+  >
+    <circle cx='12' cy='12' r='10' />
+    <line x1='12' y1='16' x2='12' y2='12' />
+    <line x1='12' y1='8' x2='12' y2='8' />
+  </svg>
+)
+export const IconList = () => (
+  <svg
+    width='24'
+    height='24'
+    viewBox='0 0 24 24'
+    fill='none'
+    stroke='currentColor'
+    strokeWidth='2'
+    strokeLinecap='round'
+    strokeLinejoin='round'
+  >
+    <line x1='8' y1='6' x2='21' y2='6' />
+    <line x1='8' y1='12' x2='21' y2='12' />
+    <line x1='8' y1='18' x2='21' y2='18' />
+    <line x1='3' y1='6' x2='3' y2='6' />
+    <line x1='3' y1='12' x2='3' y2='12' />
+    <line x1='3' y1='18' x2='3' y2='18' />
+  </svg>
+)
 export const IconDroplet = () => (
   <svg
     width='24'
@@ -140,23 +175,6 @@ export const IconCheck = ({ stroke }) => (
     <path d='M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11' />
   </svg>
 )
-IconCheck.prototypes = {
+IconCheck.propTypes = {
   stroke: PropTypes.string.isRequired,
 }
-export const IconInfo = () => (
-  <svg
-    width='24'
-    height='24'
-    viewBox='0 0 24 24'
-    fill='none'
-    stroke='currentColor'
-    strokeWidth='2'
-    strokeLinecap='round'
-    strokeLinejoin='round'
-    className='feather feather-info'
-  >
-    <circle cx='12' cy='12' r='10' />
-    <line x1='12' y1='16' x2='12' y2='12' />
-    <line x1='12' y1='8' x2='12' y2='8' />
-  </svg>
-)

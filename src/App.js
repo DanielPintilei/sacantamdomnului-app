@@ -8,16 +8,26 @@ import DrawerLeft from './DrawerLeft'
 import DrawerRight from './DrawerRight'
 import Main from './Main'
 import {
+  IconInfo,
+  IconList,
   IconDroplet,
   IconTypeSans,
   IconType,
   IconCheck,
   IconZoomOut,
   IconZoomIn,
-  IconInfo,
 } from './icons'
 import themes from './themes'
 import songs from './songs.json'
+
+const songsSorted = songs.map(({ title, songs }) => ({
+  title,
+  songs: songs
+    .slice()
+    .sort((a, b) =>
+      a.title.toLowerCase().localeCompare(b.title.toLowerCase(), 'ro')
+    ),
+}))
 
 class ScrollToTopComponent extends Component {
   static propTypes = {
@@ -42,6 +52,7 @@ class App extends Component {
     currentTheme: +localStorage.getItem('theme') || 0,
     sansFont: !!localStorage.getItem('sansFont'),
     fontSizeAdd: +localStorage.getItem('fontSizeAdd') || 0,
+    sortAZ: !!localStorage.getItem('sortAZ') || false,
   }
   toggleBodyOverflow (bool) {
     document.body.style.overflowY = bool ? 'hidden' : ''
@@ -80,6 +91,7 @@ class App extends Component {
       currentTheme,
       sansFont,
       fontSizeAdd,
+      sortAZ,
     } = this.state
     const currentThemeObj = themes[currentTheme]
     const overlayColor = `rgba(${currentThemeObj.backdrop}, 0.6)`
@@ -174,7 +186,7 @@ class App extends Component {
                 onChange={this.toggleDrawerLeft}
               >
                 <DrawerLeft
-                  songList={songs}
+                  songList={sortAZ ? songsSorted : songs}
                   closeDrawer={() => this.setState({ leftDrawerOpen: false })}
                 />
                 <Options>
@@ -186,6 +198,19 @@ class App extends Component {
                     }}
                   >
                     <IconInfo />
+                  </button>
+                  <button
+                    className='button'
+                    onClick={() => {
+                      this.setState(({ sortAZ }) => {
+                        const nextState = !sortAZ
+                        if (nextState) localStorage.setItem('sortAZ', true)
+                        else localStorage.removeItem('sortAZ')
+                        return { sortAZ: nextState }
+                      })
+                    }}
+                  >
+                    <IconList />
                   </button>
                   <button
                     onClick={() => {

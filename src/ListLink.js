@@ -13,7 +13,9 @@ const ListLink = styled(Link)`
   }
   span {
     &:first-child {
+      flex-shrink: 0;
       display: inline-block;
+      width: 40px;
       margin-right: 5px;
       opacity: 0.7;
     }
