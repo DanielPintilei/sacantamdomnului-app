@@ -4,8 +4,8 @@
   "name": "Să cântăm Domnului – Carte de cântări a Oastei Domnului",
   "start_url": "/",
   "display": "standalone",
-  "theme_color": "#212121",
-  "background_color": "#212121",
+  "theme_color": "#2c2b2a",
+  "background_color": "#2c2b2a",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
