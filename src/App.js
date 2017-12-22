@@ -190,7 +190,7 @@ class App extends Component {
                 drawerStyle={{ ...drawerStyle, paddingBottom: '100px' }}
                 width={300}
                 panTolerance={30}
-                handleWidth={rightDrawerOpen ? 0 : window.innerWidth / 2}
+                handleWidth={rightDrawerOpen ? 0 : window.innerWidth / 5}
                 zIndex={leftDrawerOpen ? 7 : 2}
                 fadeOut
                 open={leftDrawerOpen}
@@ -255,7 +255,7 @@ class App extends Component {
                 drawerStyle={drawerStyle}
                 width={300}
                 panTolerance={30}
-                handleWidth={leftDrawerOpen ? 0 : window.innerWidth / 2}
+                handleWidth={leftDrawerOpen ? 0 : window.innerWidth / 5}
                 zIndex={rightDrawerOpen ? 7 : 2}
                 fadeOut
                 open={rightDrawerOpen}

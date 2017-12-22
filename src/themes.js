@@ -1,7 +1,7 @@
 export default [
   {
     accent: '#ecce93',
-    logo: '#99855c',
+    logo: '#a39475',
     background: '#2c2b2a',
     backgroundTitle: 'rgba(236, 206, 147, 0.05)',
     navbar: '#2c2b2a',
@@ -17,10 +17,10 @@ export default [
   {
     accent: '#ecce93',
     logo: '#ad8c4a',
-    background: '#212121',
+    background: '#1a1a1a',
     backgroundTitle: 'rgba(236, 206, 147, 0.05)',
-    navbar: '#212121',
-    options: '#212121',
+    navbar: '#1a1a1a',
+    options: '#1a1a1a',
     iconsNavbar: '#d7d8d9',
     text: '#fff',
     textList: '#dedede',
@@ -58,5 +58,19 @@ export default [
     backdrop: '255, 244, 215',
     border: '#d9d9d9',
     active: '#18FFFF',
+  },
+  {
+    accent: '#ffc800',
+    logo: '#f59836',
+    background: '#4A148C',
+    navbar: '#6A1B9A',
+    options: '#6A1B9A',
+    iconsNavbar: '#fff',
+    text: '#fff',
+    textList: '#e6e6e6',
+    textInput: '#fff',
+    backdrop: '74, 20, 140',
+    border: '#631bbb',
+    active: '#85e0b4',
   },
 ]
