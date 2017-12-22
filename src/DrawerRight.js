@@ -54,6 +54,7 @@ class DrawerRight extends Component {
         }
       }
       .list {
+        touch-action: pan-y;
         flex-grow: 1;
         padding-top: 10px;
         padding-bottom: 20px;

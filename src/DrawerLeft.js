@@ -86,6 +86,7 @@ class SongSection extends Component {
       cursor: pointer;
       color: ${({ theme }) => theme.text};
       & + div {
+        touch-action: pan-y;
         padding-top: 10px;
         box-shadow: inset rgba(0, 0, 0, 0.15) 1px 1px 3px;
       }

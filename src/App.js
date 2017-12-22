@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { BrowserRouter as Router, withRouter } from 'react-router-dom'
 import styled, { ThemeProvider } from 'styled-components'
-import Drawer from 'react-motion-drawer'
+// import Drawer from 'react-motion-drawer'
+import Drawer from './Drawer'
 import Navbar from './Navbar'
 import DrawerLeft from './DrawerLeft'
 import DrawerRight from './DrawerRight'
@@ -101,6 +102,7 @@ class App extends Component {
     const currentThemeObj = themes[currentTheme]
     const overlayColor = `rgba(${currentThemeObj.backdrop}, 0.6)`
     const drawerStyle = {
+      touchAction: 'pan-y',
       background: currentThemeObj.background,
       boxShadow:
         'rgba(0, 0, 0, 0.18) 0px 10px 20px, rgba(0, 0, 0, 0.2) 0px 6px 6px',
@@ -187,8 +189,9 @@ class App extends Component {
                 overlayColor={overlayColor}
                 drawerStyle={{ ...drawerStyle, paddingBottom: '100px' }}
                 width={300}
-                handleWidth={window.innerWidth / 2}
-                zIndex={leftDrawerOpen ? 7 : 0}
+                panTolerance={30}
+                handleWidth={rightDrawerOpen ? 0 : window.innerWidth / 2}
+                zIndex={leftDrawerOpen ? 7 : 2}
                 fadeOut
                 open={leftDrawerOpen}
                 onChange={this.toggleDrawerLeft}
@@ -251,8 +254,9 @@ class App extends Component {
                 overlayColor={overlayColor}
                 drawerStyle={drawerStyle}
                 width={300}
-                handleWidth={window.innerWidth / 2}
-                zIndex={rightDrawerOpen ? 7 : 0}
+                panTolerance={30}
+                handleWidth={leftDrawerOpen ? 0 : window.innerWidth / 2}
+                zIndex={rightDrawerOpen ? 7 : 2}
                 fadeOut
                 open={rightDrawerOpen}
                 onChange={this.toggleDrawerRight}
