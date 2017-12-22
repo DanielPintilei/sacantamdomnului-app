@@ -25,7 +25,7 @@ class ListWrapper extends Component {
 class SongSection extends Component {
   cache = new CellMeasurerCache({
     fixedWidth: true,
-    defaultHeight: 30,
+    defaultHeight: 34,
   })
   static propTypes = {
     title: PropTypes.string.isRequired,

@@ -291,7 +291,7 @@ class App extends Component {
                         }}
                       >
                         {currentTheme === index && (
-                          <IconCheck stroke={theme.accent} />
+                          <IconCheck stroke={theme.checkMark} />
                         )}
                       </button>
                     ))}

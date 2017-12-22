@@ -65,7 +65,7 @@ const StyledSong = styled.article`
       }
     }
     small {
-      opacity: 0.7;
+      opacity: 0.5;
     }
   }
   .end {
