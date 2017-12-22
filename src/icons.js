@@ -63,23 +63,25 @@ export const IconInfo = () => (
     <line x1='12' y1='8' x2='12' y2='8' />
   </svg>
 )
-export const IconList = () => (
+export const IconSort = () => (
   <svg
-    width='24'
-    height='24'
-    viewBox='0 0 24 24'
+    width='30.180317'
+    height='30.380543'
+    viewBox='0 0 30.180317 30.380543'
     fill='none'
     stroke='currentColor'
     strokeWidth='2'
     strokeLinecap='round'
     strokeLinejoin='round'
   >
-    <line x1='8' y1='6' x2='21' y2='6' />
-    <line x1='8' y1='12' x2='21' y2='12' />
-    <line x1='8' y1='18' x2='21' y2='18' />
-    <line x1='3' y1='6' x2='3' y2='6' />
-    <line x1='3' y1='12' x2='3' y2='12' />
-    <line x1='3' y1='18' x2='3' y2='18' />
+    <path d='M 4.2252831,18.637592 H 11.628248' />
+    <path d='M 2.2585722,22.37695 7.9116436,7.9334564' />
+    <path d='M 13.564715,22.37695 7.9116436,7.9334564' />
+    <path d='m 17.985994,7.9488045 h 9.927562' />
+    <path d='m 17.985994,22.404196 h 9.927562' />
+    <path d='M 17.985994,22.404196 27.913556,7.9488045' />
+    <path d='m 13.595565,26.566049 2.363909,1.551818 2.363909,-1.551818' />
+    <path d='m 13.595565,3.8144929 2.363909,-1.5518171 2.363909,1.5518171' />
   </svg>
 )
 export const IconDroplet = () => (

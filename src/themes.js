@@ -2,6 +2,21 @@ export default [
   {
     accent: '#ecce93',
     logo: '#ad8c4a',
+    background: '#343332',
+    backgroundTitle: 'rgba(236, 206, 147, 0.05)',
+    navbar: '#343332',
+    options: '#343332',
+    iconsNavbar: '#d7d8d9',
+    text: '#fff',
+    textList: '#dedede',
+    textInput: '#dedede',
+    backdrop: '#343332',
+    border: '#404040',
+    active: '#bd8d75',
+  },
+  {
+    accent: '#ecce93',
+    logo: '#ad8c4a',
     background: '#212121',
     backgroundTitle: 'rgba(236, 206, 147, 0.05)',
     navbar: '#212121',
@@ -12,6 +27,7 @@ export default [
     textInput: '#dedede',
     backdrop: '#212121',
     border: '#404040',
+    active: '#bd8d75',
   },
   {
     accent: '#ecce93',
@@ -26,6 +42,7 @@ export default [
     textInput: '#757575',
     backdrop: '#fff',
     border: '#d9d9d9',
+    active: '#bd8d75',
   },
   {
     accent: '#ff764b',
@@ -40,5 +57,6 @@ export default [
     textInput: '#393a3e',
     backdrop: '255, 244, 215',
     border: '#d9d9d9',
+    active: '#18FFFF',
   },
 ]

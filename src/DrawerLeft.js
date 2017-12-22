@@ -36,9 +36,6 @@ class SongSection extends Component {
     currentSong: PropTypes.number,
     setCurrentSong: PropTypes.func.isRequired,
   }
-  componentWillUpdate () {
-    this.cache.clearAll()
-  }
   render () {
     const {
       title,
@@ -144,10 +141,15 @@ class DrawerLeft extends Component {
   static propTypes = {
     songList: PropTypes.array.isRequired,
     closeDrawer: PropTypes.func.isRequired,
+    currentBook: PropTypes.any,
+    setCurrentBook: PropTypes.func.isRequired,
+  }
+  closeBook () {
+    this.setState({ currentBook: null })
   }
   render () {
-    const { songList, closeDrawer } = this.props
-    const { currentBook, currentSong } = this.state
+    const { songList, closeDrawer, currentBook, setCurrentBook } = this.props
+    const { currentSong } = this.state
     return (
       <div>
         {songList.map(({ title, songs }) => (
@@ -156,11 +158,7 @@ class DrawerLeft extends Component {
             songs={songs}
             closeDrawer={closeDrawer}
             currentBook={currentBook}
-            setCurrentBook={currentBook =>
-              this.setState({
-                currentBook,
-              })
-            }
+            setCurrentBook={setCurrentBook}
             currentSong={currentSong}
             setCurrentSong={currentSong =>
               this.setState({

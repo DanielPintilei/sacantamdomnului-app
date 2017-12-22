@@ -9,7 +9,7 @@ import DrawerRight from './DrawerRight'
 import Main from './Main'
 import {
   IconInfo,
-  IconList,
+  IconSort,
   IconDroplet,
   IconTypeSans,
   IconType,
@@ -47,6 +47,7 @@ class App extends Component {
   state = {
     leftDrawerOpen: false,
     rightDrawerOpen: false,
+    currentBook: null,
     themesPanelOpen: false,
     fontPanelOpen: false,
     currentTheme: +localStorage.getItem('theme') || 0,
@@ -71,6 +72,9 @@ class App extends Component {
       this.toggleFontPanel(false)
     }
   }
+  setCurrentBook = book => {
+    this.setState({ currentBook: book })
+  }
   toggleThemesPanel = open => {
     this.setState({ themesPanelOpen: open })
   }
@@ -86,6 +90,7 @@ class App extends Component {
     const {
       leftDrawerOpen,
       rightDrawerOpen,
+      currentBook,
       themesPanelOpen,
       fontPanelOpen,
       currentTheme,
@@ -122,6 +127,9 @@ class App extends Component {
       box-shadow: rgba(0, 0, 0, 0.15) -1px -1px 3px;
       button {
         color: ${({ theme }) => theme.accent};
+      }
+      .sort {
+        color: ${({ theme, sortAZ }) => (sortAZ ? theme.active : theme.accent)};
       }
     `
     const OptionsPanel = styled.div`
@@ -185,11 +193,18 @@ class App extends Component {
                 open={leftDrawerOpen}
                 onChange={this.toggleDrawerLeft}
               >
-                <DrawerLeft
-                  songList={sortAZ ? songsSorted : songs}
-                  closeDrawer={() => this.setState({ leftDrawerOpen: false })}
-                />
-                <Options>
+                {!themesPanelOpen &&
+                  !fontPanelOpen && (
+                    <DrawerLeft
+                      songList={sortAZ ? songsSorted : songs}
+                      closeDrawer={() =>
+                        this.setState({ leftDrawerOpen: false })
+                      }
+                      currentBook={currentBook}
+                      setCurrentBook={this.setCurrentBook}
+                    />
+                  )}
+                <Options sortAZ={sortAZ}>
                   <button
                     onClick={() => {
                       alert(
@@ -200,8 +215,9 @@ class App extends Component {
                     <IconInfo />
                   </button>
                   <button
-                    className='button'
+                    className='sort'
                     onClick={() => {
+                      this.setCurrentBook(null)
                       this.setState(({ sortAZ }) => {
                         const nextState = !sortAZ
                         if (nextState) localStorage.setItem('sortAZ', true)
@@ -210,7 +226,7 @@ class App extends Component {
                       })
                     }}
                   >
-                    <IconList />
+                    <IconSort />
                   </button>
                   <button
                     onClick={() => {
