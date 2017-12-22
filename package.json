@@ -17,8 +17,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build-fetch": "npm run fetch-content && react-scripts build",
-    "build": "react-scripts build",
+    "build": "npm run fetch-content && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "fetch-content": "node src/fetchContent.js"
   },
