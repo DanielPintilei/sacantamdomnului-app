@@ -35,6 +35,7 @@ injectGlobal`
     }
   }
   .headroom {
+    will-change: transform;
     z-index: 5 !important;
   }
 `
