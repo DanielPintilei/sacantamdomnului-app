@@ -16,7 +16,7 @@ const StyledSong = styled.article`
     max-width: 400px;
     font-family: 'Lora';
     font-size: 22px;
-    font-weight: normal;
+    font-weight: 400;
     line-height: 1.2;
     position: relative;
     &:after {
@@ -132,6 +132,7 @@ const StyledMain = styled.div`
   margin-top: -70px;
   padding-top: 70px;
   background-color: ${({ theme }) => theme.background};
+  touch-action: pan-y;
   .background-image {
     display: flex;
     align-items: center;
