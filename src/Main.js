@@ -14,7 +14,7 @@ const StyledSong = styled.article`
     margin-top: 0;
     margin-bottom: 25px;
     max-width: 400px;
-    font-family: 'Lora';
+    font-family: 'Open Sans';
     font-size: 22px;
     font-weight: 400;
     line-height: 1.2;
@@ -33,7 +33,7 @@ const StyledSong = styled.article`
   pre {
     margin: 0 0 40px;
     white-space: pre-wrap;
-    font-family: 'Lora';
+    font-family: 'Open Sans';
     font-size: 18px;
     line-height: 1.4;
     tab-size: 2;
@@ -81,7 +81,7 @@ const StyledSong = styled.article`
 const Song = ({
   match: { params: { path } },
   songList,
-  sansFont,
+  serifFont,
   fontSizeAdd,
 }) => {
   let currentSong
@@ -97,7 +97,7 @@ const Song = ({
     <StyledSong>
       <h1
         style={{
-          fontFamily: sansFont ? 'Open Sans' : '',
+          fontFamily: serifFont ? 'Lora' : '',
           fontSize: 22 + fontSizeAdd,
         }}
       >
@@ -105,7 +105,7 @@ const Song = ({
       </h1>
       <pre
         style={{
-          fontFamily: sansFont ? 'Open Sans' : '',
+          fontFamily: serifFont ? 'Lora' : '',
           fontSize: 18 + fontSizeAdd,
         }}
         dangerouslySetInnerHTML={{ __html: currentSong.content }}
@@ -121,7 +121,7 @@ Song.propTypes = {
     }).isRequired,
   }).isRequired,
   songList: PropTypes.array.isRequired,
-  sansFont: PropTypes.bool,
+  serifFont: PropTypes.bool,
   fontSizeAdd: PropTypes.number,
 }
 
@@ -138,7 +138,7 @@ const StyledMain = styled.div`
     align-items: center;
   }
 `
-const Main = ({ songList, sansFont, fontSizeAdd }) => (
+const Main = ({ songList, serifFont, fontSizeAdd }) => (
   <StyledMain>
     <Route exact path='/' component={BackgroundImage} />
     {songList.length ? (
@@ -147,7 +147,7 @@ const Main = ({ songList, sansFont, fontSizeAdd }) => (
         render={props => (
           <Song
             songList={songList}
-            sansFont={sansFont}
+            serifFont={serifFont}
             fontSizeAdd={fontSizeAdd}
             {...props}
           />
@@ -158,7 +158,7 @@ const Main = ({ songList, sansFont, fontSizeAdd }) => (
 )
 Main.propTypes = {
   songList: PropTypes.array.isRequired,
-  sansFont: PropTypes.bool,
+  serifFont: PropTypes.bool,
   fontSizeAdd: PropTypes.number,
 }
 

@@ -47,7 +47,7 @@ class App extends Component {
     themesPanelOpen: false,
     fontPanelOpen: false,
     currentTheme: +localStorage.getItem('theme') || 0,
-    sansFont: !!localStorage.getItem('sansFont'),
+    serifFont: !!localStorage.getItem('serifFont'),
     fontSizeAdd: +localStorage.getItem('fontSizeAdd') || 0,
     sortAZ: !!localStorage.getItem('sortAZ') || false,
   }
@@ -125,7 +125,7 @@ class App extends Component {
       themesPanelOpen,
       fontPanelOpen,
       currentTheme,
-      sansFont,
+      serifFont,
       fontSizeAdd,
       sortAZ,
     } = this.state
@@ -303,7 +303,7 @@ class App extends Component {
               </Drawer>
               <Main
                 songList={songs}
-                sansFont={sansFont}
+                serifFont={serifFont}
                 fontSizeAdd={fontSizeAdd}
               />
               {themesPanelOpen && (
@@ -346,19 +346,18 @@ class App extends Component {
                       <IconZoomOut />
                     </button>
                     <button
-                      style={{ color: sansFont ? currentThemeObj.accent : '' }}
+                      style={{ color: !serifFont ? currentThemeObj.accent : '' }}
                       onClick={() => {
-                        this.setState({ sansFont: true })
-                        localStorage.setItem('sansFont', true)
-                      }}
-                    >
+                        this.setState({ serifFont: false })
+                        localStorage.removeItem('serifFont')
+                      }}>
                       <IconTypeSans />
                     </button>
                     <button
-                      style={{ color: !sansFont ? currentThemeObj.accent : '' }}
+                      style={{ color: serifFont ? currentThemeObj.accent : '' }}
                       onClick={() => {
-                        this.setState({ sansFont: false })
-                        localStorage.removeItem('sansFont')
+                        this.setState({ serifFont: true })
+                        localStorage.setItem('serifFont', true)
                       }}
                     >
                       <IconType />
