@@ -6,6 +6,7 @@
   "dependencies": {
     "downshift": "^1.22.3",
     "firebase": "^4.8.0",
+    "idb-keyval": "^2.3.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-headroom": "^2.2.2",
@@ -17,9 +18,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "npm run fetch-content && react-scripts build",
+    "build":
+      "npm run fetch-content && npm run stamp-time && react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "fetch-content": "node src/fetchContent.js"
+    "fetch-content": "node src/fetchContent.js",
+    "stamp-time": "node src/stampTime.js"
   },
   "devDependencies": {
     "dotenv": "^4.0.0",

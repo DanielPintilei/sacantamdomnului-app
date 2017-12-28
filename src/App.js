@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { BrowserRouter as Router, withRouter } from 'react-router-dom'
+import idbKeyval from 'idb-keyval'
 import styled, { ThemeProvider } from 'styled-components'
 // import Drawer from 'react-motion-drawer'
 import Drawer from './Drawer'
@@ -19,16 +20,7 @@ import {
   IconZoomIn,
 } from './icons'
 import themes from './themes'
-import songs from './songs.json'
-
-const songsSorted = songs.map(({ title, songs }) => ({
-  title,
-  songs: songs
-    .slice()
-    .sort((a, b) =>
-      a.title.toLowerCase().localeCompare(b.title.toLowerCase(), 'ro')
-    ),
-}))
+import songsVersion from './songsVersion.json'
 
 class ScrollToTopComponent extends Component {
   static propTypes = {
@@ -46,6 +38,9 @@ const ScrollToTop = withRouter(ScrollToTopComponent)
 
 class App extends Component {
   state = {
+    songs: [],
+    songsSorted: [],
+    songsArray: [],
     leftDrawerOpen: false,
     rightDrawerOpen: false,
     currentBook: null,
@@ -86,9 +81,47 @@ class App extends Component {
     document
       .querySelector('meta[name=theme-color]')
       .setAttribute('content', themes[this.state.currentTheme].navbar)
+    const idbKeyvalGet = data =>
+      idbKeyval
+        .get(data)
+        .then(songs => this.setState({ [data]: songs }))
+    idbKeyval.keys().then(keys => {
+      if (
+        +localStorage.getItem('songsVersion') === songsVersion &&
+        keys.includes('songs')
+      ) {
+        idbKeyvalGet('songs')
+        idbKeyvalGet('songsSorted')
+        idbKeyvalGet('songsArray')
+      } else {
+        import('./songs.json').then(songs => {
+          const songsSorted = songs.map(({ title, songs }) => ({
+            title,
+            songs: songs
+              .slice()
+              .sort((a, b) =>
+                a.title.toLowerCase().localeCompare(b.title.toLowerCase(), 'ro')
+              ),
+          }))
+          const songsArray = songs
+            .map(item => item.songs)
+            .reduce((a, b) => [...a, ...b], [])
+          this.setState({ songs, songsSorted, songsArray })
+          Promise.all([
+            idbKeyval.set('songs', songs),
+            idbKeyval.set('songsSorted', songsSorted),
+            idbKeyval.set('songsArray', songsArray),
+          ])
+            .then(() => localStorage.setItem('songsVersion', songsVersion))
+        })
+      }
+    })
   }
   render () {
     const {
+      songs,
+      songsSorted,
+      songsArray,
       leftDrawerOpen,
       rightDrawerOpen,
       currentBook,
@@ -261,13 +294,15 @@ class App extends Component {
                 open={rightDrawerOpen}
                 onChange={this.toggleDrawerRight}
               >
-                <DrawerRight
-                  songList={songs
-                    .map(item => item.songs)
-                    .reduce((a, b) => [...a, ...b], [])}
-                  closeDrawer={() => this.setState({ rightDrawerOpen: false })}
-                  searchFocused={rightDrawerOpen}
-                />
+                {songsArray.length && (
+                  <DrawerRight
+                    songList={songsArray}
+                    closeDrawer={() =>
+                      this.setState({ rightDrawerOpen: false })
+                    }
+                    searchFocused={rightDrawerOpen}
+                  />
+                )}
               </Drawer>
               <Main
                 songList={songs}
