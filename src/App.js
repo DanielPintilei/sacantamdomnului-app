@@ -92,25 +92,29 @@ class App extends Component {
         idbKeyvalGet('songsSorted')
         idbKeyvalGet('songsArray')
       } else {
-        import('./songs.json').then(songs => {
-          const songsSorted = songs.map(({ title, songs }) => ({
-            title,
-            songs: songs
-              .slice()
-              .sort((a, b) =>
-                a.title.toLowerCase().localeCompare(b.title.toLowerCase(), 'ro')
-              ),
-          }))
-          const songsArray = songs
-            .map(item => item.songs)
-            .reduce((a, b) => [...a, ...b], [])
-          this.setState({ songs, songsSorted, songsArray })
-          Promise.all([
-            idbKeyval.set('songs', songs),
-            idbKeyval.set('songsSorted', songsSorted),
-            idbKeyval.set('songsArray', songsArray),
-          ]).then(() => localStorage.setItem('songsVersion', songsVersion))
-        })
+        fetch('/songs.json')
+          .then(response => response.json())
+          .then(songs => {
+            const songsSorted = songs.map(({ title, songs }) => ({
+              title,
+              songs: songs
+                .slice()
+                .sort((a, b) =>
+                  a.title
+                    .toLowerCase()
+                    .localeCompare(b.title.toLowerCase(), 'ro')
+                ),
+            }))
+            const songsArray = songs
+              .map(item => item.songs)
+              .reduce((a, b) => [...a, ...b], [])
+            this.setState({ songs, songsSorted, songsArray })
+            Promise.all([
+              idbKeyval.set('songs', songs),
+              idbKeyval.set('songsSorted', songsSorted),
+              idbKeyval.set('songsArray', songsArray),
+            ]).then(() => localStorage.setItem('songsVersion', songsVersion))
+          })
       }
     })
   }
@@ -346,11 +350,14 @@ class App extends Component {
                       <IconZoomOut />
                     </button>
                     <button
-                      style={{ color: !serifFont ? currentThemeObj.accent : '' }}
+                      style={{
+                        color: !serifFont ? currentThemeObj.accent : '',
+                      }}
                       onClick={() => {
                         this.setState({ serifFont: false })
                         localStorage.removeItem('serifFont')
-                      }}>
+                      }}
+                    >
                       <IconTypeSans />
                     </button>
                     <button

@@ -62,7 +62,7 @@ const formatContent = ({ saCantamDomnului, alteCantari, colinde }) => [
 const writeContent = snapshot => {
   const raw = snapshot.val()
   const content = JSON.stringify(formatContent(raw))
-  fs.writeFileSync('./src/songs.json', content)
+  fs.writeFileSync('./public/songs.json', content)
   process.exit()
 }
 
