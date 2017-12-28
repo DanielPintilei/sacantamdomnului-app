@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 export const IconMenu = () => (
   <svg
@@ -162,13 +161,13 @@ export const IconZoomIn = () => (
     <line x1='8' y1='11' x2='14' y2='11' />
   </svg>
 )
-export const IconCheck = ({ stroke }) => (
+export const IconCheck = () => (
   <svg
     width='24'
     height='24'
     viewBox='0 0 24 24'
     fill='none'
-    stroke={stroke}
+    stroke='currentColor'
     strokeWidth='2'
     strokeLinecap='round'
     strokeLinejoin='round'
@@ -177,6 +176,3 @@ export const IconCheck = ({ stroke }) => (
     <path d='M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11' />
   </svg>
 )
-IconCheck.propTypes = {
-  stroke: PropTypes.string.isRequired,
-}

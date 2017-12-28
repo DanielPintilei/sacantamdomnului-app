@@ -82,9 +82,7 @@ class App extends Component {
       .querySelector('meta[name=theme-color]')
       .setAttribute('content', themes[this.state.currentTheme].navbar)
     const idbKeyvalGet = data =>
-      idbKeyval
-        .get(data)
-        .then(songs => this.setState({ [data]: songs }))
+      idbKeyval.get(data).then(songs => this.setState({ [data]: songs }))
     idbKeyval.keys().then(keys => {
       if (
         +localStorage.getItem('songsVersion') === songsVersion &&
@@ -111,8 +109,7 @@ class App extends Component {
             idbKeyval.set('songs', songs),
             idbKeyval.set('songsSorted', songsSorted),
             idbKeyval.set('songsArray', songsArray),
-          ])
-            .then(() => localStorage.setItem('songsVersion', songsVersion))
+          ]).then(() => localStorage.setItem('songsVersion', songsVersion))
         })
       }
     })
@@ -316,7 +313,10 @@ class App extends Component {
                       <button
                         key={index}
                         className='swatch'
-                        style={{ backgroundColor: theme.background }}
+                        style={{
+                          color: theme.checkMark,
+                          backgroundColor: theme.background,
+                        }}
                         onClick={() => {
                           document
                             .querySelector('meta[name=theme-color]')
@@ -325,9 +325,7 @@ class App extends Component {
                           localStorage.setItem('theme', index)
                         }}
                       >
-                        {currentTheme === index && (
-                          <IconCheck stroke={theme.checkMark} />
-                        )}
+                        {currentTheme === index && <IconCheck />}
                       </button>
                     ))}
                   </ThemePicker>
@@ -348,6 +346,7 @@ class App extends Component {
                       <IconZoomOut />
                     </button>
                     <button
+                      style={{ color: sansFont ? currentThemeObj.accent : '' }}
                       onClick={() => {
                         this.setState({ sansFont: true })
                         localStorage.setItem('sansFont', true)
@@ -356,6 +355,7 @@ class App extends Component {
                       <IconTypeSans />
                     </button>
                     <button
+                      style={{ color: !sansFont ? currentThemeObj.accent : '' }}
                       onClick={() => {
                         this.setState({ sansFont: false })
                         localStorage.removeItem('sansFont')

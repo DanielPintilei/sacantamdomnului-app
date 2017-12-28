@@ -141,7 +141,7 @@ const StyledMain = styled.div`
 const Main = ({ songList, sansFont, fontSizeAdd }) => (
   <StyledMain>
     <Route exact path='/' component={BackgroundImage} />
-    {songList.length && (
+    {songList.length ? (
       <Route
         path='/:path'
         render={props => (
@@ -153,7 +153,7 @@ const Main = ({ songList, sansFont, fontSizeAdd }) => (
           />
         )}
       />
-    )}
+    ) : null}
   </StyledMain>
 )
 Main.propTypes = {

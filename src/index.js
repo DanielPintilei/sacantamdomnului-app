@@ -3,40 +3,8 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import registerServiceWorker from './registerServiceWorker'
 import { injectGlobal } from 'styled-components'
-import OpenSans from './fonts/Open_Sans/OpenSans-Regular.ttf'
-import OpenSansItalic from './fonts/Open_Sans/OpenSans-Italic.ttf'
-import Lora from './fonts/Lora/Lora-Regular.ttf'
-import LoraItalic from './fonts/Lora/Lora-Italic.ttf'
 
 injectGlobal`
-  @font-face {
-    font-family: 'Open Sans';
-    src: url('${OpenSans}') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Open Sans';
-    src: url('${OpenSansItalic}') format('truetype');
-    font-weight: 400;
-    font-style: italic;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Lora';
-    src: url('${Lora}') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-  }
-  @font-face {
-    font-family: 'Lora';
-    src: url('${LoraItalic}') format('truetype');
-    font-weight: 400;
-    font-style: italic;
-    font-display: swap;
-  }
   * {
   box-sizing: border-box;
   }
