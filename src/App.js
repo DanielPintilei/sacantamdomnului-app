@@ -85,13 +85,9 @@ class App extends Component {
       idbKeyval.get(data).then(songs => this.setState({ [data]: songs }))
     idbKeyval.keys().then(keys => {
       if (
-        +localStorage.getItem('songsVersion') === songsVersion &&
-        keys.includes('songs')
+        +localStorage.getItem('songsVersion') !== songsVersion &&
+        navigator.onLine
       ) {
-        idbKeyvalGet('songs')
-        idbKeyvalGet('songsSorted')
-        idbKeyvalGet('songsArray')
-      } else {
         fetch('/songs.json')
           .then(response => response.json())
           .then(songs => {
@@ -115,6 +111,10 @@ class App extends Component {
               idbKeyval.set('songsArray', songsArray),
             ]).then(() => localStorage.setItem('songsVersion', songsVersion))
           })
+      } else {
+        idbKeyvalGet('songs')
+        idbKeyvalGet('songsSorted')
+        idbKeyvalGet('songsArray')
       }
     })
   }

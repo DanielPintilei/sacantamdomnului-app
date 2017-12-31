@@ -4,7 +4,7 @@ import styled from 'styled-components'
 const ListLink = styled(Link)`
   display: flex;
   padding: 5px 10px 5px 15px;
-  font-size: 15px;
+  font-size: 17px;
   line-height: 1.2;
   color: ${({ theme }) => theme.textList};
   text-decoration: none;

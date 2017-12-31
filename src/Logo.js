@@ -12,17 +12,18 @@ export default () => {
     transform-origin: center;
     .gr2,
     .gr3 {
-      transform-origin: center;
-      animation: r 240s infinite linear;
+      opacity: 0.7;
+      /* transform-origin: center;
+      animation: r 240s infinite linear; */
     }
-    @keyframes r {
+    /*@keyframes r {
       0% {
         transform: rotate(0);
       }
       100% {
         transform: rotate(360deg);
       }
-    }
+    } */
     .gr2-1 {
       stroke-dasharray: 0.5, 0.2, 0.5;
       animation: gr2 7s infinite linear;
@@ -60,77 +61,77 @@ export default () => {
       stroke-dashoffset: 7;
     }
     @keyframes gr2 {
-      50% {
+      /* 50% {
         opacity: 0.4;
-      }
+      } */
       100% {
         stroke-dashoffset: 7;
       }
     }
     @keyframes gr2-m {
-      30% {
+      /* 30% {
         opacity: 0.7;
-      }
+      } */
       100% {
         stroke-dashoffset: 0;
       }
     }
     .gr3-1 {
-      opacity: 0.4;
+      /* opacity: 0.4; */
       stroke-dasharray: 0.5, 0.2, 0.5;
       animation: gr3 7s infinite linear;
     }
     .gr3-2 {
-      opacity: 0.4;
+      /* opacity: 0.4; */
       stroke-dasharray: 0.7, 0.4, 0.1;
       animation: gr3 7s infinite linear;
     }
     .gr3-3 {
-      opacity: 0.4;
+      /* opacity: 0.4; */
       stroke-dasharray: 0.6, 0.2, 0.5;
       animation: gr3 7s infinite linear;
     }
     .gr3-4 {
-      opacity: 0.4;
+      /* opacity: 0.4; */
       stroke-dasharray: 0.1, 0.3, 0.7;
       animation: gr3 7s infinite linear;
     }
     .gr3-5 {
-      opacity: 0.7;
+      /* opacity: 0.7; */
       stroke-dasharray: 0.2, 0.5, 0.3;
       stroke-dashoffset: 7;
       animation: gr3-m 7s infinite linear;
     }
     .gr3-6 {
-      opacity: 0.7;
+      /* opacity: 0.7; */
       stroke-dasharray: 0.8, 0.2, 0.4;
       stroke-dashoffset: 7;
       animation: gr3-m 7s infinite linear;
     }
     .gr3-7 {
-      opacity: 0.7;
+      /* opacity: 0.7; */
       stroke-dasharray: 0.1, 0.6, 0.3;
       stroke-dashoffset: 7;
       animation: gr3-m 7s infinite linear;
     }
     .gr3-8 {
-      opacity: 0.7;
+      /* opacity: 0.7; */
       stroke-dasharray: 0.3, 0.5, 0.1;
       stroke-dashoffset: 7;
       animation: gr3-m 7s infinite linear;
     }
     @keyframes gr3 {
-      50% {
+      /* 50% {
         opacity: 1;
-      }
+      } */
       100% {
         stroke-dashoffset: 7;
       }
     }
     @keyframes gr3-m {
-      50% {
+      /* 50% {
         opacity: 1;
-      }
+      } */
       100% {
         stroke-dashoffset: 0;
       }
