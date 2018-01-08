@@ -36,6 +36,66 @@ class ScrollToTopComponent extends Component {
 }
 const ScrollToTop = withRouter(ScrollToTopComponent)
 
+const Backdrop = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+`
+const Options = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 300px;
+  padding: 15px;
+  background-color: ${({ theme }) => theme.options};
+  box-shadow: rgba(0, 0, 0, 0.15) -1px -1px 3px;
+  button {
+    color: ${({ theme }) => theme.accent};
+  }
+  .sort {
+    color: ${({ theme, sortAZ }) => (sortAZ ? theme.active : theme.accent)};
+  }
+`
+const OptionsPanel = styled.div`
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  max-width: calc(100vw - 30px);
+  background-color: #fff;
+  box-shadow: 4px 2px 6px 0px hsla(0, 0%, 0%, 0.1);
+  border-radius: 4px;
+`
+const ThemePicker = OptionsPanel.extend`
+  width: 310px;
+  padding: 5px;
+  .swatch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+`
+const FontSettings = OptionsPanel.extend`
+  justify-content: space-between;
+  width: 300px;
+  padding: 15px;
+`
+
 class App extends Component {
   state = {
     songs: [],
@@ -141,65 +201,6 @@ class App extends Component {
       boxShadow:
         'rgba(0, 0, 0, 0.18) 0px 10px 20px, rgba(0, 0, 0, 0.2) 0px 6px 6px',
     }
-    const Backdrop = styled.div`
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 10;
-    `
-    const Options = styled.div`
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      width: 300px;
-      padding: 15px;
-      background-color: ${({ theme }) => theme.options};
-      box-shadow: rgba(0, 0, 0, 0.15) -1px -1px 3px;
-      button {
-        color: ${({ theme }) => theme.accent};
-      }
-      .sort {
-        color: ${({ theme, sortAZ }) => (sortAZ ? theme.active : theme.accent)};
-      }
-    `
-    const OptionsPanel = styled.div`
-      position: fixed;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-wrap: wrap;
-      max-width: calc(100vw - 30px);
-      background-color: #fff;
-      box-shadow: 4px 2px 6px 0px hsla(0, 0%, 0%, 0.1);
-      border-radius: 4px;
-    `
-    const ThemePicker = OptionsPanel.extend`
-      width: 310px;
-      padding: 5px;
-      .swatch {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 50px;
-        height: 50px;
-        margin: 5px;
-        border-radius: 50%;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        cursor: pointer;
-      }
-    `
-    const FontSettings = OptionsPanel.extend`
-      justify-content: space-between;
-      width: 300px;
-      padding: 15px;
-    `
     return (
       <Router>
         <ScrollToTop>

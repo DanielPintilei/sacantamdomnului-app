@@ -6,6 +6,49 @@ import ListLink from './ListLink'
 import { replaceAccents } from './helpers'
 import { IconSearch } from './icons'
 
+const Div = styled.div`
+  height: 100%;
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  label {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: ${({ theme }) => theme.textInput};
+    box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 3px;
+  }
+  svg {
+    flex-shrink: 0;
+    margin-right: 15px;
+  }
+  input {
+    flex-grow: 1;
+    height: 70px;
+    font-size: 17px;
+    border: none;
+    outline: none;
+    color: ${({ theme }) => theme.textInput};
+    background-color: transparent;
+    -webkit-appearance: textfield;
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-decoration {
+      -webkit-appearance: none;
+    }
+  }
+  .list {
+    touch-action: pan-y;
+    flex-grow: 1;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    overflow-y: auto;
+  }
+`
+
 class DrawerRight extends Component {
   static propTypes = {
     songList: PropTypes.array.isRequired,
@@ -19,48 +62,6 @@ class DrawerRight extends Component {
   }
   render () {
     const { songList, closeDrawer } = this.props
-    const Div = styled.div`
-      height: 100%;
-      .wrapper {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-      }
-      label {
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        padding-left: 15px;
-        padding-right: 15px;
-        color: ${({ theme }) => theme.textInput};
-        box-shadow: rgba(0, 0, 0, 0.15) 1px 1px 3px;
-      }
-      svg {
-        flex-shrink: 0;
-        margin-right: 15px;
-      }
-      input {
-        flex-grow: 1;
-        height: 70px;
-        font-size: 17px;
-        border: none;
-        outline: none;
-        color: ${({ theme }) => theme.textInput};
-        background-color: transparent;
-        -webkit-appearance: textfield;
-        &::-webkit-search-cancel-button,
-        &::-webkit-search-decoration {
-          -webkit-appearance: none;
-        }
-      }
-      .list {
-        touch-action: pan-y;
-        flex-grow: 1;
-        padding-top: 10px;
-        padding-bottom: 20px;
-        overflow-y: auto;
-      }
-    `
     return (
       <Div>
         <Downshift

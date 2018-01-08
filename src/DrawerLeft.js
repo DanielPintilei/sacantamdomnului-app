@@ -22,6 +22,24 @@ class ListWrapper extends Component {
   }
 }
 
+const H3 = styled.h3`
+  display: flex;
+  margin: 0;
+  padding: 15px;
+  font-size: 17px;
+  font-weight: normal;
+  cursor: pointer;
+  color: ${({ theme }) => theme.text};
+  & + div {
+    touch-action: pan-y;
+    padding-top: 10px;
+    box-shadow: inset rgba(0, 0, 0, 0.15) 1px 1px 3px;
+  }
+  svg {
+    margin-right: 10px;
+  }
+`
+
 class SongSection extends Component {
   cache = new CellMeasurerCache({
     fixedWidth: true,
@@ -77,23 +95,6 @@ class SongSection extends Component {
         </CellMeasurer>
       )
     }
-    const H3 = styled.h3`
-      display: flex;
-      margin: 0;
-      padding: 15px;
-      font-size: 17px;
-      font-weight: normal;
-      cursor: pointer;
-      color: ${({ theme }) => theme.text};
-      & + div {
-        touch-action: pan-y;
-        padding-top: 10px;
-        box-shadow: inset rgba(0, 0, 0, 0.15) 1px 1px 3px;
-      }
-      svg {
-        margin-right: 10px;
-      }
-    `
     const currentBookIsThis = currentBook === title
     return (
       <div>
