@@ -307,7 +307,7 @@ class App extends Component {
                 )}
               </Drawer>
               <Main
-                songList={songs}
+                songList={songsArray}
                 serifFont={serifFont}
                 fontSizeAdd={fontSizeAdd}
               />

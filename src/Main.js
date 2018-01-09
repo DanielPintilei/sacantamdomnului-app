@@ -84,15 +84,7 @@ const Song = ({
   serifFont,
   fontSizeAdd,
 }) => {
-  let currentSong
-  for (const section of songList) {
-    for (const song of section.songs) {
-      if (song.path === path) {
-        currentSong = song
-        break
-      }
-    }
-  }
+  const currentSong = songList.find(song => song.path === path)
   return (
     <StyledSong>
       <h1
