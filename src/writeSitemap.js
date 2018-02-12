@@ -19,7 +19,7 @@ const urls = [
 ]
 
 const sitemapXML = sitemap.createSitemap({
-  hostname: process.env.PUBLIC_URL,
+  hostname: process.env.SITEMAP_URL,
   urls,
 })
 
