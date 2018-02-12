@@ -14,14 +14,15 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
     "react-virtualized": "^9.13.0",
+    "sitemap": "^1.13.0",
     "styled-components": "^2.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build":
-      "npm run fetch-content && npm run stamp-time && react-scripts build",
+    "build": "npm run fetch-content && npm run write-sitemap && npm run stamp-time && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "fetch-content": "node src/fetchContent.js",
+    "write-sitemap": "node src/writeSitemap.js",
     "stamp-time": "node src/stampTime.js"
   },
   "devDependencies": {
