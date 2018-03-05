@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Downshift from 'downshift'
 import styled from 'styled-components'
 import ListLink from './ListLink'
-import { replaceAccents } from './helpers'
+import { replaceAccents } from '../helpers'
 import { IconSearch } from './icons'
 
 const Div = styled.div`

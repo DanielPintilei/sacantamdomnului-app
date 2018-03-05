@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
+import App from './components/App'
 import registerServiceWorker from './registerServiceWorker'
 import { injectGlobal } from 'styled-components'
 import OpenSans from './fonts/Open_Sans/OpenSans-Regular.ttf'
@@ -73,6 +73,7 @@ injectGlobal`
 `
 
 ReactDOM.render(<App />, document.getElementById('root'))
+
 registerServiceWorker()
 
 if (module.hot) module.hot.accept()

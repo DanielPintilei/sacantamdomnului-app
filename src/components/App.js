@@ -19,8 +19,8 @@ import {
   IconZoomOut,
   IconZoomIn,
 } from './icons'
-import themes from './themes'
-import songsVersion from './songsVersion.json'
+import themes from '../themes'
+import songsVersion from '../songsVersion.json'
 
 class ScrollToTopComponent extends Component {
   static propTypes = {
