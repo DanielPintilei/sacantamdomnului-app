@@ -141,6 +141,28 @@ class App extends Component {
     document
       .querySelector('meta[name=theme-color]')
       .setAttribute('content', themes[this.state.currentTheme].navbar)
+    const fetchJson = () =>
+      fetch('/songs.json')
+        .then(response => response.json())
+        .then(songs => {
+          const songsSorted = songs.map(({ title, songs }) => ({
+            title,
+            songs: songs
+              .slice()
+              .sort((a, b) =>
+                a.title.toLowerCase().localeCompare(b.title.toLowerCase(), 'ro')
+              ),
+          }))
+          const songsArray = songs
+            .map(item => item.songs)
+            .reduce((a, b) => [...a, ...b], [])
+          this.setState({ songs, songsSorted, songsArray })
+          Promise.all([
+            idbKeyval.set('songs', songs),
+            idbKeyval.set('songsSorted', songsSorted),
+            idbKeyval.set('songsArray', songsArray),
+          ]).then(() => localStorage.setItem('songsVersion', songsVersion))
+        })
     const idbKeyvalGet = data =>
       idbKeyval.get(data).then(songs => this.setState({ [data]: songs }))
     idbKeyval.keys().then(keys => {
@@ -148,34 +170,16 @@ class App extends Component {
         +localStorage.getItem('songsVersion') !== songsVersion &&
         navigator.onLine
       ) {
-        fetch('/songs.json')
-          .then(response => response.json())
-          .then(songs => {
-            const songsSorted = songs.map(({ title, songs }) => ({
-              title,
-              songs: songs
-                .slice()
-                .sort((a, b) =>
-                  a.title
-                    .toLowerCase()
-                    .localeCompare(b.title.toLowerCase(), 'ro')
-                ),
-            }))
-            const songsArray = songs
-              .map(item => item.songs)
-              .reduce((a, b) => [...a, ...b], [])
-            this.setState({ songs, songsSorted, songsArray })
-            Promise.all([
-              idbKeyval.set('songs', songs),
-              idbKeyval.set('songsSorted', songsSorted),
-              idbKeyval.set('songsArray', songsArray),
-            ]).then(() => localStorage.setItem('songsVersion', songsVersion))
-          })
-      } else {
+        fetchJson()
+      } else if (
+        keys.includes('songs') &&
+        keys.includes('songsSorted') &&
+        keys.includes('songsArray')
+      ) {
         idbKeyvalGet('songs')
         idbKeyvalGet('songsSorted')
         idbKeyvalGet('songsArray')
-      }
+      } else fetchJson()
     })
   }
   render () {

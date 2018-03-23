@@ -40,9 +40,6 @@ const StyledSong = styled.article`
     em {
       display: inline-block;
       width: 100%;
-      margin-left: -4px;
-      position: sticky;
-      top: 0.5em;
       z-index: 1;
       font-style: italic;
       background-color: ${({ theme }) => theme.background};
@@ -57,11 +54,20 @@ const StyledSong = styled.article`
       }
       &::before {
         top: -0.5em;
-        border-top: 1px solid ${({ theme }) => theme.border};
+        border-top: 1px solid ${({ theme }) => theme.background};
       }
       &::after {
         bottom: -0.5em;
-        border-bottom: 1px solid ${({ theme }) => theme.border};
+        border-bottom: 1px solid ${({ theme }) => theme.background};
+      }
+    }
+    &.sticky {
+      position: sticky;
+      top: 0.5em;
+      margin-left: -4px;      
+      &::before,
+      &::after {
+        border-color: ${({ theme }) => theme.border};
       }
     }
     small {
