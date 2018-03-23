@@ -60,14 +60,14 @@ const StyledSong = styled.article`
         bottom: -0.5em;
         border-bottom: 1px solid ${({ theme }) => theme.background};
       }
-    }
-    &.sticky {
-      position: sticky;
-      top: 0.5em;
-      margin-left: -4px;      
-      &::before,
-      &::after {
-        border-color: ${({ theme }) => theme.border};
+      &.sticky {
+        position: sticky;
+        top: 0.5em;
+        margin-left: -4px;
+        &::before,
+        &::after {
+          border-color: ${({ theme }) => theme.border};
+        }
       }
     }
     small {
