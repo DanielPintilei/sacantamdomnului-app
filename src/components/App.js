@@ -4,6 +4,8 @@ import { BrowserRouter as Router, withRouter } from 'react-router-dom'
 import idbKeyval from 'idb-keyval'
 import styled, { ThemeProvider } from 'styled-components'
 // import Drawer from 'react-motion-drawer'
+// import WakeLock from 'react-wakelock'
+import WakeLock from './WakeLock/'
 import Drawer from './Drawer'
 import Navbar from './Navbar'
 import DrawerLeft from './DrawerLeft'
@@ -141,6 +143,9 @@ class App extends Component {
     document
       .querySelector('meta[name=theme-color]')
       .setAttribute('content', themes[this.state.currentTheme].navbar)
+    const KEY_SONGS = 'songs'
+    const KEY_SONGS_SORTED = 'songsSorted'
+    const KEY_SONGS_ARRAY = 'songsArray'
     const fetchJson = () =>
       fetch('/songs.json')
         .then(response => response.json())
@@ -158,9 +163,9 @@ class App extends Component {
             .reduce((a, b) => [...a, ...b], [])
           this.setState({ songs, songsSorted, songsArray })
           Promise.all([
-            idbKeyval.set('songs', songs),
-            idbKeyval.set('songsSorted', songsSorted),
-            idbKeyval.set('songsArray', songsArray),
+            idbKeyval.set(KEY_SONGS, songs),
+            idbKeyval.set(KEY_SONGS_SORTED, songsSorted),
+            idbKeyval.set(KEY_SONGS_ARRAY, songsArray),
           ]).then(() => localStorage.setItem('songsVersion', songsVersion))
         })
     const idbKeyvalGet = data =>
@@ -172,13 +177,13 @@ class App extends Component {
       ) {
         fetchJson()
       } else if (
-        keys.includes('songs') &&
-        keys.includes('songsSorted') &&
-        keys.includes('songsArray')
+        keys.includes(KEY_SONGS) &&
+        keys.includes(KEY_SONGS_SORTED) &&
+        keys.includes(KEY_SONGS_ARRAY)
       ) {
-        idbKeyvalGet('songs')
-        idbKeyvalGet('songsSorted')
-        idbKeyvalGet('songsArray')
+        idbKeyvalGet(KEY_SONGS)
+        idbKeyvalGet(KEY_SONGS_SORTED)
+        idbKeyvalGet(KEY_SONGS_ARRAY)
       } else fetchJson()
     })
   }
@@ -210,6 +215,7 @@ class App extends Component {
         <ScrollToTop>
           <ThemeProvider theme={currentThemeObj}>
             <div>
+              <WakeLock />
               <Navbar
                 onClickLeft={() =>
                   this.setState({
@@ -250,7 +256,7 @@ class App extends Component {
                   <button
                     onClick={() => {
                       alert(
-                        'Carte de cântări a Oastei Domnului \n\n Designed and developed by Daniel Pintilei'
+                        'Carte de cântări a Oastei Domnului\n\nDesigned and developed by Daniel Pintilei'
                       )
                     }}
                   >
