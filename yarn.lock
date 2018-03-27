@@ -5413,9 +5413,9 @@ react-headroom@^2.2.2:
     raf "^3.3.0"
     shallowequal "^0.2.2"
 
-react-motion-drawer@^2.1.7:
-  version "2.1.7"
-  resolved "https://registry.yarnpkg.com/react-motion-drawer/-/react-motion-drawer-2.1.7.tgz#c0e9bf85366ac6995a41c774f115fa4bc062b122"
+react-motion-drawer@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/react-motion-drawer/-/react-motion-drawer-3.0.4.tgz#4ba672f87f7ce21241530d553c451688542fedf7"
   dependencies:
     "1-liners" "^0.4.0"
     prop-types "^15.5.10"

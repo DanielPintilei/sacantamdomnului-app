@@ -10,7 +10,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-headroom": "^2.2.2",
-    "react-motion-drawer": "^2.1.7",
+    "react-motion-drawer": "^3.0.4",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.17",
     "react-virtualized": "^9.13.0",

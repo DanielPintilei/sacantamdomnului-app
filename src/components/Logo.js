@@ -14,105 +14,105 @@ const Div = styled.div`
   }
   .gr2-1 {
     stroke-dasharray: 0.5, 0.2, 0.5;
-    @media (min-width: 350px) {
+    @media (min-width: 1200px) {
       animation: gr2 7s infinite linear;
     }
   }
   .gr2-2 {
     stroke-dasharray: 0.2, 0.6, 0.3;
-    @media (min-width: 350px) {
+    @media (min-width: 1200px) {
       animation: gr2 7s infinite linear;
     }
   }
   .gr2-3 {
     stroke-dasharray: 0.1, 0.4, 0.7;
-    @media (min-width: 350px) {
+    @media (min-width: 1200px) {
       animation: gr2 7s infinite linear;
     }
   }
   .gr2-4 {
     stroke-dasharray: 0.4, 0.2, 0.5;
-    @media (min-width: 350px) {
+    @media (min-width: 1200px) {
       animation: gr2 7s infinite linear;
     }
   }
   .gr2-5 {
     stroke-dasharray: 0.2, 0.2, 0.5;
-    @media (min-width: 350px) {
+    @media (min-width: 1200px) {
       animation: gr2-m 7s infinite linear;
     }
     stroke-dashoffset: 7;
   }
   .gr2-6 {
     stroke-dasharray: 0.4, 0.1, 0.7;
-    @media (min-width: 350px) {
+    @media (min-width: 1200px) {
       animation: gr2-m 7s infinite linear;
     }
     stroke-dashoffset: 7;
   }
   .gr2-7 {
     stroke-dasharray: 0.8, 0.2, 0.3;
-    @media (min-width: 350px) {
+    @media (min-width: 1200px) {
       animation: gr2-m 7s infinite linear;
     }
     stroke-dashoffset: 7;
   }
   .gr2-8 {
     stroke-dasharray: 0.2, 0.7, 0.4;
-    @media (min-width: 350px) {
+    @media (min-width: 1200px) {
       animation: gr2-m 7s infinite linear;
     }
     stroke-dashoffset: 7;
   }
   .gr3-1 {
     stroke-dasharray: 0.5, 0.2, 0.5;
-    @media (min-width: 350px) {
+    @media (min-width: 1200px) {
       animation: gr2 7s infinite linear;
     }
   }
   .gr3-2 {
     stroke-dasharray: 0.7, 0.4, 0.1;
-    @media (min-width: 350px) {
+    @media (min-width: 1200px) {
       animation: gr2 7s infinite linear;
     }
   }
   .gr3-3 {
     stroke-dasharray: 0.6, 0.2, 0.5;
-    @media (min-width: 350px) {
+    @media (min-width: 1200px) {
       animation: gr2 7s infinite linear;
     }
   }
   .gr3-4 {
     stroke-dasharray: 0.1, 0.3, 0.7;
-    @media (min-width: 350px) {
+    @media (min-width: 1200px) {
       animation: gr2 7s infinite linear;
     }
   }
   .gr3-5 {
     stroke-dasharray: 0.2, 0.5, 0.3;
     stroke-dashoffset: 7;
-    @media (min-width: 350px) {
+    @media (min-width: 1200px) {
       animation: gr2-m 7s infinite linear;
     }
   }
   .gr3-6 {
     stroke-dasharray: 0.8, 0.2, 0.4;
     stroke-dashoffset: 7;
-    @media (min-width: 350px) {
+    @media (min-width: 1200px) {
       animation: gr2-m 7s infinite linear;
     }
   }
   .gr3-7 {
     stroke-dasharray: 0.1, 0.6, 0.3;
     stroke-dashoffset: 7;
-    @media (min-width: 350px) {
+    @media (min-width: 1200px) {
       animation: gr2-m 7s infinite linear;
     }
   }
   .gr3-8 {
     stroke-dasharray: 0.3, 0.5, 0.1;
     stroke-dashoffset: 7;
-    @media (min-width: 350px) {
+    @media (min-width: 1200px) {
       animation: gr2-m 7s infinite linear;
     }
   }
