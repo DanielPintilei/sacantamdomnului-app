@@ -34,9 +34,17 @@ const Div = styled.div`
     outline: none;
     color: ${({ theme }) => theme.textInput};
     background-color: transparent;
-    -webkit-appearance: textfield;
-    &::-webkit-search-cancel-button,
-    &::-webkit-search-decoration {
+    &::-webkit-search-cancel-button {
+      position: relative;
+      left: 4px;
+      width: 18px;
+      height: 18px;
+      background-size: 18px;
+      background-position: center;
+      background-image: ${({ theme }) =>
+    `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${
+      theme.textInput
+    }" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>')`};
       -webkit-appearance: none;
     }
   }
