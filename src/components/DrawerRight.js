@@ -35,8 +35,6 @@ const Div = styled.div`
     color: ${({ theme }) => theme.textInput};
     background-color: transparent;
     &::-webkit-search-cancel-button {
-      position: relative;
-      left: 4px;
       width: 18px;
       height: 18px;
       background-size: 18px;
