@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { BrowserRouter as Router, withRouter } from 'react-router-dom'
-import idbKeyval from 'idb-keyval'
+import { get, set, keys } from 'idb-keyval'
 import styled, { ThemeProvider } from 'styled-components'
 import Drawer from 'react-motion-drawer'
 // import WakeLock from 'react-wakelock'
 import WakeLock from './WakeLock/'
+import GlobalStyle from './GlobalStyle'
 import Navbar from './Navbar'
 import DrawerLeft from './DrawerLeft'
 import DrawerRight from './DrawerRight'
@@ -28,10 +29,10 @@ class ScrollToTopComponent extends Component {
     location: PropTypes.object.isRequired,
     children: PropTypes.object.isRequired,
   }
-  componentDidUpdate (prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.location !== prevProps.location) window.scrollTo(0, 0)
   }
-  render () {
+  render() {
     return this.props.children
   }
 }
@@ -47,7 +48,7 @@ const Backdrop = styled.div`
 `
 const Options = styled.div`
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: space-between;
   position: fixed;
   bottom: 0;
@@ -58,7 +59,14 @@ const Options = styled.div`
   background-color: ${({ theme }) => theme.options};
   box-shadow: rgba(0, 0, 0, 0.15) -1px -1px 3px;
   button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     color: ${({ theme }) => theme.accent};
+    svg {
+      margin-bottom: 5px;
+    }
   }
   .sort {
     color: ${({ theme, sortAZ }) => (sortAZ ? theme.active : theme.accent)};
@@ -112,7 +120,7 @@ class App extends Component {
     fontSizeAdd: +localStorage.getItem('fontSizeAdd') || 0,
     sortAZ: !!localStorage.getItem('sortAZ') || false,
   }
-  toggleBodyOverflow (bool) {
+  toggleBodyOverflow(bool) {
     document.body.style.overflowY = bool ? 'hidden' : ''
   }
   toggleDrawerLeft = open => {
@@ -138,7 +146,7 @@ class App extends Component {
   toggleFontPanel = open => {
     this.setState({ fontPanelOpen: open })
   }
-  componentDidMount () {
+  componentDidMount() {
     document
       .querySelector('meta[name=theme-color]')
       .setAttribute('content', themes[this.state.currentTheme].navbar)
@@ -154,7 +162,9 @@ class App extends Component {
             songs: songs
               .slice()
               .sort((a, b) =>
-                a.title.toLowerCase().localeCompare(b.title.toLowerCase(), 'ro')
+                a.title
+                  .toLowerCase()
+                  .localeCompare(b.title.toLowerCase(), 'ro'),
               ),
           }))
           const songsArray = songs
@@ -162,14 +172,14 @@ class App extends Component {
             .reduce((a, b) => [...a, ...b], [])
           this.setState({ songs, songsSorted, songsArray })
           Promise.all([
-            idbKeyval.set(KEY_SONGS, songs),
-            idbKeyval.set(KEY_SONGS_SORTED, songsSorted),
-            idbKeyval.set(KEY_SONGS_ARRAY, songsArray),
+            set(KEY_SONGS, songs),
+            set(KEY_SONGS_SORTED, songsSorted),
+            set(KEY_SONGS_ARRAY, songsArray),
           ]).then(() => localStorage.setItem('songsVersion', songsVersion))
         })
     const idbKeyvalGet = data =>
-      idbKeyval.get(data).then(songs => this.setState({ [data]: songs }))
-    idbKeyval.keys().then(keys => {
+      get(data).then(songs => this.setState({ [data]: songs }))
+    keys().then(keys => {
       if (
         +localStorage.getItem('songsVersion') !== songsVersion &&
         navigator.onLine
@@ -186,7 +196,7 @@ class App extends Component {
       } else fetchJson()
     })
   }
-  render () {
+  render() {
     const {
       songs,
       songsSorted,
@@ -214,6 +224,7 @@ class App extends Component {
         <ScrollToTop>
           <ThemeProvider theme={currentThemeObj}>
             <div>
+              <GlobalStyle />
               <WakeLock />
               <Navbar
                 onClickLeft={() =>
@@ -240,29 +251,27 @@ class App extends Component {
                 open={leftDrawerOpen}
                 onChange={this.toggleDrawerLeft}
               >
-                {!themesPanelOpen &&
-                  !fontPanelOpen && (
-                    <DrawerLeft
-                      songList={sortAZ ? songsSorted : songs}
-                      closeDrawer={() =>
-                        this.setState({ leftDrawerOpen: false })
-                      }
-                      currentBook={currentBook}
-                      setCurrentBook={this.setCurrentBook}
-                    />
-                  )}
+                {!themesPanelOpen && !fontPanelOpen && (
+                  <DrawerLeft
+                    songList={sortAZ ? songsSorted : songs}
+                    closeDrawer={() => this.setState({ leftDrawerOpen: false })}
+                    currentBook={currentBook}
+                    setCurrentBook={this.setCurrentBook}
+                  />
+                )}
                 <Options sortAZ={sortAZ}>
                   <button
                     onClick={() => {
                       alert(
-                        'Carte de cântări a Oastei Domnului\n\nDesigned and developed by Daniel Pintilei'
+                        'Carte de cântări a Oastei Domnului\n\nDesigned and developed by Daniel Pintilei',
                       )
                     }}
                   >
                     <IconInfo />
+                    Info
                   </button>
                   <button
-                    className='sort'
+                    className="sort"
                     onClick={() => {
                       this.setCurrentBook(null)
                       this.setState(({ sortAZ }) => {
@@ -274,6 +283,7 @@ class App extends Component {
                     }}
                   >
                     <IconSort />
+                    Sortare
                   </button>
                   <button
                     onClick={() => {
@@ -282,6 +292,7 @@ class App extends Component {
                     }}
                   >
                     <IconDroplet />
+                    Teme
                   </button>
                   <button
                     onClick={() => {
@@ -290,6 +301,7 @@ class App extends Component {
                     }}
                   >
                     <IconType />
+                    Text
                   </button>
                 </Options>
               </Drawer>
@@ -326,7 +338,7 @@ class App extends Component {
                     {themes.map((theme, index) => (
                       <button
                         key={index}
-                        className='swatch'
+                        className="swatch"
                         style={{
                           color: theme.checkMark,
                           backgroundColor: theme.background,

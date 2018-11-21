@@ -40,9 +40,9 @@ const Div = styled.div`
       background-size: 18px;
       background-position: center;
       background-image: ${({ theme }) =>
-    `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${
-      theme.textInput
-    }" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>')`};
+        `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${
+          theme.textInput
+        }" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>')`};
       -webkit-appearance: none;
     }
   }
@@ -61,18 +61,18 @@ class DrawerRight extends Component {
     closeDrawer: PropTypes.func.isRequired,
     searchFocused: PropTypes.bool.isRequired,
   }
-  componentDidUpdate () {
+  componentDidUpdate() {
     if (this.props.searchFocused) {
       setTimeout(() => this.searchInput.focus())
     }
   }
-  render () {
+  render() {
     const { songList, closeDrawer } = this.props
     return (
       <Div>
-        <Downshift
-          render={({ getInputProps, isOpen, inputValue }) => (
-            <div className='wrapper'>
+        <Downshift>
+          {({ getInputProps, isOpen, inputValue }) => (
+            <div className="wrapper">
               <label>
                 <IconSearch />
                 <input
@@ -80,15 +80,15 @@ class DrawerRight extends Component {
                   ref={input => {
                     this.searchInput = input
                   }}
-                  type='search'
-                  autoComplete='off'
-                  autoCorrect='off'
-                  autoCapitalize='off'
-                  spellCheck='false'
+                  type="search"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck="false"
                 />
               </label>
               {isOpen ? (
-                <div className='list'>
+                <div className="list">
                   {songList
                     .filter(({ number, title }) => {
                       const formattedTitle = replaceAccents(title).toLowerCase()
@@ -115,7 +115,7 @@ class DrawerRight extends Component {
               ) : null}
             </div>
           )}
-        />
+        </Downshift>
       </Div>
     )
   }
