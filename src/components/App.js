@@ -6,7 +6,6 @@ import styled, { ThemeProvider } from 'styled-components'
 import Drawer from 'react-motion-drawer'
 // import WakeLock from 'react-wakelock'
 import WakeLock from './WakeLock/'
-import GlobalStyle from './GlobalStyle'
 import Navbar from './Navbar'
 import DrawerLeft from './DrawerLeft'
 import DrawerRight from './DrawerRight'
@@ -220,197 +219,194 @@ class App extends Component {
         'rgba(0, 0, 0, 0.18) 0px 10px 20px, rgba(0, 0, 0, 0.2) 0px 6px 6px',
     }
     return (
-      <>
-        <GlobalStyle />
-        <Router>
-          <ScrollToTop>
-            <ThemeProvider theme={currentThemeObj}>
-              <div>
-                <WakeLock />
-                <Navbar
-                  onClickLeft={() =>
-                    this.setState({
-                      leftDrawerOpen: !leftDrawerOpen,
-                      rightDrawerOpen: false,
-                    })
-                  }
-                  onClickRight={() =>
-                    this.setState({
-                      rightDrawerOpen: !rightDrawerOpen,
-                      leftDrawerOpen: false,
-                    })
-                  }
-                />
-                <Drawer
-                  overlayColor={overlayColor}
-                  drawerStyle={{ ...drawerStyle, paddingBottom: '100px' }}
-                  width={300}
-                  panTolerance={30}
-                  handleWidth={rightDrawerOpen ? 0 : window.innerWidth / 5}
-                  zIndex={leftDrawerOpen ? 7 : 2}
-                  fadeOut
-                  open={leftDrawerOpen}
-                  onChange={this.toggleDrawerLeft}
-                >
-                  {!themesPanelOpen && !fontPanelOpen && (
-                    <DrawerLeft
-                      songList={sortAZ ? songsSorted : songs}
-                      closeDrawer={() => this.setState({ leftDrawerOpen: false })}
-                      currentBook={currentBook}
-                      setCurrentBook={this.setCurrentBook}
-                    />
-                  )}
-                  <Options sortAZ={sortAZ}>
+      <Router>
+        <ScrollToTop>
+          <ThemeProvider theme={currentThemeObj}>
+            <div>
+              <WakeLock />
+              <Navbar
+                onClickLeft={() =>
+                  this.setState({
+                    leftDrawerOpen: !leftDrawerOpen,
+                    rightDrawerOpen: false,
+                  })
+                }
+                onClickRight={() =>
+                  this.setState({
+                    rightDrawerOpen: !rightDrawerOpen,
+                    leftDrawerOpen: false,
+                  })
+                }
+              />
+              <Drawer
+                overlayColor={overlayColor}
+                drawerStyle={{ ...drawerStyle, paddingBottom: '100px' }}
+                width={300}
+                panTolerance={30}
+                handleWidth={rightDrawerOpen ? 0 : window.innerWidth / 5}
+                zIndex={leftDrawerOpen ? 7 : 2}
+                fadeOut
+                open={leftDrawerOpen}
+                onChange={this.toggleDrawerLeft}
+              >
+                {!themesPanelOpen && !fontPanelOpen && (
+                  <DrawerLeft
+                    songList={sortAZ ? songsSorted : songs}
+                    closeDrawer={() => this.setState({ leftDrawerOpen: false })}
+                    currentBook={currentBook}
+                    setCurrentBook={this.setCurrentBook}
+                  />
+                )}
+                <Options sortAZ={sortAZ}>
+                  <button
+                    onClick={() => {
+                      alert(
+                        'Carte de cântări a Oastei Domnului\n\nDesigned and developed by Daniel Pintilei',
+                      )
+                    }}
+                  >
+                    <IconInfo />
+                    Info
+                  </button>
+                  <button
+                    className='sort'
+                    onClick={() => {
+                      this.setCurrentBook(null)
+                      this.setState(({ sortAZ }) => {
+                        const nextState = !sortAZ
+                        if (nextState) localStorage.setItem('sortAZ', true)
+                        else localStorage.removeItem('sortAZ')
+                        return { sortAZ: nextState }
+                      })
+                    }}
+                  >
+                    <IconSort />
+                    Sortare
+                  </button>
+                  <button
+                    onClick={() => {
+                      this.toggleDrawerLeft(false)
+                      this.toggleThemesPanel(true)
+                    }}
+                  >
+                    <IconDroplet />
+                    Teme
+                  </button>
+                  <button
+                    onClick={() => {
+                      this.toggleDrawerLeft(false)
+                      this.toggleFontPanel(true)
+                    }}
+                  >
+                    <IconType />
+                    Text
+                  </button>
+                </Options>
+              </Drawer>
+              <Drawer
+                right
+                overlayColor={overlayColor}
+                drawerStyle={drawerStyle}
+                width={300}
+                panTolerance={30}
+                handleWidth={leftDrawerOpen ? 0 : window.innerWidth / 5}
+                zIndex={rightDrawerOpen ? 7 : 2}
+                fadeOut
+                open={rightDrawerOpen}
+                onChange={this.toggleDrawerRight}
+              >
+                {songsArray.length && (
+                  <DrawerRight
+                    songList={songsArray}
+                    closeDrawer={() =>
+                      this.setState({ rightDrawerOpen: false })
+                    }
+                    searchFocused={rightDrawerOpen}
+                  />
+                )}
+              </Drawer>
+              <Main
+                songList={songsArray}
+                serifFont={serifFont}
+                fontSizeAdd={fontSizeAdd}
+              />
+              {themesPanelOpen && (
+                <Backdrop data-backdrop onClick={this.closeBackdrop}>
+                  <ThemePicker>
+                    {themes.map((theme, index) => (
+                      <button
+                        key={index}
+                        className='swatch'
+                        style={{
+                          color: theme.checkMark,
+                          backgroundColor: theme.background,
+                        }}
+                        onClick={() => {
+                          document
+                            .querySelector('meta[name=theme-color]')
+                            .setAttribute('content', theme.navbar)
+                          this.setState({ currentTheme: index })
+                          localStorage.setItem('theme', index)
+                        }}
+                      >
+                        {currentTheme === index && <IconCheck />}
+                      </button>
+                    ))}
+                  </ThemePicker>
+                </Backdrop>
+              )}
+              {fontPanelOpen && (
+                <Backdrop data-backdrop onClick={this.closeBackdrop}>
+                  <FontSettings>
                     <button
                       onClick={() => {
-                        alert(
-                          'Carte de cântări a Oastei Domnului\n\nDesigned and developed by Daniel Pintilei',
-                        )
-                      }}
-                    >
-                      <IconInfo />
-                      Info
-                    </button>
-                    <button
-                      className='sort'
-                      onClick={() => {
-                        this.setCurrentBook(null)
-                        this.setState(({ sortAZ }) => {
-                          const nextState = !sortAZ
-                          if (nextState) localStorage.setItem('sortAZ', true)
-                          else localStorage.removeItem('sortAZ')
-                          return { sortAZ: nextState }
+                        this.setState(({ fontSizeAdd }) => {
+                          const newSize = fontSizeAdd - 2
+                          localStorage.setItem('fontSizeAdd', newSize)
+                          return { fontSizeAdd: newSize }
                         })
                       }}
                     >
-                      <IconSort />
-                      Sortare
+                      <IconZoomOut />
                     </button>
                     <button
+                      style={{
+                        color: !serifFont ? currentThemeObj.accent : '',
+                      }}
                       onClick={() => {
-                        this.toggleDrawerLeft(false)
-                        this.toggleThemesPanel(true)
+                        this.setState({ serifFont: false })
+                        localStorage.removeItem('serifFont')
                       }}
                     >
-                      <IconDroplet />
-                      Teme
+                      <IconTypeSans />
                     </button>
                     <button
+                      style={{ color: serifFont ? currentThemeObj.accent : '' }}
                       onClick={() => {
-                        this.toggleDrawerLeft(false)
-                        this.toggleFontPanel(true)
+                        this.setState({ serifFont: true })
+                        localStorage.setItem('serifFont', true)
                       }}
                     >
                       <IconType />
-                      Text
                     </button>
-                  </Options>
-                </Drawer>
-                <Drawer
-                  right
-                  overlayColor={overlayColor}
-                  drawerStyle={drawerStyle}
-                  width={300}
-                  panTolerance={30}
-                  handleWidth={leftDrawerOpen ? 0 : window.innerWidth / 5}
-                  zIndex={rightDrawerOpen ? 7 : 2}
-                  fadeOut
-                  open={rightDrawerOpen}
-                  onChange={this.toggleDrawerRight}
-                >
-                  {songsArray.length && (
-                    <DrawerRight
-                      songList={songsArray}
-                      closeDrawer={() =>
-                        this.setState({ rightDrawerOpen: false })
-                      }
-                      searchFocused={rightDrawerOpen}
-                    />
-                  )}
-                </Drawer>
-                <Main
-                  songList={songsArray}
-                  serifFont={serifFont}
-                  fontSizeAdd={fontSizeAdd}
-                />
-                {themesPanelOpen && (
-                  <Backdrop data-backdrop onClick={this.closeBackdrop}>
-                    <ThemePicker>
-                      {themes.map((theme, index) => (
-                        <button
-                          key={index}
-                          className='swatch'
-                          style={{
-                            color: theme.checkMark,
-                            backgroundColor: theme.background,
-                          }}
-                          onClick={() => {
-                            document
-                              .querySelector('meta[name=theme-color]')
-                              .setAttribute('content', theme.navbar)
-                            this.setState({ currentTheme: index })
-                            localStorage.setItem('theme', index)
-                          }}
-                        >
-                          {currentTheme === index && <IconCheck />}
-                        </button>
-                      ))}
-                    </ThemePicker>
-                  </Backdrop>
-                )}
-                {fontPanelOpen && (
-                  <Backdrop data-backdrop onClick={this.closeBackdrop}>
-                    <FontSettings>
-                      <button
-                        onClick={() => {
-                          this.setState(({ fontSizeAdd }) => {
-                            const newSize = fontSizeAdd - 2
-                            localStorage.setItem('fontSizeAdd', newSize)
-                            return { fontSizeAdd: newSize }
-                          })
-                        }}
-                      >
-                        <IconZoomOut />
-                      </button>
-                      <button
-                        style={{
-                          color: !serifFont ? currentThemeObj.accent : '',
-                        }}
-                        onClick={() => {
-                          this.setState({ serifFont: false })
-                          localStorage.removeItem('serifFont')
-                        }}
-                      >
-                        <IconTypeSans />
-                      </button>
-                      <button
-                        style={{ color: serifFont ? currentThemeObj.accent : '' }}
-                        onClick={() => {
-                          this.setState({ serifFont: true })
-                          localStorage.setItem('serifFont', true)
-                        }}
-                      >
-                        <IconType />
-                      </button>
-                      <button
-                        onClick={() => {
-                          this.setState(({ fontSizeAdd }) => {
-                            const newSize = fontSizeAdd + 2
-                            localStorage.setItem('fontSizeAdd', newSize)
-                            return { fontSizeAdd: newSize }
-                          })
-                        }}
-                      >
-                        <IconZoomIn />
-                      </button>
-                    </FontSettings>
-                  </Backdrop>
-                )}
-              </div>
-            </ThemeProvider>
-          </ScrollToTop>
-        </Router>
-      </>
+                    <button
+                      onClick={() => {
+                        this.setState(({ fontSizeAdd }) => {
+                          const newSize = fontSizeAdd + 2
+                          localStorage.setItem('fontSizeAdd', newSize)
+                          return { fontSizeAdd: newSize }
+                        })
+                      }}
+                    >
+                      <IconZoomIn />
+                    </button>
+                  </FontSettings>
+                </Backdrop>
+              )}
+            </div>
+          </ThemeProvider>
+        </ScrollToTop>
+      </Router>
     )
   }
 }
