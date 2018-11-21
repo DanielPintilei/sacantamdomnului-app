@@ -29,10 +29,10 @@ class ScrollToTopComponent extends Component {
     location: PropTypes.object.isRequired,
     children: PropTypes.object.isRequired,
   }
-  componentDidUpdate(prevProps) {
+  componentDidUpdate (prevProps) {
     if (this.props.location !== prevProps.location) window.scrollTo(0, 0)
   }
-  render() {
+  render () {
     return this.props.children
   }
 }
@@ -84,7 +84,7 @@ const OptionsPanel = styled.div`
   box-shadow: 4px 2px 6px 0px hsla(0, 0%, 0%, 0.1);
   border-radius: 4px;
 `
-const ThemePicker = OptionsPanel.extend`
+const ThemePicker = styled(OptionsPanel)`
   width: 310px;
   padding: 5px;
   .swatch {
@@ -99,7 +99,7 @@ const ThemePicker = OptionsPanel.extend`
     cursor: pointer;
   }
 `
-const FontSettings = OptionsPanel.extend`
+const FontSettings = styled(OptionsPanel)`
   justify-content: space-between;
   width: 300px;
   padding: 15px;
@@ -120,7 +120,7 @@ class App extends Component {
     fontSizeAdd: +localStorage.getItem('fontSizeAdd') || 0,
     sortAZ: !!localStorage.getItem('sortAZ') || false,
   }
-  toggleBodyOverflow(bool) {
+  toggleBodyOverflow (bool) {
     document.body.style.overflowY = bool ? 'hidden' : ''
   }
   toggleDrawerLeft = open => {
@@ -146,7 +146,7 @@ class App extends Component {
   toggleFontPanel = open => {
     this.setState({ fontPanelOpen: open })
   }
-  componentDidMount() {
+  componentDidMount () {
     document
       .querySelector('meta[name=theme-color]')
       .setAttribute('content', themes[this.state.currentTheme].navbar)
@@ -196,7 +196,7 @@ class App extends Component {
       } else fetchJson()
     })
   }
-  render() {
+  render () {
     const {
       songs,
       songsSorted,
@@ -271,7 +271,7 @@ class App extends Component {
                     Info
                   </button>
                   <button
-                    className="sort"
+                    className='sort'
                     onClick={() => {
                       this.setCurrentBook(null)
                       this.setState(({ sortAZ }) => {
@@ -338,7 +338,7 @@ class App extends Component {
                     {themes.map((theme, index) => (
                       <button
                         key={index}
-                        className="swatch"
+                        className='swatch'
                         style={{
                           color: theme.checkMark,
                           backgroundColor: theme.background,

@@ -24,5 +24,6 @@ yarn-error.log*
 
 .env
 songs.json
+public/json/
 sitemap.xml
 songsVersion.json

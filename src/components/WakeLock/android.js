@@ -55,7 +55,7 @@ class WakeLockAndroid extends React.Component {
         this.removeListeners()
         this.addListeners()
       }
-      this.dummyVideo.play()
+      this.dummyVideo.play().catch(err => console.log(err))
     } else {
       this.removeListeners()
 
@@ -77,7 +77,7 @@ class WakeLockAndroid extends React.Component {
 
   startVideo = () => {
     this.removeListeners()
-    this.dummyVideo.play()
+    this.dummyVideo.play().catch(err => console.log(err))
   }
 
   render () {

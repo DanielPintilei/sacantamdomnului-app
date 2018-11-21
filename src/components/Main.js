@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Route } from 'react-router-dom'
@@ -84,43 +84,77 @@ const StyledSong = styled.article`
     opacity: 0.2;
   }
 `
-const Song = ({
-  match: { params: { path } },
-  songList,
-  serifFont,
-  fontSizeAdd,
-}) => {
-  const currentSong = songList.find(song => song.path === path)
-  return (
-    <StyledSong>
-      <h1
-        style={{
-          fontFamily: serifFont ? 'Lora' : '',
-          fontSize: 22 + fontSizeAdd,
-        }}
-      >
-        {currentSong.number}. {currentSong.title}
-      </h1>
-      <pre
-        style={{
-          fontFamily: serifFont ? 'Lora' : '',
-          fontSize: 18 + fontSizeAdd,
-        }}
-        dangerouslySetInnerHTML={{ __html: currentSong.content }}
-      />
-      <div className='end' />
-    </StyledSong>
-  )
-}
-Song.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      path: PropTypes.string.isRequired,
+class Song extends Component {
+  static propTypes = {
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        path: PropTypes.string.isRequired,
+      }).isRequired,
     }).isRequired,
-  }).isRequired,
-  songList: PropTypes.array.isRequired,
-  serifFont: PropTypes.bool,
-  fontSizeAdd: PropTypes.number,
+    // songList: PropTypes.array.isRequired,
+    serifFont: PropTypes.bool,
+    fontSizeAdd: PropTypes.number,
+  }
+  state = {
+    currentSong: null,
+  }
+  static getDerivedStateFromProps (nextProps, prevState) {
+    const {
+      songList,
+      match: {
+        params: { path },
+      },
+    } = nextProps
+    if (!songList) return null
+    const currentSong = songList.find(song => song.path === path)
+    if (
+      (currentSong && currentSong.path) !==
+      (prevState.currentSong && prevState.currentSong.path)
+    ) {
+      return {
+        currentSong,
+      }
+    }
+    return null
+  }
+  componentDidMount () {
+    const {
+      match: {
+        params: { path },
+      },
+    } = this.props
+    const { currentSong } = this.state
+    if (!currentSong) {
+      fetch(`/json/${path}.json`)
+        .then(response => response.json())
+        .then(song => this.setState({ currentSong: song }))
+    }
+  }
+  render () {
+    const { serifFont, fontSizeAdd } = this.props
+    const { currentSong } = this.state
+    if (!currentSong) return null
+    return (
+      <StyledSong>
+        <h1
+          style={{
+            fontFamily: serifFont ? 'Lora' : '',
+            fontSize: 22 + fontSizeAdd,
+          }}
+        >
+          {currentSong.number}. {currentSong.title}
+        </h1>
+        <pre
+          style={{
+            fontFamily: serifFont ? 'Lora' : '',
+            fontSize: 18 + fontSizeAdd,
+          }}
+          dangerouslySetInnerHTML={{ __html: currentSong.content }}
+        />
+        <div className='end' />
+      </StyledSong>
+    )
+  }
 }
 
 const StyledMain = styled.div`
@@ -138,20 +172,18 @@ const StyledMain = styled.div`
 `
 const Main = ({ songList, serifFont, fontSizeAdd }) => (
   <StyledMain>
-    <Route exact path='/' component={BackgroundImage} />
-    {songList.length ? (
-      <Route
-        path='/:path'
-        render={props => (
-          <Song
-            songList={songList}
-            serifFont={serifFont}
-            fontSizeAdd={fontSizeAdd}
-            {...props}
-          />
-        )}
-      />
-    ) : null}
+    <Route exact path='/' render={BackgroundImage.render} />
+    <Route
+      path='/:path'
+      render={props => (
+        <Song
+          songList={songList}
+          serifFont={serifFont}
+          fontSizeAdd={fontSizeAdd}
+          {...props}
+        />
+      )}
+    />
   </StyledMain>
 )
 Main.propTypes = {

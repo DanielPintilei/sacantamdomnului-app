@@ -1,8 +1,8 @@
 import { createGlobalStyle } from 'styled-components'
-import OpenSans from './fonts/Open_Sans/OpenSans-Regular.ttf'
-import OpenSansItalic from './fonts/Open_Sans/OpenSans-Italic.ttf'
-import Lora from './fonts/Lora/Lora-Regular.ttf'
-import LoraItalic from './fonts/Lora/Lora-Italic.ttf'
+import OpenSans from '../fonts/Open_Sans/OpenSans-Regular.ttf'
+import OpenSansItalic from '../fonts/Open_Sans/OpenSans-Italic.ttf'
+import Lora from '../fonts/Lora/Lora-Regular.ttf'
+import LoraItalic from '../fonts/Lora/Lora-Italic.ttf'
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
