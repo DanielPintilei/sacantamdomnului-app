@@ -1,3 +1,4 @@
+/* eslint-disable */
 export default [
   {
     accent: '#ecce93',

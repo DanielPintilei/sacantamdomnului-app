@@ -4,6 +4,13 @@
   "private": true,
   "author": "Daniel Pintilei",
   "dependencies": {
+    "@types/jest": "^23.3.9",
+    "@types/node": "^10.12.10",
+    "@types/react": "^16.7.7",
+    "@types/react-dom": "^16.0.10",
+    "@types/react-router-dom": "^4.3.1",
+    "@types/react-virtualized": "^9.18.9",
+    "@types/styled-components": "^4.1.1",
     "downshift": "^3.1.5",
     "firebase": "^5.5.9",
     "idb-keyval": "^3.1.0",
@@ -16,32 +23,23 @@
     "react-virtualized": "^9.21.0",
     "react-wakelock": "^0.0.4",
     "sitemap": "^2.1.0",
-    "styled-components": "^4.1.1"
+    "styled-components": "^4.1.1",
+    "typescript": "^3.1.6"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "npm run fetch-content && npm run write-sitemap && npm run stamp-time && react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "fetch-content": "node src/fetchContent.js",
-    "write-sitemap": "node src/writeSitemap.js",
-    "stamp-time": "node src/stampTime.js"
+    "fetch-content": "node scripts/fetchContent.js",
+    "write-sitemap": "node scripts/writeSitemap.js",
+    "stamp-time": "node scripts/stampTime.js"
   },
   "devDependencies": {
-    "dotenv": "^6.1.0",
-    "eslint": "^5.6.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-config-standard-react": "^7.0.2",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^8.0.0",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-react": "^7.11.1",
-    "eslint-plugin-standard": "^4.0.0"
+    "dotenv": "^6.1.0"
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "standard",
-      "standard-react"
+      "react-app"
     ],
     "rules": {
       "comma-dangle": [
@@ -52,6 +50,45 @@
           "imports": "always-multiline",
           "exports": "always-multiline",
           "functions": "always-multiline"
+        }
+      ],
+      "space-before-function-paren": [
+        "error",
+        "always"
+      ],
+      "one-var": [
+        "error",
+        {
+          "initialized": "never"
+        }
+      ],
+      "spaced-comment": [
+        "error",
+        "always",
+        {
+          "line": {
+            "markers": [
+              "*package",
+              "!",
+              "/",
+              ",",
+              "="
+            ]
+          },
+          "block": {
+            "balanced": true,
+            "markers": [
+              "*package",
+              "!",
+              ",",
+              ":",
+              "::",
+              "flow-include"
+            ],
+            "exceptions": [
+              "*"
+            ]
+          }
         }
       ]
     }

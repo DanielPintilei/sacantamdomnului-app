@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import Downshift from 'downshift'
 import styled from 'styled-components'
+import { SongListType } from '../types'
 import ListLink from './ListLink'
 import { replaceAccents } from '../helpers'
 import { IconSearch } from './icons'
@@ -40,9 +40,9 @@ const Div = styled.div`
       background-size: 18px;
       background-position: center;
       background-image: ${({ theme }) =>
-        `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${
-          theme.textInput
-        }" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>')`};
+    `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="${
+    theme.textInput
+    }" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>')`};
       -webkit-appearance: none;
     }
   }
@@ -55,12 +55,13 @@ const Div = styled.div`
   }
 `
 
-class DrawerRight extends Component {
-  static propTypes = {
-    songList: PropTypes.array.isRequired,
-    closeDrawer: PropTypes.func.isRequired,
-    searchFocused: PropTypes.bool.isRequired,
-  }
+type DrawerRightProps = {
+  songList: SongListType,
+  closeDrawer: () => void,
+  searchFocused: boolean,
+}
+class DrawerRight extends Component<DrawerRightProps> {
+  searchInput
   componentDidUpdate() {
     if (this.props.searchFocused) {
       setTimeout(() => this.searchInput.focus())
@@ -72,7 +73,7 @@ class DrawerRight extends Component {
       <Div>
         <Downshift>
           {({ getInputProps, isOpen, inputValue }) => (
-            <div className="wrapper">
+            <div className='wrapper'>
               <label>
                 <IconSearch />
                 <input
@@ -80,15 +81,15 @@ class DrawerRight extends Component {
                   ref={input => {
                     this.searchInput = input
                   }}
-                  type="search"
-                  autoComplete="off"
-                  autoCorrect="off"
-                  autoCapitalize="off"
-                  spellCheck="false"
+                  type='search'
+                  autoComplete='off'
+                  autoCorrect='off'
+                  autoCapitalize='off'
+                  spellCheck='false'
                 />
               </label>
               {isOpen ? (
-                <div className="list">
+                <div className='list'>
                   {songList
                     .filter(({ number, title }) => {
                       const formattedTitle = replaceAccents(title).toLowerCase()
@@ -101,7 +102,7 @@ class DrawerRight extends Component {
                           .replace(/\s+/g, ' ')
                           .match(searchText) ||
                           formattedTitle.match(searchText)) &&
-                          inputValue.length > 1)
+                          inputValue && inputValue.length > 1)
                       )
                     })
                     .sort((a, b) => a.number - b.number)

@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { BrowserRouter as Router, withRouter } from 'react-router-dom'
+import { BrowserRouter as Router, withRouter, RouteComponentProps } from 'react-router-dom'
 import { get, set, keys } from 'idb-keyval'
 import styled, { ThemeProvider } from 'styled-components'
+// @ts-ignore
 import Drawer from 'react-motion-drawer'
 // import WakeLock from 'react-wakelock'
 import WakeLock from './WakeLock/'
+import { ThemeType, SongListType, SongFolderType, SongFoldersType } from '../types'
 import Navbar from './Navbar'
 import DrawerLeft from './DrawerLeft'
 import DrawerRight from './DrawerRight'
@@ -23,15 +24,15 @@ import {
 import themes from '../themes'
 import songsVersion from '../songsVersion.json'
 
-class ScrollToTopComponent extends Component {
-  static propTypes = {
-    location: PropTypes.object.isRequired,
-    children: PropTypes.object.isRequired,
-  }
-  componentDidUpdate (prevProps) {
+type ScrollToTopComponentProps = RouteComponentProps & {
+  location: {},
+  children: {},
+}
+class ScrollToTopComponent extends Component<ScrollToTopComponentProps> {
+  componentDidUpdate(prevProps: ScrollToTopComponentProps) {
     if (this.props.location !== prevProps.location) window.scrollTo(0, 0)
   }
-  render () {
+  render() {
     return this.props.children
   }
 }
@@ -45,6 +46,7 @@ const Backdrop = styled.div`
   bottom: 0;
   z-index: 10;
 `
+type OptionProps = { theme: ThemeType, sortAZ: boolean }
 const Options = styled.div`
   display: flex;
   align-items: stretch;
@@ -68,7 +70,7 @@ const Options = styled.div`
     }
   }
   .sort {
-    color: ${({ theme, sortAZ }) => (sortAZ ? theme.active : theme.accent)};
+    color: ${({ theme, sortAZ }: OptionProps) => (sortAZ ? theme.active : theme.accent)};
   }
 `
 const OptionsPanel = styled.div`
@@ -104,8 +106,22 @@ const FontSettings = styled(OptionsPanel)`
   padding: 15px;
 `
 
-class App extends Component {
-  state = {
+type AppState = {
+  songs: SongFoldersType,
+  songsSorted: SongFoldersType,
+  songsArray: SongListType,
+  leftDrawerOpen: boolean,
+  rightDrawerOpen: boolean,
+  currentBook: string,
+  themesPanelOpen: boolean,
+  fontPanelOpen: boolean,
+  currentTheme: number,
+  serifFont: boolean,
+  fontSizeAdd: number,
+  sortAZ: boolean,
+}
+class App extends Component<{}, AppState> {
+  state: AppState = {
     songs: [],
     songsSorted: [],
     songsArray: [],
@@ -114,38 +130,38 @@ class App extends Component {
     currentBook: null,
     themesPanelOpen: false,
     fontPanelOpen: false,
-    currentTheme: +localStorage.getItem('theme') || 0,
+    currentTheme: +(localStorage.getItem('theme')) || 0,
     serifFont: !!localStorage.getItem('serifFont'),
     fontSizeAdd: +localStorage.getItem('fontSizeAdd') || 0,
     sortAZ: !!localStorage.getItem('sortAZ') || false,
   }
-  toggleBodyOverflow (bool) {
+  toggleBodyOverflow(bool: boolean) {
     document.body.style.overflowY = bool ? 'hidden' : ''
   }
-  toggleDrawerLeft = open => {
+  toggleDrawerLeft = (open: boolean) => {
     this.setState({ leftDrawerOpen: open })
     this.toggleBodyOverflow(open)
   }
-  toggleDrawerRight = open => {
+  toggleDrawerRight = (open: boolean) => {
     this.setState({ rightDrawerOpen: open })
     this.toggleBodyOverflow(open)
   }
-  closeBackdrop = ev => {
+  closeBackdrop = (ev: any) => {
     if (ev.target.hasAttribute('data-backdrop')) {
       this.toggleThemesPanel(false)
       this.toggleFontPanel(false)
     }
   }
-  setCurrentBook = book => {
+  setCurrentBook = (book: string) => {
     this.setState({ currentBook: book })
   }
-  toggleThemesPanel = open => {
+  toggleThemesPanel = (open: boolean) => {
     this.setState({ themesPanelOpen: open })
   }
-  toggleFontPanel = open => {
+  toggleFontPanel = (open: boolean) => {
     this.setState({ fontPanelOpen: open })
   }
-  componentDidMount () {
+  componentDidMount() {
     document
       .querySelector('meta[name=theme-color]')
       .setAttribute('content', themes[this.state.currentTheme].navbar)
@@ -156,7 +172,7 @@ class App extends Component {
       fetch('/songs.json')
         .then(response => response.json())
         .then(songs => {
-          const songsSorted = songs.map(({ title, songs }) => ({
+          const songsSorted = songs.map(({ title, songs }: SongFolderType) => ({
             title,
             songs: songs
               .slice()
@@ -167,16 +183,17 @@ class App extends Component {
               ),
           }))
           const songsArray = songs
-            .map(item => item.songs)
-            .reduce((a, b) => [...a, ...b], [])
+            .map((item: SongFolderType) => item.songs)
+            .reduce((a: SongListType, b: SongListType) => [...a, ...b], [])
           this.setState({ songs, songsSorted, songsArray })
           Promise.all([
             set(KEY_SONGS, songs),
             set(KEY_SONGS_SORTED, songsSorted),
             set(KEY_SONGS_ARRAY, songsArray),
-          ]).then(() => localStorage.setItem('songsVersion', songsVersion))
+          ]).then(() => localStorage.setItem('songsVersion', songsVersion.toString()))
         })
-    const idbKeyvalGet = data =>
+    const idbKeyvalGet = (data: string) =>
+      // @ts-ignore
       get(data).then(songs => this.setState({ [data]: songs }))
     keys().then(keys => {
       if (
@@ -185,8 +202,11 @@ class App extends Component {
       ) {
         fetchJson()
       } else if (
+        // @ts-ignore
         keys.includes(KEY_SONGS) &&
+        // @ts-ignore
         keys.includes(KEY_SONGS_SORTED) &&
+        // @ts-ignore
         keys.includes(KEY_SONGS_ARRAY)
       ) {
         idbKeyvalGet(KEY_SONGS)
@@ -195,7 +215,7 @@ class App extends Component {
       } else fetchJson()
     })
   }
-  render () {
+  render() {
     const {
       songs,
       songsSorted,
@@ -274,7 +294,7 @@ class App extends Component {
                       this.setCurrentBook(null)
                       this.setState(({ sortAZ }) => {
                         const nextState = !sortAZ
-                        if (nextState) localStorage.setItem('sortAZ', true)
+                        if (nextState) localStorage.setItem('sortAZ', 'true')
                         else localStorage.removeItem('sortAZ')
                         return { sortAZ: nextState }
                       })
@@ -346,7 +366,7 @@ class App extends Component {
                             .querySelector('meta[name=theme-color]')
                             .setAttribute('content', theme.navbar)
                           this.setState({ currentTheme: index })
-                          localStorage.setItem('theme', index)
+                          localStorage.setItem('theme', index.toString())
                         }}
                       >
                         {currentTheme === index && <IconCheck />}
@@ -362,7 +382,7 @@ class App extends Component {
                       onClick={() => {
                         this.setState(({ fontSizeAdd }) => {
                           const newSize = fontSizeAdd - 2
-                          localStorage.setItem('fontSizeAdd', newSize)
+                          localStorage.setItem('fontSizeAdd', newSize.toString())
                           return { fontSizeAdd: newSize }
                         })
                       }}
@@ -384,7 +404,7 @@ class App extends Component {
                       style={{ color: serifFont ? currentThemeObj.accent : '' }}
                       onClick={() => {
                         this.setState({ serifFont: true })
-                        localStorage.setItem('serifFont', true)
+                        localStorage.setItem('serifFont', 'true')
                       }}
                     >
                       <IconType />
@@ -393,7 +413,7 @@ class App extends Component {
                       onClick={() => {
                         this.setState(({ fontSizeAdd }) => {
                           const newSize = fontSizeAdd + 2
-                          localStorage.setItem('fontSizeAdd', newSize)
+                          localStorage.setItem('fontSizeAdd', newSize.toString())
                           return { fontSizeAdd: newSize }
                         })
                       }}

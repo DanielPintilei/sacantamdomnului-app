@@ -1,27 +1,25 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 // method taken from https://github.com/richtr/NoSleep.js/blob/master/NoSleep.js
 // needs testing.
 
-class WakeLockIOS extends React.Component {
-  static propTypes = {
-    preventSleep: PropTypes.bool,
-  }
-
+type WakeLockIOSProps = {
+  preventSleep: boolean
+}
+class WakeLockIOS extends React.Component<WakeLockIOSProps> {
   static defaultProps = {
     preventSleep: true,
   }
-
-  componentDidMount () {
+  timer
+  componentDidMount() {
     this.syncState(this.props.preventSleep)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.syncState(false)
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.syncState(nextProps.preventSleep)
   }
 
@@ -43,7 +41,7 @@ class WakeLockIOS extends React.Component {
     }
   }
 
-  render () {
+  render() {
     return null
   }
 }

@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component, SFC } from 'react'
 import styled from 'styled-components'
 import { Route } from 'react-router-dom'
+import { SongType, SongListType } from '../types'
 import BackgroundImage from './BackgroundImage'
 
 const StyledSong = styled.article`
@@ -84,21 +84,25 @@ const StyledSong = styled.article`
     opacity: 0.2;
   }
 `
-class Song extends Component {
-  static propTypes = {
-    match: PropTypes.shape({
-      params: PropTypes.shape({
-        path: PropTypes.string.isRequired,
-      }).isRequired,
-    }).isRequired,
-    // songList: PropTypes.array.isRequired,
-    serifFont: PropTypes.bool,
-    fontSizeAdd: PropTypes.number,
-  }
-  state = {
+
+type SongProps = {
+  match: {
+    params: {
+      path: string
+    }
+  },
+  songList: SongListType,
+  serifFont: boolean,
+  fontSizeAdd: number,
+}
+type SongState = {
+  currentSong: SongType | null,
+}
+class Song extends Component<SongProps, SongState> {
+  state: SongState = {
     currentSong: null,
   }
-  static getDerivedStateFromProps (nextProps, prevState) {
+  static getDerivedStateFromProps(nextProps: SongProps, prevState: SongState) {
     const {
       songList,
       match: {
@@ -117,7 +121,7 @@ class Song extends Component {
     }
     return null
   }
-  componentDidMount () {
+  componentDidMount() {
     const {
       match: {
         params: { path },
@@ -130,7 +134,7 @@ class Song extends Component {
         .then(song => this.setState({ currentSong: song }))
     }
   }
-  render () {
+  render() {
     const { serifFont, fontSizeAdd } = this.props
     const { currentSong } = this.state
     if (!currentSong) return null
@@ -151,7 +155,7 @@ class Song extends Component {
           }}
           dangerouslySetInnerHTML={{ __html: currentSong.content }}
         />
-        <div className='end' />
+        <div className="end" />
       </StyledSong>
     )
   }
@@ -170,11 +174,16 @@ const StyledMain = styled.div`
     align-items: center;
   }
 `
-const Main = ({ songList, serifFont, fontSizeAdd }) => (
+type MainProps = {
+  songList: SongListType,
+  serifFont: boolean,
+  fontSizeAdd: number,
+}
+const Main: SFC<MainProps> = ({ songList, serifFont, fontSizeAdd }) => (
   <StyledMain>
-    <Route exact path='/' render={BackgroundImage.render} />
+    <Route exact path="/" component={() => <BackgroundImage></BackgroundImage>} />
     <Route
-      path='/:path'
+      path="/:path"
       render={props => (
         <Song
           songList={songList}
@@ -186,10 +195,5 @@ const Main = ({ songList, serifFont, fontSizeAdd }) => (
     />
   </StyledMain>
 )
-Main.propTypes = {
-  songList: PropTypes.array.isRequired,
-  serifFont: PropTypes.bool,
-  fontSizeAdd: PropTypes.number,
-}
 
 export default Main

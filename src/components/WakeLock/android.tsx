@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 const media = {
   // raw files taken from https://github.com/mathiasbynens/small
@@ -11,23 +10,22 @@ const media = {
 
 const ugiEvents = ['mousedown', 'touchend']
 
-function addSourceToVideo (element, type, dataURI) {
+function addSourceToVideo(element, type, dataURI) {
   const source = document.createElement('source')
   source.src = dataURI
   source.type = 'video/' + type
   element.appendChild(source)
 }
 
-class WakeLockAndroid extends React.Component {
-  static propTypes = {
-    preventSleep: PropTypes.bool,
-  }
-
+type WakeLockAndroidProps = {
+  preventSleep: boolean
+}
+class WakeLockAndroid extends React.Component<WakeLockAndroidProps> {
   static defaultProps = {
     preventSleep: true,
   }
-
-  componentDidMount () {
+  dummyVideo
+  componentDidMount() {
     // Create a <video> tag that plays a blank/dummy in a loop.
     // It's not necessary to *add* the tag to the document.
     this.dummyVideo = document.createElement('video')
@@ -39,11 +37,11 @@ class WakeLockAndroid extends React.Component {
     this.syncState(this.props.preventSleep)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     delete this.dummyVideo
   }
 
-  componentWillReceiveProps (nextProps) {
+  componentWillReceiveProps(nextProps) {
     this.syncState(nextProps.preventSleep)
   }
 
@@ -80,7 +78,7 @@ class WakeLockAndroid extends React.Component {
     this.dummyVideo.play().catch(err => console.log(err))
   }
 
-  render () {
+  render() {
     return null
   }
 }

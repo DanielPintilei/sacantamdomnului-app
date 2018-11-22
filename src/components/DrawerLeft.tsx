@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import List from 'react-virtualized/dist/commonjs/List'
+import { SongListType, SongFoldersType } from '../types'
+import { List } from 'react-virtualized/dist/commonjs/List'
 import {
   CellMeasurer,
   CellMeasurerCache,
@@ -9,15 +9,14 @@ import {
 import ListLink from './ListLink'
 import { IconBook } from './icons'
 
-class ListWrapper extends Component {
-  static propTypes = {
-    children: PropTypes.object.isRequired,
-    scrollToCurrentSong: PropTypes.func.isRequired,
-  }
-  componentDidMount () {
+type ListWrapperProps = {
+  scrollToCurrentSong: () => void,
+}
+class ListWrapper extends Component<ListWrapperProps> {
+  componentDidMount() {
     this.props.scrollToCurrentSong()
   }
-  render () {
+  render() {
     return this.props.children
   }
 }
@@ -40,21 +39,22 @@ const H3 = styled.h3`
   }
 `
 
-class SongSection extends Component {
+type SongSectionProps = {
+  title: string,
+  songs: SongListType,
+  closeDrawer: () => void,
+  currentBook: string,
+  setCurrentBook: (title: string | null) => void,
+  currentSong: number,
+  setCurrentSong: (index: number) => void,
+}
+class SongSection extends Component<SongSectionProps> {
   cache = new CellMeasurerCache({
     fixedWidth: true,
     defaultHeight: 34,
   })
-  static propTypes = {
-    title: PropTypes.string.isRequired,
-    songs: PropTypes.array.isRequired,
-    closeDrawer: PropTypes.func.isRequired,
-    currentBook: PropTypes.string,
-    setCurrentBook: PropTypes.func.isRequired,
-    currentSong: PropTypes.number,
-    setCurrentSong: PropTypes.func.isRequired,
-  }
-  render () {
+  listRef: any
+  render() {
     const {
       title,
       songs,
@@ -68,10 +68,10 @@ class SongSection extends Component {
       key,
       index,
       parent,
-      isScrolling,
-      isVisible,
+      // isScrolling,
+      // isVisible,
       style,
-    }) => {
+    }: any) => {
       const { number: songNumber, title: songTitle, path } = songs[index]
       return (
         <CellMeasurer
@@ -135,21 +135,25 @@ class SongSection extends Component {
   }
 }
 
-class DrawerLeft extends Component {
-  state = {
+type DrawerLeftProps = {
+  songList: SongFoldersType,
+  closeDrawer: () => void,
+  currentBook: string,
+  setCurrentBook: (book: string) => void,
+}
+type DrawerLeftState = {
+  currentBook: string,
+  currentSong: number,
+}
+class DrawerLeft extends Component<DrawerLeftProps, DrawerLeftState> {
+  state: DrawerLeftState = {
     currentBook: null,
     currentSong: 0,
   }
-  static propTypes = {
-    songList: PropTypes.array.isRequired,
-    closeDrawer: PropTypes.func.isRequired,
-    currentBook: PropTypes.any,
-    setCurrentBook: PropTypes.func.isRequired,
-  }
-  closeBook () {
+  closeBook() {
     this.setState({ currentBook: null })
   }
-  render () {
+  render() {
     const { songList, closeDrawer, currentBook, setCurrentBook } = this.props
     const { currentSong } = this.state
     return (

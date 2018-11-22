@@ -13,5 +13,3 @@ ReactDOM.render(
 )
 
 serviceWorker.register()
-
-if (module.hot) module.hot.accept()

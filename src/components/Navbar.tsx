@@ -1,5 +1,4 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { SFC } from 'react'
 import Headroom from 'react-headroom'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
@@ -20,13 +19,17 @@ const Nav = styled.div`
     color: ${({ theme }) => theme.iconsNavbar};
   }
 `
-const Navbar = ({ onClickLeft, onClickRight }) => (
+type NavbarProps = {
+  onClickLeft: () => void,
+  onClickRight: () => void
+}
+const Navbar: SFC<NavbarProps> = ({ onClickLeft, onClickRight }) => (
   <Headroom>
     <Nav>
       <button onClick={onClickLeft}>
         <IconMenu />
       </button>
-      <Link to='/'>
+      <Link to="/">
         <Logo />
       </Link>
       <button onClick={onClickRight}>
@@ -35,9 +38,5 @@ const Navbar = ({ onClickLeft, onClickRight }) => (
     </Nav>
   </Headroom>
 )
-Navbar.propTypes = {
-  onClickLeft: PropTypes.func.isRequired,
-  onClickRight: PropTypes.func.isRequired,
-}
 
 export default Navbar
