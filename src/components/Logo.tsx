@@ -130,28 +130,28 @@ const Div = styled.div`
 
 export default () => (
   <Div>
-    <svg width='100%' height='100%' viewBox='0 0 24 24'>
-      <g className='gr1'>
-        <path d='M12,9.798l0,4.437' />
-        <path d='M10.847,10.763l2.306,0' />
+    <svg width="100%" height="100%" viewBox="0 0 24 24">
+      <g className="gr1">
+        <path d="M12,9.798l0,4.437" />
+        <path d="M10.847,10.763l2.306,0" />
       </g>
-      <g className='gr2'>
-        <path className='gr2-1' d='M12,6.529l0,2.046' />
-        <path className='gr2-2' d='M17.471,12l-2.046,0' />
-        <path className='gr2-3' d='M8.131,8.131l1.447,1.447' />
-        <path className='gr2-4' d='M8.131,15.869l1.447,-1.447' />
-        <path className='gr2-5' d='M12,15.425l0,2.046' />
-        <path className='gr2-6' d='M8.575,12l-2.046,0' />
-        <path className='gr2-7' d='M14.422,14.422l1.447,1.447' />
-        <path className='gr2-8' d='M14.422,9.578l1.447,-1.447' />
-        <path className='gr3-1' d='M9.95,6.927l0.767,1.898' />
-        <path className='gr3-2' d='M17.073,9.95l-1.898,0.767' />
-        <path className='gr3-3' d='M6.963,9.863l1.884,0.799' />
-        <path className='gr3-4' d='M9.863,17.037l0.799,-1.884' />
-        <path className='gr3-5' d='M13.283,15.175l0.767,1.898' />
-        <path className='gr3-6' d='M8.825,13.283l-1.898,0.767' />
-        <path className='gr3-7' d='M15.153,13.338l1.884,0.799' />
-        <path className='gr3-8' d='M13.338,8.847l0.799,-1.884' />
+      <g className="gr2">
+        <path className="gr2-1" d="M12,6.529l0,2.046" />
+        <path className="gr2-2" d="M17.471,12l-2.046,0" />
+        <path className="gr2-3" d="M8.131,8.131l1.447,1.447" />
+        <path className="gr2-4" d="M8.131,15.869l1.447,-1.447" />
+        <path className="gr2-5" d="M12,15.425l0,2.046" />
+        <path className="gr2-6" d="M8.575,12l-2.046,0" />
+        <path className="gr2-7" d="M14.422,14.422l1.447,1.447" />
+        <path className="gr2-8" d="M14.422,9.578l1.447,-1.447" />
+        <path className="gr3-1" d="M9.95,6.927l0.767,1.898" />
+        <path className="gr3-2" d="M17.073,9.95l-1.898,0.767" />
+        <path className="gr3-3" d="M6.963,9.863l1.884,0.799" />
+        <path className="gr3-4" d="M9.863,17.037l0.799,-1.884" />
+        <path className="gr3-5" d="M13.283,15.175l0.767,1.898" />
+        <path className="gr3-6" d="M8.825,13.283l-1.898,0.767" />
+        <path className="gr3-7" d="M15.153,13.338l1.884,0.799" />
+        <path className="gr3-8" d="M13.338,8.847l0.799,-1.884" />
       </g>
     </svg>
   </Div>

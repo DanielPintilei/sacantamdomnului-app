@@ -10,13 +10,13 @@ import ListLink from './ListLink'
 import { IconBook } from './icons'
 
 type ListWrapperProps = {
-  scrollToCurrentSong: () => void,
+  scrollToCurrentSong: () => void
 }
 class ListWrapper extends Component<ListWrapperProps> {
-  componentDidMount() {
+  componentDidMount () {
     this.props.scrollToCurrentSong()
   }
-  render() {
+  render () {
     return this.props.children
   }
 }
@@ -40,13 +40,13 @@ const H3 = styled.h3`
 `
 
 type SongSectionProps = {
-  title: string,
-  songs: SongListType,
-  closeDrawer: () => void,
-  currentBook: string,
-  setCurrentBook: (title: string | null) => void,
-  currentSong: number,
-  setCurrentSong: (index: number) => void,
+  title: string
+  songs: SongListType
+  closeDrawer: () => void
+  currentBook: string
+  setCurrentBook: (title: string | null) => void
+  currentSong: number
+  setCurrentSong: (index: number) => void
 }
 class SongSection extends Component<SongSectionProps> {
   cache = new CellMeasurerCache({
@@ -54,7 +54,7 @@ class SongSection extends Component<SongSectionProps> {
     defaultHeight: 34,
   })
   listRef: any
-  render() {
+  render () {
     const {
       title,
       songs,
@@ -136,24 +136,24 @@ class SongSection extends Component<SongSectionProps> {
 }
 
 type DrawerLeftProps = {
-  songList: SongFoldersType,
-  closeDrawer: () => void,
-  currentBook: string,
-  setCurrentBook: (book: string) => void,
+  songList: SongFoldersType
+  closeDrawer: () => void
+  currentBook: string
+  setCurrentBook: (book: string) => void
 }
 type DrawerLeftState = {
-  currentBook: string,
-  currentSong: number,
+  currentBook: string
+  currentSong: number
 }
 class DrawerLeft extends Component<DrawerLeftProps, DrawerLeftState> {
   state: DrawerLeftState = {
     currentBook: null,
     currentSong: 0,
   }
-  closeBook() {
+  closeBook () {
     this.setState({ currentBook: null })
   }
-  render() {
+  render () {
     const { songList, closeDrawer, currentBook, setCurrentBook } = this.props
     const { currentSong } = this.state
     return (

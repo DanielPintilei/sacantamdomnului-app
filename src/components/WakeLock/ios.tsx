@@ -10,25 +10,24 @@ class WakeLockIOS extends React.Component<WakeLockIOSProps> {
   static defaultProps = {
     preventSleep: true,
   }
-  timer
-  componentDidMount() {
+  timer: any
+  componentDidMount () {
     this.syncState(this.props.preventSleep)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     this.syncState(false)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps: WakeLockIOSProps) {
     this.syncState(nextProps.preventSleep)
   }
 
-  syncState = preventSleep => {
+  syncState = (preventSleep: boolean) => {
     if (preventSleep && !this.timer) {
       this.timer = setInterval(() => {
         if (!document.hidden) {
           // gh-richtr/NoSleep.js#25
-          // eslint-disable-next-line
           window.location.href = window.location.href // gh-richtr/NoSleep.js#12
           setTimeout(window.stop, 0)
         }
@@ -41,7 +40,7 @@ class WakeLockIOS extends React.Component<WakeLockIOSProps> {
     }
   }
 
-  render() {
+  render (): any {
     return null
   }
 }

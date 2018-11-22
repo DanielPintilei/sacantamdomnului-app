@@ -1,17 +1,15 @@
-import React, { Component, ComponentClass } from 'react'
+import React, { Component } from 'react'
 import { withTheme } from 'styled-components'
+import { ThemeType } from '../types'
 
 type BackgroundImageProps = {
-  theme: {
-    accent: string,
-    logo: string
-  },
+  theme: ThemeType
 }
-class BackgroundImage extends Component<ComponentClass & BackgroundImageProps> {
+class BackgroundImage extends Component<BackgroundImageProps> {
   state = {
     height: window.innerHeight - 70,
   }
-  render() {
+  render () {
     const { accent, logo } = this.props.theme
     return (
       <div style={{ height: this.state.height }} className="background-image">

@@ -90,19 +90,19 @@ type SongProps = {
     params: {
       path: string
     }
-  },
-  songList: SongListType,
-  serifFont: boolean,
-  fontSizeAdd: number,
+  }
+  songList: SongListType
+  serifFont: boolean
+  fontSizeAdd: number
 }
 type SongState = {
-  currentSong: SongType | null,
+  currentSong: SongType | null
 }
 class Song extends Component<SongProps, SongState> {
   state: SongState = {
     currentSong: null,
   }
-  static getDerivedStateFromProps(nextProps: SongProps, prevState: SongState) {
+  static getDerivedStateFromProps (nextProps: SongProps, prevState: SongState) {
     const {
       songList,
       match: {
@@ -121,7 +121,7 @@ class Song extends Component<SongProps, SongState> {
     }
     return null
   }
-  componentDidMount() {
+  componentDidMount () {
     const {
       match: {
         params: { path },
@@ -134,7 +134,7 @@ class Song extends Component<SongProps, SongState> {
         .then(song => this.setState({ currentSong: song }))
     }
   }
-  render() {
+  render () {
     const { serifFont, fontSizeAdd } = this.props
     const { currentSong } = this.state
     if (!currentSong) return null
@@ -175,13 +175,13 @@ const StyledMain = styled.div`
   }
 `
 type MainProps = {
-  songList: SongListType,
-  serifFont: boolean,
-  fontSizeAdd: number,
+  songList: SongListType
+  serifFont: boolean
+  fontSizeAdd: number
 }
 const Main: SFC<MainProps> = ({ songList, serifFont, fontSizeAdd }) => (
   <StyledMain>
-    <Route exact path="/" component={() => <BackgroundImage></BackgroundImage>} />
+    <Route exact path="/" component={() => <BackgroundImage />} />
     <Route
       path="/:path"
       render={props => (

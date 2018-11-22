@@ -10,7 +10,7 @@ const media = {
 
 const ugiEvents = ['mousedown', 'touchend']
 
-function addSourceToVideo(element, type, dataURI) {
+function addSourceToVideo (element: any, type: string, dataURI: string) {
   const source = document.createElement('source')
   source.src = dataURI
   source.type = 'video/' + type
@@ -24,8 +24,8 @@ class WakeLockAndroid extends React.Component<WakeLockAndroidProps> {
   static defaultProps = {
     preventSleep: true,
   }
-  dummyVideo
-  componentDidMount() {
+  dummyVideo: any
+  componentDidMount () {
     // Create a <video> tag that plays a blank/dummy in a loop.
     // It's not necessary to *add* the tag to the document.
     this.dummyVideo = document.createElement('video')
@@ -36,16 +36,13 @@ class WakeLockAndroid extends React.Component<WakeLockAndroidProps> {
 
     this.syncState(this.props.preventSleep)
   }
-
-  componentWillUnmount() {
+  componentWillUnmount () {
     delete this.dummyVideo
   }
-
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps: WakeLockAndroidProps) {
     this.syncState(nextProps.preventSleep)
   }
-
-  syncState = preventSleep => {
+  syncState = (preventSleep: boolean) => {
     if (preventSleep) {
       if (this.dummyVideo.paused) {
         // We need a "user generated intervention" to start the video.
@@ -53,32 +50,28 @@ class WakeLockAndroid extends React.Component<WakeLockAndroidProps> {
         this.removeListeners()
         this.addListeners()
       }
-      this.dummyVideo.play().catch(err => console.log(err))
+      this.dummyVideo.play().catch((err: any) => console.log(err))
     } else {
       this.removeListeners()
 
       this.dummyVideo.pause()
     }
   }
-
   removeListeners = () => {
     for (let i = 0; i < ugiEvents.length; i++) {
       document.removeEventListener(ugiEvents[i], this.startVideo, false)
     }
   }
-
   addListeners = () => {
     for (let i = 0; i < ugiEvents.length; i++) {
       document.addEventListener(ugiEvents[i], this.startVideo, false)
     }
   }
-
   startVideo = () => {
     this.removeListeners()
-    this.dummyVideo.play().catch(err => console.log(err))
+    this.dummyVideo.play().catch((err: any) => console.log(err))
   }
-
-  render() {
+  render (): any {
     return null
   }
 }

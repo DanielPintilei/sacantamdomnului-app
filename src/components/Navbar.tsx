@@ -1,4 +1,5 @@
 import React, { SFC } from 'react'
+// @ts-ignore
 import Headroom from 'react-headroom'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
@@ -20,7 +21,7 @@ const Nav = styled.div`
   }
 `
 type NavbarProps = {
-  onClickLeft: () => void,
+  onClickLeft: () => void
   onClickRight: () => void
 }
 const Navbar: SFC<NavbarProps> = ({ onClickLeft, onClickRight }) => (
