@@ -8,6 +8,10 @@ type RouteChangeWatcherProps = RouteComponentProps & {
   children: {}
 }
 class RouteChangeWatcher extends Component<RouteChangeWatcherProps> {
+  componentDidMount () {
+    const { history, location } = this.props
+    history.push(location)
+  }
   componentDidUpdate (prevProps: RouteChangeWatcherProps) {
     const { menuOpen, callback, history, location } = this.props
     const locationIsNotTheSame = location !== prevProps.location

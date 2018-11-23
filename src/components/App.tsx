@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import {
-  BrowserRouter as Router,
-} from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import { get, set, keys } from 'idb-keyval'
 import styled, { ThemeProvider } from 'styled-components'
 import WakeLock from './WakeLock/'
@@ -166,7 +164,12 @@ class App extends Component<{}, AppState> {
     return (
       <Router>
         <RouteChangeWatcher
-          menuOpen={leftDrawerOpen || rightDrawerOpen || themesPanelOpen || fontPanelOpen}
+          menuOpen={
+            leftDrawerOpen ||
+            rightDrawerOpen ||
+            themesPanelOpen ||
+            fontPanelOpen
+          }
           callback={() => {
             this.toggleDrawerLeft(false)
             this.toggleDrawerRight(false)
