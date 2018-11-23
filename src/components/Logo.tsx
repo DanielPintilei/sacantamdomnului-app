@@ -127,9 +127,10 @@ const Div = styled.div`
     }
   }
 `
+const WrapperMemoized = React.memo(Div)
 
-export default () => (
-  <Div>
+const Logo = (
+  <WrapperMemoized>
     <svg width="100%" height="100%" viewBox="0 0 24 24">
       <g className="gr1">
         <path d="M12,9.798l0,4.437" />
@@ -154,5 +155,7 @@ export default () => (
         <path className="gr3-8" d="M13.338,8.847l0.799,-1.884" />
       </g>
     </svg>
-  </Div>
+  </WrapperMemoized>
 )
+
+export default Logo

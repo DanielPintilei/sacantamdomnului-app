@@ -20,6 +20,7 @@ const Nav = styled.div`
     color: ${({ theme }) => theme.iconsNavbar};
   }
 `
+
 type NavbarProps = {
   onClickLeft: () => void
   onClickRight: () => void
@@ -27,15 +28,9 @@ type NavbarProps = {
 const Navbar: SFC<NavbarProps> = ({ onClickLeft, onClickRight }) => (
   <Headroom>
     <Nav>
-      <button onClick={onClickLeft}>
-        <IconMenu />
-      </button>
-      <Link to="/">
-        <Logo />
-      </Link>
-      <button onClick={onClickRight}>
-        <IconSearch />
-      </button>
+      <button onClick={onClickLeft}>{IconMenu}</button>
+      <Link to="/">{Logo}</Link>
+      <button onClick={onClickRight}>{IconSearch}</button>
     </Nav>
   </Headroom>
 )

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import styled from 'styled-components'
 import { SongListType, SongFoldersType } from '../types'
 import { List } from 'react-virtualized/dist/commonjs/List'
@@ -12,7 +12,7 @@ import { IconBook } from './icons'
 type ListWrapperProps = {
   scrollToCurrentSong: () => void
 }
-class ListWrapper extends Component<ListWrapperProps> {
+class ListWrapper extends PureComponent<ListWrapperProps> {
   componentDidMount () {
     this.props.scrollToCurrentSong()
   }
@@ -48,7 +48,7 @@ type SongSectionProps = {
   currentSong: number
   setCurrentSong: (index: number) => void
 }
-class SongSection extends Component<SongSectionProps> {
+class SongSection extends PureComponent<SongSectionProps> {
   cache = new CellMeasurerCache({
     fixedWidth: true,
     defaultHeight: 34,
@@ -111,7 +111,7 @@ class SongSection extends Component<SongSectionProps> {
             }
           }}
         >
-          <IconBook /> {title}
+          {IconBook} {title}
         </H3>
         {currentBookIsThis && (
           <ListWrapper
@@ -145,7 +145,7 @@ type DrawerLeftState = {
   currentBook: string
   currentSong: number
 }
-class DrawerLeft extends Component<DrawerLeftProps, DrawerLeftState> {
+class DrawerLeft extends PureComponent<DrawerLeftProps, DrawerLeftState> {
   state: DrawerLeftState = {
     currentBook: null,
     currentSong: 0,

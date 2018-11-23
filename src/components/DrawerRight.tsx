@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import Downshift from 'downshift'
 import styled from 'styled-components'
 import { SongListType } from '../types'
@@ -60,7 +60,7 @@ type DrawerRightProps = {
   closeDrawer: () => void
   searchFocused: boolean
 }
-class DrawerRight extends Component<DrawerRightProps> {
+class DrawerRight extends PureComponent<DrawerRightProps> {
   searchInput: any
   componentDidUpdate () {
     if (this.props.searchFocused) {
@@ -75,7 +75,7 @@ class DrawerRight extends Component<DrawerRightProps> {
           {({ getInputProps, isOpen, inputValue }) => (
             <div className="wrapper">
               <label>
-                <IconSearch />
+                {IconSearch}
                 <input
                   {...getInputProps()}
                   ref={input => {

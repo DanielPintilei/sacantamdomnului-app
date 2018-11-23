@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const IconMenu = () => (
+export const IconMenu = (
   <svg
     width="24"
     height="24"
@@ -16,7 +16,8 @@ export const IconMenu = () => (
     <circle cx="12" cy="20" r="2" />
   </svg>
 )
-export const IconSearch = () => (
+
+export const IconSearch = (
   <svg
     width="24"
     height="24"
@@ -31,7 +32,8 @@ export const IconSearch = () => (
     <line x1="21" y1="21" x2="15.8" y2="15.8" />
   </svg>
 )
-export const IconBook = () => (
+
+export const IconBook = (
   <svg
     width="24"
     height="24"
@@ -46,7 +48,8 @@ export const IconBook = () => (
     <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
   </svg>
 )
-export const IconInfo = () => (
+
+export const IconInfo = (
   <svg
     width="24"
     height="24"
@@ -62,7 +65,8 @@ export const IconInfo = () => (
     <line x1="12" y1="8" x2="12" y2="8" />
   </svg>
 )
-export const IconSort = () => (
+
+export const IconSort = (
   <svg
     width="30.180317"
     height="30.380543"
@@ -83,7 +87,8 @@ export const IconSort = () => (
     <path d="m 13.595565,3.8144929 2.363909,-1.5518171 2.363909,1.5518171" />
   </svg>
 )
-export const IconDroplet = () => (
+
+export const IconDroplet = (
   <svg
     width="24"
     height="24"
@@ -97,7 +102,8 @@ export const IconDroplet = () => (
     <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
   </svg>
 )
-export const IconTypeSans = () => (
+
+export const IconTypeSans = (
   <svg
     width="24"
     height="24"
@@ -112,7 +118,8 @@ export const IconTypeSans = () => (
     <line x1="20" y1="4" x2="4" y2="4" />
   </svg>
 )
-export const IconType = () => (
+
+export const IconType = (
   <svg
     width="24"
     height="24"
@@ -128,7 +135,8 @@ export const IconType = () => (
     <line x1="12" y1="4" x2="12" y2="20" />
   </svg>
 )
-export const IconZoomOut = () => (
+
+export const IconZoomOut = (
   <svg
     width="24"
     height="24"
@@ -144,7 +152,8 @@ export const IconZoomOut = () => (
     <line x1="8" y1="11" x2="14" y2="11" />
   </svg>
 )
-export const IconZoomIn = () => (
+
+export const IconZoomIn = (
   <svg
     width="24"
     height="24"
@@ -161,7 +170,8 @@ export const IconZoomIn = () => (
     <line x1="8" y1="11" x2="14" y2="11" />
   </svg>
 )
-export const IconCheck = () => (
+
+export const IconCheck = (
   <svg
     width="24"
     height="24"
