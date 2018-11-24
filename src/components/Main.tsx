@@ -12,7 +12,6 @@ const StyledMain = styled.div`
   margin-top: -70px;
   padding-top: 70px;
   background-color: ${({ theme }) => theme.background};
-  overflow: hidden;
   touch-action: pan-y;
   .background-image {
     display: flex;
