@@ -58,6 +58,40 @@
         <div style="font-style: italic;">Slăvit să fie Domnul</div>
       </div>
     </div>
-    <div id="root"></div>
+    <div id="root">
+      <div
+        style="height: 100vh; display: flex; align-items: center; justify-content: center; background-color: #2c2b2a;"
+      >
+        <svg
+          style="display: block; margin: 30px auto;"
+          width="200"
+          height="2"
+          viewBox="0 0 200 2"
+        >
+          <line
+            class="loader"
+            x1="0"
+            y1="1"
+            x2="200"
+            y2="1"
+            stroke-width="2"
+            stroke="#ecce93"
+          />
+          <style>
+            @keyframes loader {
+              to {
+                stroke-dashoffset: -200;
+              }
+            }
+
+            .loader {
+              stroke-dasharray: 200;
+              stroke-dashoffset: 200;
+              animation: loader 2s infinite ease-in;
+            }
+          </style>
+        </svg>
+      </div>
+    </div>
   </body>
 </html>
