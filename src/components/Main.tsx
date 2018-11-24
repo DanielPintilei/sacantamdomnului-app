@@ -27,13 +27,7 @@ type MainProps = {
 }
 const Main: SFC<MainProps> = ({ songList, serifFont, fontSizeAdd }) => (
   <StyledMain>
-    <Route
-      exact
-      path="/"
-      component={React.memo(() => (
-        <BackgroundImage />
-      ))}
-    />
+    <Route exact path="/" component={() => <BackgroundImage />} />
     <Route
       path="/:path"
       render={props => (
