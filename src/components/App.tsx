@@ -195,9 +195,7 @@ class App extends Component<{}, AppState> {
                 {!themesPanelOpen && !fontPanelOpen && (
                   <DrawerLeft
                     songList={sortAZ ? songsSorted : songs}
-                    closeDrawer={() =>
-                      this.setState({ leftDrawerOpen: false })
-                    }
+                    closeDrawer={() => this.setState({ leftDrawerOpen: false })}
                     currentBook={currentBook}
                     setCurrentBook={this.setCurrentBook}
                   />
@@ -268,10 +266,7 @@ class App extends Component<{}, AppState> {
                     setZoomOut={() => {
                       this.setState(({ fontSizeAdd }: AppState) => {
                         const newSize = fontSizeAdd - 2
-                        localStorage.setItem(
-                          'fontSizeAdd',
-                          newSize.toString(),
-                        )
+                        localStorage.setItem('fontSizeAdd', newSize.toString())
                         return { fontSizeAdd: newSize }
                       })
                     }}
@@ -286,10 +281,7 @@ class App extends Component<{}, AppState> {
                     setZoomIn={() => {
                       this.setState(({ fontSizeAdd }: AppState) => {
                         const newSize = fontSizeAdd + 2
-                        localStorage.setItem(
-                          'fontSizeAdd',
-                          newSize.toString(),
-                        )
+                        localStorage.setItem('fontSizeAdd', newSize.toString())
                         return { fontSizeAdd: newSize }
                       })
                     }}

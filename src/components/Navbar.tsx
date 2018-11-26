@@ -1,4 +1,4 @@
-import React, { SFC } from 'react'
+import React, { FC } from 'react'
 // @ts-ignore
 import Headroom from 'react-headroom'
 import styled from 'styled-components'
@@ -25,7 +25,7 @@ type NavbarProps = {
   onClickLeft: () => void
   onClickRight: () => void
 }
-const Navbar: SFC<NavbarProps> = ({ onClickLeft, onClickRight }) => (
+const Navbar: FC<NavbarProps> = ({ onClickLeft, onClickRight }) => (
   <Headroom>
     <Nav>
       <button onClick={onClickLeft}>{IconMenu}</button>

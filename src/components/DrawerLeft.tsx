@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, useState, FC } from 'react'
 import styled from 'styled-components'
 import { SongListType, SongFoldersType } from '../types'
 import { List } from 'react-virtualized/dist/commonjs/List'
@@ -141,42 +141,29 @@ type DrawerLeftProps = {
   currentBook: string
   setCurrentBook: (book: string) => void
 }
-type DrawerLeftState = {
-  currentBook: string
-  currentSong: number
-}
-class DrawerLeft extends PureComponent<DrawerLeftProps, DrawerLeftState> {
-  state: DrawerLeftState = {
-    currentBook: null,
-    currentSong: 0,
-  }
-  closeBook () {
-    this.setState({ currentBook: null })
-  }
-  render () {
-    const { songList, closeDrawer, currentBook, setCurrentBook } = this.props
-    const { currentSong } = this.state
-    return (
-      <div>
-        {songList.map(({ title, songs }) => (
-          <SongSection
-            title={title}
-            songs={songs}
-            closeDrawer={closeDrawer}
-            currentBook={currentBook}
-            setCurrentBook={setCurrentBook}
-            currentSong={currentSong}
-            setCurrentSong={currentSong =>
-              this.setState({
-                currentSong,
-              })
-            }
-            key={title}
-          />
-        ))}
-      </div>
-    )
-  }
+const DrawerLeft: FC<DrawerLeftProps> = ({
+  songList,
+  closeDrawer,
+  currentBook,
+  setCurrentBook,
+}) => {
+  const [currentSong, setCurrentSong] = useState(0)
+  return (
+    <div>
+      {songList.map(({ title, songs }) => (
+        <SongSection
+          title={title}
+          songs={songs}
+          closeDrawer={closeDrawer}
+          currentBook={currentBook}
+          setCurrentBook={setCurrentBook}
+          currentSong={currentSong}
+          setCurrentSong={currentSong => setCurrentSong(currentSong)}
+          key={title}
+        />
+      ))}
+    </div>
+  )
 }
 
 export default DrawerLeft

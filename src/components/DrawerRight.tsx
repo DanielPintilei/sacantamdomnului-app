@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { useEffect, useRef, FC } from 'react'
 import Downshift from 'downshift'
 import styled from 'styled-components'
 import { SongListType } from '../types'
@@ -60,67 +60,67 @@ type DrawerRightProps = {
   closeDrawer: () => void
   searchFocused: boolean
 }
-class DrawerRight extends PureComponent<DrawerRightProps> {
-  searchInput: any
-  componentDidUpdate () {
-    if (this.props.searchFocused) {
-      setTimeout(() => this.searchInput.focus())
-    }
-  }
-  render () {
-    const { songList, closeDrawer } = this.props
-    return (
-      <Div>
-        <Downshift>
-          {({ getInputProps, isOpen, inputValue }) => (
-            <div className="wrapper">
-              <label>
-                {IconSearch}
-                <input
-                  {...getInputProps()}
-                  ref={input => {
-                    this.searchInput = input
-                  }}
-                  type="search"
-                  autoComplete="off"
-                  autoCorrect="off"
-                  autoCapitalize="off"
-                  spellCheck="false"
-                />
-              </label>
-              {isOpen ? (
-                <div className="list">
-                  {songList
-                    .filter(({ number, title }) => {
-                      const formattedTitle = replaceAccents(title).toLowerCase()
-                      const searchText = new RegExp(`\\b${inputValue}`, 'ig')
-                      return (
-                        (inputValue &&
-                          number.toString().startsWith(inputValue)) ||
-                        ((formattedTitle
-                          .replace(/[^\w\s]|_/g, '')
-                          .replace(/\s+/g, ' ')
-                          .match(searchText) ||
-                          formattedTitle.match(searchText)) &&
-                          inputValue &&
-                          inputValue.length > 1)
-                      )
-                    })
-                    .sort((a, b) => a.number - b.number)
-                    .map(({ number, title, path }) => (
-                      <ListLink key={path} to={path} onClick={closeDrawer}>
-                        <span>{number}</span>
-                        <span>{title}</span>
-                      </ListLink>
-                    ))}
-                </div>
-              ) : null}
-            </div>
-          )}
-        </Downshift>
-      </Div>
-    )
-  }
+const DrawerRight: FC<DrawerRightProps> = ({
+  songList,
+  closeDrawer,
+  searchFocused,
+}) => {
+  const searchInput = useRef(null)
+  useEffect(
+    () => {
+      setTimeout(() => searchInput.current.focus())
+    },
+    [searchFocused],
+  )
+  return (
+    <Div>
+      <Downshift>
+        {({ getInputProps, isOpen, inputValue }) => (
+          <div className="wrapper">
+            <label>
+              {IconSearch}
+              <input
+                {...getInputProps()}
+                ref={searchInput}
+                type="search"
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck="false"
+              />
+            </label>
+            {isOpen ? (
+              <div className="list">
+                {songList
+                  .filter(({ number, title }) => {
+                    const formattedTitle = replaceAccents(title).toLowerCase()
+                    const searchText = new RegExp(`\\b${inputValue}`, 'ig')
+                    return (
+                      (inputValue &&
+                        number.toString().startsWith(inputValue)) ||
+                      ((formattedTitle
+                        .replace(/[^\w\s]|_/g, '')
+                        .replace(/\s+/g, ' ')
+                        .match(searchText) ||
+                        formattedTitle.match(searchText)) &&
+                        inputValue &&
+                        inputValue.length > 1)
+                    )
+                  })
+                  .sort((a, b) => a.number - b.number)
+                  .map(({ number, title, path }) => (
+                    <ListLink key={path} to={path} onClick={closeDrawer}>
+                      <span>{number}</span>
+                      <span>{title}</span>
+                    </ListLink>
+                  ))}
+              </div>
+            ) : null}
+          </div>
+        )}
+      </Downshift>
+    </Div>
+  )
 }
 
 export default DrawerRight

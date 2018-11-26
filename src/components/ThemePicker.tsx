@@ -1,4 +1,4 @@
-import React, { SFC } from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 import OptionsPanel from './OptionsPanel'
 import { IconCheck } from './icons'
@@ -24,7 +24,7 @@ type ThemePickerProps = {
   currentTheme: number
   setCurrentTheme: (index: number) => void
 }
-const ThemePicker: SFC<ThemePickerProps> = ({
+const ThemePicker: FC<ThemePickerProps> = ({
   currentTheme,
   setCurrentTheme,
 }) => (

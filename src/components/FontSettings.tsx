@@ -1,4 +1,4 @@
-import React, { SFC } from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 import { ThemeType } from '../types'
 import OptionsPanel from './OptionsPanel'
@@ -18,7 +18,7 @@ type FontSettingsProps = {
   setFontSerif: () => void
   setZoomIn: () => void
 }
-const FontSettings: SFC<FontSettingsProps> = ({
+const FontSettings: FC<FontSettingsProps> = ({
   serifFont,
   currentThemeObj,
   setZoomOut,

@@ -1,4 +1,4 @@
-import React, { SFC } from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 import { Route } from 'react-router-dom'
 import { SongListType } from '../types'
@@ -24,7 +24,7 @@ type MainProps = {
   serifFont: boolean
   fontSizeAdd: number
 }
-const Main: SFC<MainProps> = ({ songList, serifFont, fontSizeAdd }) => (
+const Main: FC<MainProps> = ({ songList, serifFont, fontSizeAdd }) => (
   <StyledMain>
     <Route exact path="/" component={() => <BackgroundImage />} />
     <Route

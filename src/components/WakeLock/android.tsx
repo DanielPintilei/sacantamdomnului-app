@@ -1,4 +1,4 @@
-import React from 'react'
+import { Component } from 'react'
 
 const media = {
   // raw files taken from https://github.com/mathiasbynens/small
@@ -20,7 +20,7 @@ function addSourceToVideo (element: any, type: string, dataURI: string) {
 type WakeLockAndroidProps = {
   preventSleep: boolean
 }
-class WakeLockAndroid extends React.Component<WakeLockAndroidProps> {
+class WakeLockAndroid extends Component<WakeLockAndroidProps> {
   static defaultProps = {
     preventSleep: true,
   }
@@ -30,10 +30,8 @@ class WakeLockAndroid extends React.Component<WakeLockAndroidProps> {
     // It's not necessary to *add* the tag to the document.
     this.dummyVideo = document.createElement('video')
     this.dummyVideo.setAttribute('loop', '')
-
     addSourceToVideo(this.dummyVideo, 'webm', media.WebM)
     addSourceToVideo(this.dummyVideo, 'mp4', media.MP4)
-
     this.syncState(this.props.preventSleep)
   }
   componentWillUnmount () {
@@ -53,7 +51,6 @@ class WakeLockAndroid extends React.Component<WakeLockAndroidProps> {
       this.dummyVideo.play().catch((err: any) => console.log(err))
     } else {
       this.removeListeners()
-
       this.dummyVideo.pause()
     }
   }

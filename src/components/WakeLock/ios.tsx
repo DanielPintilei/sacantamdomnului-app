@@ -1,4 +1,4 @@
-import React from 'react'
+import { Component } from 'react'
 
 // method taken from https://github.com/richtr/NoSleep.js/blob/master/NoSleep.js
 // needs testing.
@@ -6,7 +6,7 @@ import React from 'react'
 type WakeLockIOSProps = {
   preventSleep: boolean
 }
-class WakeLockIOS extends React.Component<WakeLockIOSProps> {
+class WakeLockIOS extends Component<WakeLockIOSProps> {
   static defaultProps = {
     preventSleep: true,
   }
@@ -14,15 +14,12 @@ class WakeLockIOS extends React.Component<WakeLockIOSProps> {
   componentDidMount () {
     this.syncState(this.props.preventSleep)
   }
-
   componentWillUnmount () {
     this.syncState(false)
   }
-
   componentWillReceiveProps (nextProps: WakeLockIOSProps) {
     this.syncState(nextProps.preventSleep)
   }
-
   syncState = (preventSleep: boolean) => {
     if (preventSleep && !this.timer) {
       this.timer = setInterval(() => {
@@ -33,13 +30,11 @@ class WakeLockIOS extends React.Component<WakeLockIOSProps> {
         }
       }, 15000)
     }
-
     if (!preventSleep && this.timer) {
       clearInterval(this.timer)
       this.timer = null
     }
   }
-
   render (): any {
     return null
   }

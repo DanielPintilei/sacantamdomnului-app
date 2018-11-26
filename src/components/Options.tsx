@@ -1,4 +1,4 @@
-import React, { SFC } from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 import { ThemeType } from '../types'
 import { IconInfo, IconSort, IconDroplet, IconType } from './icons'
@@ -38,7 +38,7 @@ type OptionsProps = {
   openThemes: () => void
   openText: () => void
 }
-const Options: SFC<OptionsProps> = ({ sortAZ, sort, openThemes, openText }) => (
+const Options: FC<OptionsProps> = ({ sortAZ, sort, openThemes, openText }) => (
   <OptionsStyles sortAZ={sortAZ}>
     <button
       onClick={() => {
