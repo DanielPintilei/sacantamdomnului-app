@@ -1,6 +1,6 @@
 {
   "name": "sacantamdomnului-app",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "author": "Daniel Pintilei",
   "dependencies": {
@@ -9,7 +9,7 @@
     "@types/react": "^16.7.7",
     "@types/react-dom": "^16.0.10",
     "@types/react-router-dom": "^4.3.1",
-    "@types/react-virtualized": "^9.18.9",
+    "@types/react-window": "^1.1.0",
     "@types/styled-components": "^4.1.1",
     "downshift": "^3.1.5",
     "firebase": "^5.5.9",
@@ -20,8 +20,8 @@
     "react-motion-drawer": "^3.1.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.1",
-    "react-virtualized": "^9.21.0",
     "react-wakelock": "^0.0.4",
+    "react-window": "^1.3.1",
     "sitemap": "^2.1.0",
     "styled-components": "^4.1.1",
     "typescript": "^3.1.6"
@@ -35,9 +35,15 @@
     "stamp-time": "node scripts/stampTime.js"
   },
   "devDependencies": {
-    "dotenv": "^6.1.0"
+    "dotenv": "^6.1.0",
+    "eslint-plugin-typescript": "^0.14.0",
+    "typescript-eslint-parser": "^21.0.1"
   },
   "eslintConfig": {
+    "parser": "typescript-eslint-parser",
+    "plugins": [
+      "typescript"
+    ],
     "extends": [
       "react-app"
     ],

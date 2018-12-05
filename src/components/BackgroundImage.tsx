@@ -1,14 +1,15 @@
-import React, { useState, FC } from 'react'
+import React, { FC } from 'react'
 import { withTheme } from 'styled-components'
 import { ThemeType } from '../types'
 
 type BackgroundImageProps = {
   theme: ThemeType
+  height: number
 }
 const BackgroundImage: FC<BackgroundImageProps> = ({
   theme: { accent, logo },
+  height,
 }) => {
-  const [height] = useState(window.innerHeight - 70)
   return (
     <div style={{ height }} className="background-image">
       <svg viewBox="0 0 79.4 67.9" width="300">

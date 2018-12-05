@@ -1,25 +1,9 @@
-import React, { PureComponent, useState, FC } from 'react'
+import React, { useState, useEffect, FC } from 'react'
 import styled from 'styled-components'
 import { SongListType, SongFoldersType } from '../types'
-import { List } from 'react-virtualized/dist/commonjs/List'
-import {
-  CellMeasurer,
-  CellMeasurerCache,
-} from 'react-virtualized/dist/commonjs/CellMeasurer'
+import { FixedSizeList as List } from 'react-window'
 import ListLink from './ListLink'
 import { IconBook } from './icons'
-
-type ListWrapperProps = {
-  scrollToCurrentSong: () => void
-}
-class ListWrapper extends PureComponent<ListWrapperProps> {
-  componentDidMount () {
-    this.props.scrollToCurrentSong()
-  }
-  render () {
-    return this.props.children
-  }
-}
 
 const H3 = styled.h3`
   display: flex;
@@ -48,91 +32,67 @@ type SongSectionProps = {
   currentSong: number
   setCurrentSong: (index: number) => void
 }
-class SongSection extends PureComponent<SongSectionProps> {
-  cache = new CellMeasurerCache({
-    fixedWidth: true,
-    defaultHeight: 34,
-  })
-  listRef: any
-  render () {
-    const {
-      title,
-      songs,
-      closeDrawer,
-      currentBook,
-      setCurrentBook,
-      currentSong,
-      setCurrentSong,
-    } = this.props
-    const rowRenderer = ({
-      key,
-      index,
-      parent,
-      // isScrolling,
-      // isVisible,
-      style,
-    }: any) => {
-      const { number: songNumber, title: songTitle, path } = songs[index]
-      return (
-        <CellMeasurer
-          key={key}
-          cache={this.cache}
-          parent={parent}
-          columnIndex={0}
-          rowIndex={index}
+const SongSection: FC<SongSectionProps> = ({
+  title,
+  songs,
+  closeDrawer,
+  currentBook,
+  setCurrentBook,
+  currentSong,
+  setCurrentSong,
+}) => {
+  const listRef: React.RefObject<List> = React.createRef()
+  const currentBookIsThis = currentBook === title
+  useEffect(
+    () => {
+      currentSong &&
+        listRef &&
+        listRef.current &&
+        listRef.current.scrollToItem(currentSong, 'center')
+    },
+    [currentSong],
+  )
+  return (
+    <div>
+      <H3
+        onClick={() => {
+          if (currentBookIsThis) setCurrentBook(null)
+          else {
+            setCurrentSong(0)
+            setCurrentBook(title)
+          }
+        }}
+      >
+        {IconBook} {title}
+      </H3>
+      {currentBookIsThis && (
+        <List
+          height={window.innerHeight / 1.5}
+          itemCount={songs.length}
+          itemSize={50}
+          width={300}
+          ref={listRef}
         >
-          <ListLink
-            to={path}
-            style={style}
-            onClick={() => {
-              closeDrawer()
-              setCurrentSong(index + 15)
-            }}
-          >
-            <span>{songNumber}</span>
-            <span>{songTitle}</span>
-          </ListLink>
-        </CellMeasurer>
-      )
-    }
-    const currentBookIsThis = currentBook === title
-    return (
-      <div>
-        <H3
-          onClick={() => {
-            if (currentBookIsThis) setCurrentBook(null)
-            else {
-              setCurrentSong(0)
-              setCurrentBook(title)
-              setTimeout(() => {
-                this.cache.clearAll()
-                this.forceUpdate()
-              })
-            }
+          {({ index, style }: any) => {
+            const { number: songNumber, title: songTitle, path } = songs[index]
+            return (
+              <ListLink
+                to={`/${path}`}
+                style={style}
+                onClick={() => {
+                  closeDrawer()
+                  setCurrentSong(index)
+                }}
+              >
+                <span>{songNumber}</span>
+                <span>{songTitle}</span>
+              </ListLink>
+            )
           }}
-        >
-          {IconBook} {title}
-        </H3>
-        {currentBookIsThis && (
-          <ListWrapper
-            scrollToCurrentSong={() => this.listRef.scrollToRow(currentSong)}
-          >
-            <List
-              height={window.innerHeight / 1.5}
-              rowCount={songs.length}
-              rowHeight={this.cache.rowHeight}
-              defferedMeasurementCache={this.cache}
-              width={300}
-              rowRenderer={rowRenderer}
-              ref={list => {
-                this.listRef = list
-              }}
-            />
-          </ListWrapper>
-        )}
-      </div>
-    )
-  }
+        </List>
+      )}
+    </div>
+  )
 }
 
 type DrawerLeftProps = {

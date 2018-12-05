@@ -23,10 +23,20 @@ type MainProps = {
   songList: SongListType
   serifFont: boolean
   fontSizeAdd: number
+  backgroundImageHeight: number
 }
-const Main: FC<MainProps> = ({ songList, serifFont, fontSizeAdd }) => (
+const Main: FC<MainProps> = ({
+  songList,
+  serifFont,
+  fontSizeAdd,
+  backgroundImageHeight,
+}) => (
   <StyledMain>
-    <Route exact path="/" component={() => <BackgroundImage />} />
+    <Route
+      exact
+      path="/"
+      component={() => <BackgroundImage height={backgroundImageHeight} />}
+    />
     <Route
       path="/:path"
       render={props => (

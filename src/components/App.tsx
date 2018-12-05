@@ -1,22 +1,22 @@
-import React, { Component } from 'react'
+import React, { Suspense, Component } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { get, set, keys } from 'idb-keyval'
 import styled, { ThemeProvider } from 'styled-components'
-import WakeLock from './WakeLock/'
 // import WakeLock from 'react-wakelock'
-// @ts-ignore
-import Drawer from 'react-motion-drawer'
+import WakeLock from './WakeLock/'
 import RouteChangeWatcher from './RouteChangeWatcher'
 import Navbar from './Navbar'
-import DrawerLeft from './DrawerLeft'
-import Options from './Options'
-import FontSettings from './FontSettings'
-import ThemePicker from './ThemePicker'
-import DrawerRight from './DrawerRight'
 import Main from './Main'
 import themes from '../themes'
 import songsVersion from '../songsVersion.json'
 import { SongListType, SongFolderType, SongFoldersType } from '../types'
+
+const Drawer = React.lazy(() => import('react-motion-drawer'))
+const DrawerLeft = React.lazy(() => import('./DrawerLeft'))
+const DrawerRight = React.lazy(() => import('./DrawerRight'))
+const Options = React.lazy(() => import('./Options'))
+const FontSettings = React.lazy(() => import('./FontSettings'))
+const ThemePicker = React.lazy(() => import('./ThemePicker'))
 
 const Backdrop = styled.div`
   position: fixed;
@@ -40,6 +40,7 @@ type AppState = {
   serifFont: boolean
   fontSizeAdd: number
   sortAZ: boolean
+  backgroundImageHeight: number
 }
 class App extends Component<{}, AppState> {
   state: AppState = {
@@ -55,6 +56,7 @@ class App extends Component<{}, AppState> {
     serifFont: !!localStorage.getItem('serifFont'),
     fontSizeAdd: +localStorage.getItem('fontSizeAdd') || 0,
     sortAZ: !!localStorage.getItem('sortAZ') || false,
+    backgroundImageHeight: window.innerHeight - 70,
   }
   toggleBodyOverflow (bool: boolean) {
     document.body.style.overflowY = bool ? 'hidden' : ''
@@ -152,6 +154,7 @@ class App extends Component<{}, AppState> {
       serifFont,
       fontSizeAdd,
       sortAZ,
+      backgroundImageHeight,
     } = this.state
     const currentThemeObj = themes[currentTheme]
     const overlayColor = `rgba(${currentThemeObj.backdrop}, 0.6)`
@@ -181,113 +184,125 @@ class App extends Component<{}, AppState> {
                   })
                 }
               />
-              <Drawer
-                overlayColor={overlayColor}
-                drawerStyle={{ ...drawerStyle, paddingBottom: '100px' }}
-                width={300}
-                panTolerance={30}
-                handleWidth={rightDrawerOpen ? 0 : window.innerWidth / 5}
-                zIndex={leftDrawerOpen ? 7 : 2}
-                fadeOut
-                open={leftDrawerOpen}
-                onChange={this.toggleDrawerLeft}
-              >
-                {!themesPanelOpen && !fontPanelOpen && (
-                  <DrawerLeft
-                    songList={sortAZ ? songsSorted : songs}
-                    closeDrawer={() => this.setState({ leftDrawerOpen: false })}
-                    currentBook={currentBook}
-                    setCurrentBook={this.setCurrentBook}
+              <Suspense fallback="">
+                <Drawer
+                  overlayColor={overlayColor}
+                  drawerStyle={{ ...drawerStyle, paddingBottom: '100px' }}
+                  width={300}
+                  panTolerance={30}
+                  handleWidth={rightDrawerOpen ? 0 : window.innerWidth / 5}
+                  zIndex={leftDrawerOpen ? 7 : 2}
+                  fadeOut
+                  open={leftDrawerOpen}
+                  onChange={this.toggleDrawerLeft}
+                >
+                  {!themesPanelOpen && !fontPanelOpen && (
+                    <DrawerLeft
+                      songList={sortAZ ? songsSorted : songs}
+                      closeDrawer={() =>
+                        this.setState({ leftDrawerOpen: false })
+                      }
+                      currentBook={currentBook}
+                      setCurrentBook={this.setCurrentBook}
+                    />
+                  )}
+                  <Options
+                    sortAZ={sortAZ}
+                    sort={() => {
+                      this.setState(({ sortAZ }: AppState) => {
+                        const nextState = !sortAZ
+                        if (nextState) localStorage.setItem('sortAZ', 'true')
+                        else localStorage.removeItem('sortAZ')
+                        return { sortAZ: nextState }
+                      })
+                    }}
+                    openThemes={() => {
+                      this.toggleDrawerLeft(false)
+                      this.toggleThemesPanel(true)
+                    }}
+                    openText={() => {
+                      this.toggleDrawerLeft(false)
+                      this.toggleFontPanel(true)
+                    }}
                   />
-                )}
-                <Options
-                  sortAZ={sortAZ}
-                  sort={() => {
-                    this.setCurrentBook(null)
-                    this.setState(({ sortAZ }: AppState) => {
-                      const nextState = !sortAZ
-                      if (nextState) localStorage.setItem('sortAZ', 'true')
-                      else localStorage.removeItem('sortAZ')
-                      return { sortAZ: nextState }
-                    })
-                  }}
-                  openThemes={() => {
-                    this.toggleDrawerLeft(false)
-                    this.toggleThemesPanel(true)
-                  }}
-                  openText={() => {
-                    this.toggleDrawerLeft(false)
-                    this.toggleFontPanel(true)
-                  }}
-                />
-              </Drawer>
-              <Drawer
-                right
-                overlayColor={overlayColor}
-                drawerStyle={drawerStyle}
-                width={300}
-                panTolerance={30}
-                handleWidth={leftDrawerOpen ? 0 : window.innerWidth / 5}
-                zIndex={rightDrawerOpen ? 7 : 2}
-                fadeOut
-                open={rightDrawerOpen}
-                onChange={this.toggleDrawerRight}
-              >
-                {songsArray.length && (
-                  <DrawerRight
-                    songList={songsArray}
-                    closeDrawer={() =>
-                      this.setState({ rightDrawerOpen: false })
-                    }
-                    searchFocused={rightDrawerOpen}
-                  />
-                )}
-              </Drawer>
+                </Drawer>
+                <Drawer
+                  right
+                  overlayColor={overlayColor}
+                  drawerStyle={drawerStyle}
+                  width={300}
+                  panTolerance={30}
+                  handleWidth={leftDrawerOpen ? 0 : window.innerWidth / 5}
+                  zIndex={rightDrawerOpen ? 7 : 2}
+                  fadeOut
+                  open={rightDrawerOpen}
+                  onChange={this.toggleDrawerRight}
+                >
+                  {songsArray.length && (
+                    <DrawerRight
+                      songList={songsArray}
+                      closeDrawer={() =>
+                        this.setState({ rightDrawerOpen: false })
+                      }
+                      searchFocused={rightDrawerOpen}
+                    />
+                  )}
+                </Drawer>
+              </Suspense>
               <Main
                 songList={songsArray}
                 serifFont={serifFont}
                 fontSizeAdd={fontSizeAdd}
+                backgroundImageHeight={backgroundImageHeight}
               />
-              {themesPanelOpen && (
-                <Backdrop data-backdrop onClick={this.closeBackdrop}>
-                  <ThemePicker
-                    currentTheme={currentTheme}
-                    setCurrentTheme={index =>
-                      this.setState({ currentTheme: index })
-                    }
-                  />
-                </Backdrop>
-              )}
-              {fontPanelOpen && (
-                <Backdrop data-backdrop onClick={this.closeBackdrop}>
-                  <FontSettings
-                    serifFont={serifFont}
-                    currentThemeObj={currentThemeObj}
-                    setZoomOut={() => {
-                      this.setState(({ fontSizeAdd }: AppState) => {
-                        const newSize = fontSizeAdd - 2
-                        localStorage.setItem('fontSizeAdd', newSize.toString())
-                        return { fontSizeAdd: newSize }
-                      })
-                    }}
-                    setFontSans={() => {
-                      this.setState({ serifFont: false })
-                      localStorage.removeItem('serifFont')
-                    }}
-                    setFontSerif={() => {
-                      this.setState({ serifFont: true })
-                      localStorage.setItem('serifFont', 'true')
-                    }}
-                    setZoomIn={() => {
-                      this.setState(({ fontSizeAdd }: AppState) => {
-                        const newSize = fontSizeAdd + 2
-                        localStorage.setItem('fontSizeAdd', newSize.toString())
-                        return { fontSizeAdd: newSize }
-                      })
-                    }}
-                  />
-                </Backdrop>
-              )}
+              <Suspense fallback="">
+                {themesPanelOpen && (
+                  <Backdrop data-backdrop onClick={this.closeBackdrop}>
+                    <ThemePicker
+                      currentTheme={currentTheme}
+                      setCurrentTheme={index =>
+                        this.setState({ currentTheme: index })
+                      }
+                    />
+                  </Backdrop>
+                )}
+                {fontPanelOpen && (
+                  <Backdrop data-backdrop onClick={this.closeBackdrop}>
+                    <FontSettings
+                      serifFont={serifFont}
+                      currentThemeObj={currentThemeObj}
+                      setZoomOut={() => {
+                        this.setState(({ fontSizeAdd }: AppState) => {
+                          const newSize = fontSizeAdd - 2
+                          localStorage.setItem(
+                            'fontSizeAdd',
+                            newSize.toString(),
+                          )
+                          return { fontSizeAdd: newSize }
+                        })
+                      }}
+                      setFontSans={() => {
+                        this.setState({ serifFont: false })
+                        localStorage.removeItem('serifFont')
+                      }}
+                      setFontSerif={() => {
+                        this.setState({ serifFont: true })
+                        localStorage.setItem('serifFont', 'true')
+                      }}
+                      setZoomIn={() => {
+                        this.setState(({ fontSizeAdd }: AppState) => {
+                          const newSize = fontSizeAdd + 2
+                          localStorage.setItem(
+                            'fontSizeAdd',
+                            newSize.toString(),
+                          )
+                          return { fontSizeAdd: newSize }
+                        })
+                      }}
+                    />
+                  </Backdrop>
+                )}
+              </Suspense>
             </div>
           </ThemeProvider>
         </RouteChangeWatcher>

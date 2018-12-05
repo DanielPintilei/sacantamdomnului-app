@@ -1,5 +1,4 @@
 import React, { FC } from 'react'
-// @ts-ignore
 import Headroom from 'react-headroom'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
