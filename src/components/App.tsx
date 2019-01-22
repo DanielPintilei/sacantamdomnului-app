@@ -2,8 +2,6 @@ import React, { Suspense, Component } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { get, set, keys } from 'idb-keyval'
 import styled, { ThemeProvider } from 'styled-components'
-// import WakeLock from 'react-wakelock'
-import WakeLock from './WakeLock/'
 import RouteChangeWatcher from './RouteChangeWatcher'
 import Navbar from './Navbar'
 import Main from './Main'
@@ -169,7 +167,6 @@ class App extends Component<{}, AppState> {
         <RouteChangeWatcher>
           <ThemeProvider theme={currentThemeObj}>
             <div>
-              <WakeLock />
               <Navbar
                 onClickLeft={() =>
                   this.setState({

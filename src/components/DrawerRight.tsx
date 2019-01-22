@@ -86,7 +86,7 @@ const DrawerRight: FC<DrawerRightProps> = ({
                 autoComplete="off"
                 autoCorrect="off"
                 autoCapitalize="off"
-                spellCheck="false"
+                spellCheck={false}
               />
             </label>
             {isOpen ? (

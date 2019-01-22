@@ -131,6 +131,12 @@ class Song extends Component<SongProps, SongState> {
         .then(response => response.json())
         .then(song => this.setState({ currentSong: song }))
     }
+    if ('getWakeLock' in navigator) {
+      // @ts-ignore
+      navigator.getWakeLock('screen').then(wakeLock => {
+        wakeLock.createRequest()
+      })
+    }
   }
   render () {
     const { serifFont, fontSizeAdd } = this.props
