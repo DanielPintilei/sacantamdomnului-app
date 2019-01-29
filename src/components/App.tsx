@@ -125,11 +125,8 @@ class App extends Component<{}, AppState> {
       ) {
         fetchJson()
       } else if (
-        // @ts-ignore
         keys.includes(KEY_SONGS) &&
-        // @ts-ignore
         keys.includes(KEY_SONGS_SORTED) &&
-        // @ts-ignore
         keys.includes(KEY_SONGS_ARRAY)
       ) {
         idbKeyvalGet(KEY_SONGS)
@@ -235,7 +232,7 @@ class App extends Component<{}, AppState> {
                   open={rightDrawerOpen}
                   onChange={this.toggleDrawerRight}
                 >
-                  {songsArray.length && (
+                  {!!songsArray.length && (
                     <DrawerRight
                       songList={songsArray}
                       closeDrawer={() =>

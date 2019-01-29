@@ -34,18 +34,22 @@
     "stamp-time": "node scripts/stampTime.js"
   },
   "devDependencies": {
-    "dotenv": "^6.1.0",
-    "eslint-plugin-typescript": "^0.14.0",
-    "typescript-eslint-parser": "^22.0.0"
+    "@typescript-eslint/eslint-plugin": "^1.1.1",
+    "dotenv": "^6.1.0"
   },
   "eslintConfig": {
-    "parser": "typescript-eslint-parser",
+    "parser": "@typescript-eslint/parser",
     "plugins": [
-      "typescript"
+      "@typescript-eslint"
     ],
     "extends": [
       "react-app"
     ],
+    "parserOptions": {
+      "ecmaVersion": 2016,
+      "project": "./tsconfig.json",
+      "sourceType": "module"
+    },
     "rules": {
       "comma-dangle": [
         "error",
