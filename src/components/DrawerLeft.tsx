@@ -43,15 +43,12 @@ const SongSection: FC<SongSectionProps> = ({
 }) => {
   const listRef: React.RefObject<List> = React.createRef()
   const currentBookIsThis = currentBook === title
-  useEffect(
-    () => {
-      currentSong &&
-        listRef &&
-        listRef.current &&
-        listRef.current.scrollToItem(currentSong, 'center')
-    },
-    [currentSong],
-  )
+  useEffect(() => {
+    currentSong &&
+      listRef &&
+      listRef.current &&
+      listRef.current.scrollToItem(currentSong, 'center')
+  }, [listRef, currentSong])
   return (
     <div>
       <H3
