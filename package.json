@@ -5,7 +5,7 @@
   "author": "Daniel Pintilei",
   "dependencies": {
     "@types/jest": "^24.0.3",
-    "@types/node": "^11.9.2",
+    "@types/node": "^12.0.0",
     "@types/react": "^16.7.7",
     "@types/react-dom": "^16.0.10",
     "@types/react-router-dom": "^4.3.1",
@@ -13,7 +13,7 @@
     "@types/styled-components": "4.1.8",
     "@typescript-eslint/eslint-plugin": "^1.7.0",
     "downshift": "^3.1.5",
-    "firebase": "^5.5.9",
+    "firebase": "^6.0.1",
     "idb-keyval": "^3.1.0",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
@@ -35,7 +35,7 @@
     "stamp-time": "node scripts/stampTime.js"
   },
   "devDependencies": {
-    "dotenv": "^7.0.0"
+    "dotenv": "^8.0.0"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
