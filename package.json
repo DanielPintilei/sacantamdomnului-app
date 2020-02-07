@@ -4,7 +4,7 @@
   "private": true,
   "author": "Daniel Pintilei",
   "dependencies": {
-    "@types/jest": "^24.0.3",
+    "@types/jest": "^25.1.2",
     "@types/node": "^13.1.2",
     "@types/react": "^16.7.7",
     "@types/react-dom": "^16.0.10",
@@ -23,7 +23,7 @@
     "react-scripts": "^3.0.0",
     "react-window": "^1.3.1",
     "sitemap": "^5.1.0",
-    "styled-components": "^4.1.1",
+    "styled-components": "^5.0.1",
     "typescript": "^3.1.6"
   },
   "scripts": {
