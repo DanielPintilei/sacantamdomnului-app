@@ -1,14 +1,14 @@
 if (process.env.NODE_ENV !== 'production') require('dotenv').config()
-const fs = require('fs')
-const sitemap = require('sitemap')
+const { readFileSync, createWriteStream } = require('fs')
+const { SitemapStream } = require('sitemap')
 
-const songs = JSON.parse(fs.readFileSync('./public/songs.json', 'utf8'))
+const songs = JSON.parse(readFileSync('./public/songs.json', 'utf8'))
 
 const songsArray = songs
-  .map(item => item.songs)
+  .map((item) => item.songs)
   .reduce((a, b) => [...a, ...b], [])
 
-const songsUrls = songsArray.map(item => ({ url: item.path }))
+const songsUrls = songsArray.map((item) => ({ url: item.path }))
 
 const urls = [
   {
@@ -18,9 +18,13 @@ const urls = [
   ...songsUrls,
 ]
 
-const sitemapXML = sitemap.createSitemap({
+const sitemap = new SitemapStream({
   hostname: process.env.SITEMAP_URL,
-  urls,
 })
 
-fs.writeFileSync('./public/sitemap.xml', sitemapXML.toString())
+const writeStream = createWriteStream('./public/sitemap.xml')
+sitemap.pipe(writeStream)
+urls.forEach((url) => {
+  sitemap.write(url)
+})
+sitemap.end()
