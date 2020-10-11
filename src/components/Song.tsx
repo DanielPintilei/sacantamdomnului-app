@@ -12,7 +12,7 @@ const StyledSong = styled.article`
     margin-top: 0;
     margin-bottom: 25px;
     max-width: 400px;
-    font-family: 'Open Sans';
+    font-family: 'Noto Sans';
     font-size: 22px;
     font-weight: 400;
     line-height: 1.2;
@@ -31,7 +31,7 @@ const StyledSong = styled.article`
   pre {
     margin: 0 0 40px;
     white-space: pre-wrap;
-    font-family: 'Open Sans';
+    font-family: 'Noto Sans';
     font-size: 18px;
     line-height: 1.4;
     tab-size: 2;
@@ -100,7 +100,7 @@ class Song extends Component<SongProps, SongState> {
   state: SongState = {
     currentSong: null,
   }
-  static getDerivedStateFromProps (nextProps: SongProps, prevState: SongState) {
+  static getDerivedStateFromProps(nextProps: SongProps, prevState: SongState) {
     const {
       songList,
       match: {
@@ -108,7 +108,7 @@ class Song extends Component<SongProps, SongState> {
       },
     } = nextProps
     if (!songList) return null
-    const currentSong = songList.find(song => song.path === path)
+    const currentSong = songList.find((song) => song.path === path)
     if (
       (currentSong && currentSong.path) !==
       (prevState.currentSong && prevState.currentSong.path)
@@ -119,7 +119,7 @@ class Song extends Component<SongProps, SongState> {
     }
     return null
   }
-  componentDidMount () {
+  componentDidMount() {
     const {
       match: {
         params: { path },
@@ -128,17 +128,17 @@ class Song extends Component<SongProps, SongState> {
     const { currentSong } = this.state
     if (!currentSong) {
       fetch(`/json/${path}.json`)
-        .then(response => response.json())
-        .then(song => this.setState({ currentSong: song }))
+        .then((response) => response.json())
+        .then((song) => this.setState({ currentSong: song }))
     }
     if ('getWakeLock' in navigator) {
       // @ts-ignore
-      navigator.getWakeLock('screen').then(wakeLock => {
+      navigator.getWakeLock('screen').then((wakeLock) => {
         wakeLock.createRequest()
       })
     }
   }
-  render () {
+  render() {
     const { serifFont, fontSizeAdd } = this.props
     const { currentSong } = this.state
     if (!currentSong) return null

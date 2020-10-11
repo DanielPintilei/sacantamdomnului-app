@@ -61,10 +61,6 @@
           "functions": "always-multiline"
         }
       ],
-      "space-before-function-paren": [
-        "error",
-        "always"
-      ],
       "one-var": [
         "error",
         {

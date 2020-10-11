@@ -1,23 +1,23 @@
 import { createGlobalStyle } from 'styled-components'
-const OpenSans = require('../fonts/Open_Sans/OpenSans-Regular.ttf')
-const OpenSansItalic = require('../fonts/Open_Sans/OpenSans-Italic.ttf')
+const NotoSans = require('../fonts/Noto_Sans/NotoSans-Regular.ttf')
+const NotoSansItalic = require('../fonts/Noto_Sans/NotoSans-Italic.ttf')
 const Lora = require('../fonts/Lora/Lora-Regular.ttf')
 const LoraItalic = require('../fonts/Lora/Lora-Italic.ttf')
 
 const GlobalStyle = createGlobalStyle`
   @font-face {
-    font-family: 'Open Sans';
+    font-family: 'Noto Sans';
     font-weight: 400;
     font-style: normal;
     font-display: fallback;
-    src: local('Open Sans Regular'), local('OpenSans-Regular'), url('${OpenSans}') format('truetype');
+    src: local('Noto Sans Regular'), local('NotoSans-Regular'), url('${NotoSans}') format('truetype');
   }
   @font-face {
-    font-family: 'Open Sans';
+    font-family: 'Noto Sans';
     font-weight: 400;
     font-style: italic;
     font-display: fallback;
-    src: local('Open Sans Italic'), local('OpenSans-Italic'), url('${OpenSansItalic}') format('truetype');
+    src: local('Noto Sans Italic'), local('NotoSans-Italic'), url('${NotoSansItalic}') format('truetype');
   }
   @font-face {
     font-family: 'Lora';
