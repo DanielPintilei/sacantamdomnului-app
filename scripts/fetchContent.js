@@ -1,18 +1,11 @@
 if (process.env.NODE_ENV !== 'production') require('dotenv').config()
 const fs = require('fs')
-const firebase = require('firebase')
+const fetch = require('node-fetch')
 
-const config = {
-  apiKey: process.env.API_KEY,
-  // authDomain: process.env.AUTH_DOMAIN,
-  databaseURL: process.env.DATABASE_URL,
-}
-firebase.initializeApp(config)
-
-const replaceAccents = str =>
+const replaceAccents = (str) =>
   str.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
-const normalizeTitle = title =>
+const normalizeTitle = (title) =>
   replaceAccents(title)
     .replace(/\s+/g, '-')
     .replace(/[^\w-]+/g, '')
@@ -20,7 +13,7 @@ const normalizeTitle = title =>
 
 const generatePath = (number, title) => `${number}-${normalizeTitle(title)}`
 
-const formatSong = song => {
+const formatSong = (song) => {
   const refren = /Refren\n([^]*?)\n\n/g
   const autor = /(Versuri:(.*)\n)/
   const melodie = /(Melodie:(.*)\n)/
@@ -40,9 +33,9 @@ const formatSong = song => {
   return formatted
 }
 
-const formatSection = section =>
+const formatSection = (section) =>
   section
-    .filter(x => x)
+    .filter((x) => x)
     .map(({ number, title, content }) => ({
       number,
       title,
@@ -50,10 +43,10 @@ const formatSection = section =>
       path: generatePath(number, title),
     }))
 
-const formatContent = ({ saCantamDomnului, alteCantari, colinde }) => [
+const formatContent = ({ scd, alteCantari, colinde }) => [
   {
     title: 'Să cântăm Domnului',
-    songs: formatSection(saCantamDomnului),
+    songs: formatSection(scd),
   },
   {
     title: 'Alte Cântări',
@@ -65,10 +58,9 @@ const formatContent = ({ saCantamDomnului, alteCantari, colinde }) => [
   },
 ]
 
-const writeContent = snapshot => {
-  const raw = snapshot.val()
+const writeContent = (snapshot) => {
   const rawNormalized = JSON.parse(
-    JSON.stringify(raw)
+    JSON.stringify(snapshot)
       .replace(/"comtent"/g, '"content"')
       .replace(/"numar"/g, '"number"')
       .replace(/\\n\\n \\n/g, '\\n\\n')
@@ -83,39 +75,42 @@ const writeContent = snapshot => {
   const contentFormatted = formatContent(rawNormalized)
   const content = JSON.stringify(contentFormatted)
   const contentArray = contentFormatted
-    .map(item => item.songs)
+    .map((item) => item.songs)
     .reduce((a, b) => [...a, ...b], [])
   fs.writeFileSync('./public/songs.json', content)
-  contentArray.forEach(song => {
+  contentArray.forEach((song) => {
     fs.writeFileSync(`./public/json/${song.path}.json`, JSON.stringify(song))
   })
   process.exit()
 }
 
-const getContent = () => {
-  firebase
-    .database()
-    .ref()
-    .child('cantari')
-    .once('value')
-    .then(snapshot => {
-      writeContent(snapshot)
+const fetchContent = (child) =>
+  fetch(`${process.env.DATABASE_URL}/${child}`)
+    .then((res) => res.json())
+    .then((resJSON) => {
+      if (Object.entries(resJSON).length) {
+        return resJSON.arrayBook
+      } else throw new Error()
     })
-    .catch(err => {
-      console.log(err)
-      process.exit(1)
-    })
+
+const contentBooks = ['scd', 'alteCantari', 'colinde']
+
+const fetchAllContent = async () => {
+  const mergedContent = {}
+  for (const book of contentBooks) {
+    const child = `${book}/0`
+    await fetchContent(child)
+      .then((contentSingle) => {
+        mergedContent[book] = contentSingle
+      })
+      .catch((error) => error)
+  }
+  return mergedContent
 }
 
-// firebase
-//   .auth()
-//   .signInWithEmailAndPassword(process.env.EMAIL, process.env.PASSWORD)
-//   .then(() => {
-//     getContent()
-//   })
-//   .catch(({ code, message }) => {
-//     console.log(code, message)
-//     process.exit(1)
-//   })
+const getAllContent = async () => {
+  const allContent = await fetchAllContent()
+  writeContent(allContent)
+}
 
-getContent()
+getAllContent()

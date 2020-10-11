@@ -18,5 +18,5 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["react"] // delete this
   },
-  "include": ["src"]
+  "include": ["src", "scripts"]
 }
