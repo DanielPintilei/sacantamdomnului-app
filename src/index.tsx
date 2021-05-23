@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import GlobalStyle from './components/GlobalStyle'
 import App from './components/App'
-import * as serviceWorker from './serviceWorker'
+import * as serviceWorkerRegistration from './serviceWorkerRegistration'
 
 const rootElement = document.getElementById('root')
 
@@ -14,4 +14,4 @@ render(
   rootElement,
 )
 
-serviceWorker.register()
+serviceWorkerRegistration.register()
