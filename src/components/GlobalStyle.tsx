@@ -1,8 +1,8 @@
 import { createGlobalStyle } from 'styled-components'
-const NotoSans = require('../fonts/Noto_Sans/NotoSans-Regular.ttf')
-const NotoSansItalic = require('../fonts/Noto_Sans/NotoSans-Italic.ttf')
-const Lora = require('../fonts/Lora/Lora-Regular.ttf')
-const LoraItalic = require('../fonts/Lora/Lora-Italic.ttf')
+import NotoSans from '../fonts/Noto_Sans/NotoSans-Regular.ttf'
+import NotoSansItalic from '../fonts/Noto_Sans/NotoSans-Italic.ttf'
+import Lora from '../fonts/Lora/Lora-Regular.ttf'
+import LoraItalic from '../fonts/Lora/Lora-Italic.ttf'
 
 const GlobalStyle = createGlobalStyle`
   @font-face {

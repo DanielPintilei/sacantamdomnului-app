@@ -1,4 +1,4 @@
-export default [
+const themes = [
   {
     accent: '#ecce93',
     checkMark: '#ecce93',
@@ -160,3 +160,5 @@ export default [
     active: '#f3f8f2',
   },
 ]
+
+export default themes
