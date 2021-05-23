@@ -1,6 +1,6 @@
 import React, { Suspense, Component } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { get, set, keys } from 'idb-keyval'
+import { getMany, setMany, keys } from 'idb-keyval'
 import styled, { ThemeProvider } from 'styled-components'
 import RouteChangeWatcher from './RouteChangeWatcher'
 import Navbar from './Navbar'
@@ -56,7 +56,7 @@ class App extends Component<{}, AppState> {
     sortAZ: !!localStorage.getItem('sortAZ') || false,
     backgroundImageHeight: window.innerHeight - 70,
   }
-  toggleBodyOverflow (bool: boolean) {
+  toggleBodyOverflow(bool: boolean) {
     document.body.style.overflowY = bool ? 'hidden' : ''
   }
   toggleDrawerLeft = (open: boolean) => {
@@ -82,7 +82,7 @@ class App extends Component<{}, AppState> {
   toggleFontPanel = (open: boolean) => {
     this.setState({ fontPanelOpen: open })
   }
-  componentDidMount () {
+  componentDidMount() {
     document
       .querySelector('meta[name=theme-color]')
       .setAttribute('content', themes[this.state.currentTheme].navbar)
@@ -91,8 +91,8 @@ class App extends Component<{}, AppState> {
     const KEY_SONGS_ARRAY = 'songsArray'
     const fetchJson = () =>
       fetch('/songs.json')
-        .then(response => response.json())
-        .then(songs => {
+        .then((response) => response.json())
+        .then((songs) => {
           const songsSorted = songs.map(({ title, songs }: SongFolderType) => ({
             title,
             songs: songs
@@ -107,18 +107,15 @@ class App extends Component<{}, AppState> {
             .map((item: SongFolderType) => item.songs)
             .reduce((a: SongListType, b: SongListType) => [...a, ...b], [])
           this.setState({ songs, songsSorted, songsArray })
-          Promise.all([
-            set(KEY_SONGS, songs),
-            set(KEY_SONGS_SORTED, songsSorted),
-            set(KEY_SONGS_ARRAY, songsArray),
+          setMany([
+            [KEY_SONGS, songs],
+            [KEY_SONGS_SORTED, songsSorted],
+            [KEY_SONGS_ARRAY, songsArray],
           ]).then(() =>
             localStorage.setItem('songsVersion', songsVersion.toString()),
           )
         })
-    const idbKeyvalGet = (data: string) =>
-      // @ts-ignore
-      get(data).then(songs => this.setState({ [data]: songs }))
-    keys().then(keys => {
+    keys().then((keys) => {
       if (
         +localStorage.getItem('songsVersion') !== songsVersion &&
         navigator.onLine
@@ -129,13 +126,15 @@ class App extends Component<{}, AppState> {
         keys.includes(KEY_SONGS_SORTED) &&
         keys.includes(KEY_SONGS_ARRAY)
       ) {
-        idbKeyvalGet(KEY_SONGS)
-        idbKeyvalGet(KEY_SONGS_SORTED)
-        idbKeyvalGet(KEY_SONGS_ARRAY)
+        getMany([KEY_SONGS, KEY_SONGS_SORTED, KEY_SONGS_ARRAY]).then(
+          ([songs, songsSorted, songsArray]) => {
+            this.setState({ songs, songsSorted, songsArray })
+          },
+        )
       } else fetchJson()
     })
   }
-  render () {
+  render() {
     const {
       songs,
       songsSorted,
@@ -254,7 +253,7 @@ class App extends Component<{}, AppState> {
                   <Backdrop data-backdrop onClick={this.closeBackdrop}>
                     <ThemePicker
                       currentTheme={currentTheme}
-                      setCurrentTheme={index =>
+                      setCurrentTheme={(index) =>
                         this.setState({ currentTheme: index })
                       }
                     />
